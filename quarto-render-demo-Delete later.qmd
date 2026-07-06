@@ -1,0 +1,47 @@
+---
+title: "ETC2420/5242: Tutorial 1"
+subtitle: "Getting started"
+author: "Your name"
+format: 
+ html: 
+  toc: true
+date: today
+---
+
+This is my first Quarto document
+
+# About me
+
+This section contains information about me.
+
+## My Studies
+
+Currently I am studying a **Bachelor of Spreadsheet Wizardry**, majoring in *Copying Code from the Internet* and a minor in *Forgetting to Save my Work*. The units I am taking are:
+
+- ETC9: Introduction to Panic-Driven Analysis
+- ETC12: Advanced Copy and Paste Techniques
+- ETC5: Debugging by Randomly Changing Things
+- ETC67: Professional File Naming
+
+```{r}
+#| echo: false
+x <- 1
+y <- 2
+x+y
+```
+
+
+## My Interests
+
+1. opening RStudio and immediately forgetting why
+2. making plots with axis labels that are almost useful
+3. telling myself “just one more change” before breaking the whole document
+4. pressing `Render` with the same emotional intensity as submitting an assignment
+
+```{r}
+#| eval: false
+x^2 + y^2
+```
+
+
+

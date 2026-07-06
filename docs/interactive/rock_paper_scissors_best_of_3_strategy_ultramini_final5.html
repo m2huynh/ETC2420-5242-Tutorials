@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rock Paper Scissors</title>
+  <style>
+    :root {
+      --bg: #f7f7f8;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #d1d5db;
+      --accent: #2563eb;
+      --win: #047857;
+      --lose: #b91c1c;
+      --draw: #92400e;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    main {
+      width: 100%;
+      padding: 8px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    h1 {
+      margin: 0 0 4px;
+      font-size: 1.45rem;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .subtitle {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .top-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .box {
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: #fafafa;
+      text-align: center;
+      padding: 6px 4px;
+      min-width: 0;
+    }
+
+    .count-box {
+      border-color: #93c5fd;
+      background: #eff6ff;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.10);
+    }
+
+    .count-box .label {
+      color: #1d4ed8;
+      font-weight: 700;
+    }
+
+    .count-box .value {
+      color: #1e3a8a;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 0.68rem;
+      white-space: nowrap;
+    }
+
+    .value {
+      font-weight: 800;
+      font-size: 1.15rem;
+      line-height: 1.15;
+    }
+
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .choice {
+      border: 1.5px solid var(--border);
+      background: white;
+      border-radius: 10px;
+      padding: 8px 6px;
+      cursor: pointer;
+      text-align: center;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .choice span {
+      display: block;
+      font-size: 1.45rem;
+      line-height: 1.1;
+      margin-bottom: 2px;
+    }
+
+    .choice.selected {
+      border-color: var(--accent);
+      background: #eff6ff;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 9px;
+      padding: 8px 11px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button.primary { background: var(--accent); color: white; }
+    button.secondary { background: #e5e7eb; color: var(--text); }
+    button.warning { background: #fee2e2; color: #991b1b; }
+    button:disabled { cursor: not-allowed; opacity: 0.55; }
+
+    .message {
+      margin-left: auto;
+      font-weight: 800;
+      font-size: 1rem;
+      min-height: 1.4rem;
+    }
+
+    .win { color: var(--win); }
+    .lose { color: var(--lose); }
+    .draw { color: var(--draw); }
+
+    .hidden { display: none !important; }
+
+    .final-screen {
+      display: flex;
+      min-height: 185px;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .final-message {
+      margin: 0;
+      font-size: 1.85rem;
+      line-height: 1.1;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .final-message.win { color: var(--win); }
+    .final-message.lose { color: var(--lose); }
+
+    @media (max-width: 620px) {
+      .top-grid { grid-template-columns: repeat(3, 1fr); }
+      .message { width: 100%; margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="card">
+      <div id="gameContent">
+      <h1>Rock Paper Scissors</h1>
+      <p class="subtitle">Best of 3. First to 2 round wins takes the game.</p>
+
+      <div class="top-grid" aria-label="Score and running count">
+        <div class="box"><div class="label">You</div><div class="value" id="playerScore">0</div></div>
+        <div class="box"><div class="label">Round</div><div class="value" id="roundNumber">1</div></div>
+        <div class="box"><div class="label">Opponent</div><div class="value" id="opponentScore">0</div></div>
+        <div class="box count-box"><div class="label">Games</div><div class="value" id="gamesPlayed">0</div></div>
+        <div class="box count-box"><div class="label">Your wins</div><div class="value" id="playerGamesWon">0</div></div>
+        <div class="box count-box"><div class="label">Opp. wins</div><div class="value" id="opponentGamesWon">0</div></div>
+      </div>
+
+      <div class="choices" role="radiogroup" aria-label="Choose rock paper or scissors">
+        <button class="choice" data-choice="Rock" aria-label="Rock"><span>✊</span>Rock</button>
+        <button class="choice" data-choice="Paper" aria-label="Paper"><span>✋</span>Paper</button>
+        <button class="choice" data-choice="Scissors" aria-label="Scissors"><span>✌️</span>Scissors</button>
+      </div>
+
+      <div class="actions">
+        <button class="primary" id="submitBtn" disabled>Submit</button>
+        <button class="secondary" id="newGameBtn" disabled>Next game</button>
+        <button class="warning" id="resetAllBtn">Reset</button>
+        <div class="message" id="mainResult" aria-live="polite">Choose an option.</div>
+      </div>
+      </div>
+
+      <div id="finalScreen" class="final-screen hidden" aria-live="polite">
+        <p id="finalMessage" class="final-message"></p>
+        <button class="warning" id="finalResetBtn">Reset</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const choices = ["Rock", "Paper", "Scissors"];
+
+    let selectedChoice = null;
+    let playerScore = 0;
+    let opponentScore = 0;
+    let roundNumber = 1;
+    let gameOver = false;
+    let history = [];
+
+    let gamesPlayed = 0;
+    let playerGamesWon = 0;
+    let opponentGamesWon = 0;
+
+    const choiceButtons = document.querySelectorAll(".choice");
+    const submitBtn = document.getElementById("submitBtn");
+    const newGameBtn = document.getElementById("newGameBtn");
+    const resetAllBtn = document.getElementById("resetAllBtn");
+    const playerScoreEl = document.getElementById("playerScore");
+    const opponentScoreEl = document.getElementById("opponentScore");
+    const roundNumberEl = document.getElementById("roundNumber");
+    const gamesPlayedEl = document.getElementById("gamesPlayed");
+    const playerGamesWonEl = document.getElementById("playerGamesWon");
+    const opponentGamesWonEl = document.getElementById("opponentGamesWon");
+    const mainResultEl = document.getElementById("mainResult");
+    const gameContentEl = document.getElementById("gameContent");
+    const finalScreenEl = document.getElementById("finalScreen");
+    const finalMessageEl = document.getElementById("finalMessage");
+    const finalResetBtn = document.getElementById("finalResetBtn");
+
+    function randomChoice() {
+      return choices[Math.floor(Math.random() * choices.length)];
+    }
+
+    function shiftChoice(choice) {
+      if (choice === "Rock") return "Paper";
+      if (choice === "Paper") return "Scissors";
+      return "Rock";
+    }
+
+    function opponentChoice() {
+      if (history.length === 0) return randomChoice();
+      const previousRound = history[history.length - 1];
+      if (previousRound.result === "Opponent wins") return previousRound.opponent;
+      if (previousRound.result === "You win") return shiftChoice(previousRound.opponent);
+      return randomChoice();
+    }
+
+    function getRoundResult(player, opponent) {
+      if (player === opponent) return "Draw";
+      if (
+        (player === "Rock" && opponent === "Scissors") ||
+        (player === "Paper" && opponent === "Rock") ||
+        (player === "Scissors" && opponent === "Paper")
+      ) {
+        return "You win";
+      }
+      return "Opponent wins";
+    }
+
+    function updateDisplays() {
+      playerScoreEl.textContent = playerScore;
+      opponentScoreEl.textContent = opponentScore;
+      roundNumberEl.textContent = gameOver ? "End" : roundNumber;
+      gamesPlayedEl.textContent = gamesPlayed;
+      playerGamesWonEl.textContent = playerGamesWon;
+      opponentGamesWonEl.textContent = opponentGamesWon;
+    }
+
+    function setMessage(text, className = "") {
+      mainResultEl.textContent = text;
+      mainResultEl.className = "message";
+      if (className) mainResultEl.classList.add(className);
+    }
+
+    function showFinalScreen(winner) {
+      gameContentEl.classList.add("hidden");
+      finalScreenEl.classList.remove("hidden");
+
+      if (winner === "player") {
+        finalMessageEl.textContent = "You won 5 games";
+        finalMessageEl.className = "final-message win";
+      } else {
+        finalMessageEl.textContent = "Your opponent won 5 games";
+        finalMessageEl.className = "final-message lose";
+      }
+    }
+
+    choiceButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        if (gameOver) return;
+        selectedChoice = button.dataset.choice;
+        choiceButtons.forEach(b => b.classList.remove("selected"));
+        button.classList.add("selected");
+        submitBtn.disabled = false;
+      });
+    });
+
+    submitBtn.addEventListener("click", () => {
+      if (!selectedChoice || gameOver) return;
+
+      const player = selectedChoice;
+      const opponent = opponentChoice();
+      const result = getRoundResult(player, opponent);
+
+      if (result === "You win") playerScore += 1;
+      if (result === "Opponent wins") opponentScore += 1;
+
+      history.push({ round: roundNumber, player, opponent, result });
+
+      if (playerScore === 2 || opponentScore === 2) {
+        gameOver = true;
+        gamesPlayed += 1;
+        if (playerScore === 2) {
+          playerGamesWon += 1;
+          setMessage("You win", "win");
+        } else {
+          opponentGamesWon += 1;
+          setMessage("Opponent wins", "lose");
+        }
+
+        if (playerGamesWon === 5) {
+          updateDisplays();
+          showFinalScreen("player");
+        } else if (opponentGamesWon === 5) {
+          updateDisplays();
+          showFinalScreen("opponent");
+        } else {
+          newGameBtn.disabled = false;
+        }
+      } else {
+        roundNumber += 1;
+        setMessage(result, result === "Draw" ? "draw" : result === "You win" ? "win" : "lose");
+      }
+
+      selectedChoice = null;
+      choiceButtons.forEach(b => b.classList.remove("selected"));
+      submitBtn.disabled = true;
+      updateDisplays();
+    });
+
+    function resetCurrentGame() {
+      selectedChoice = null;
+      playerScore = 0;
+      opponentScore = 0;
+      roundNumber = 1;
+      gameOver = false;
+      history = [];
+      choiceButtons.forEach(b => b.classList.remove("selected"));
+      submitBtn.disabled = true;
+      newGameBtn.disabled = true;
+      setMessage("Choose an option.");
+      updateDisplays();
+    }
+
+    newGameBtn.addEventListener("click", resetCurrentGame);
+
+    function resetEverything() {
+      gamesPlayed = 0;
+      playerGamesWon = 0;
+      opponentGamesWon = 0;
+      finalScreenEl.classList.add("hidden");
+      gameContentEl.classList.remove("hidden");
+      resetCurrentGame();
+    }
+
+    resetAllBtn.addEventListener("click", resetEverything);
+    finalResetBtn.addEventListener("click", resetEverything);
+
+    updateDisplays();
+  </script>
+</body>
+</html>

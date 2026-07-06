@@ -1,0 +1,152 @@
+---
+title: "Week 2"
+---
+
+```{r}
+#| include: false
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(tinytex)
+```
+
+## Preparing the project
+
+You should already have a project folder on your device (see the **Getting Started** chapter). This week we will create a Quarto document to answer the tasks below and save everything in the `week 2` folder. Within this folder:
+
+- Create a new Quarto document and save it as `Week 2 Tutorial`.
+- Create a new folder called `data`.
+
+In your Quarto document, you will need to answer the questions in the **Task** section. Think about how you will create and structure your Quarto document, e.g.
+
+  - Sections with different header levels
+  - Code chunks for some questions
+  - Interpretation for some questions
+
+## Scenario: Dr.Arbuthnot’s baptism records
+
+John Arbuthnot was a Scottish physician. In 1710 he published a paper[^week02-1] that examined birth records in London for each of the 82 years from 1629 to 1710. Actually the data he used were counts of baptisms, by year and gender, but these are used as a proxy for the number of births.
+
+[^week02-1]: Arbuthnot, J. (1710). “An argument for divine providence, taken from the constant regularity observed in the births of both sexes,” \textit{Philosophical Transactions of the Royal Society}, Vol 27, pp 186–190.
+
+## Data
+
+The data from Arbuthnot’s study is contained in the file `arbuthnot.csv`. It consists of three columns, named `year`, `boys` and `girls`. The `boys` and `girls` columns show the number of each that were born in London for each year as specified in the `year` column.
+
+<center>
+```{r, echo=FALSE}
+library(downloadthis)
+download_file(
+  path = "Data/arbuthnot.csv",
+  button_label = "arbuthnot",
+  button_type = 'success'
+)
+```
+</center><br>
+
+Download and transfer the file `arbuthnot.csv` to your Project folder > week 2 > data
+
+In your Quarto file, create a new code chunk and add the following code:
+
+```{r}
+#| label: load-packages
+#| eval: true
+#| echo: true
+#| message: false
+
+library(tidyverse)
+arbuthnot <- read_csv("data/arbuthnot.csv")
+```
+
+## Tasks
+
+1.  What line of R code would you use to extract the vector containing just the counts of girls baptised? Would it be a good idea to print it in an assignment?
+
+2. Using `ggplot()`, create a plot to visualise the number of girls baptised per year. Is there an apparent trend in the number of girls baptized over the years? How would you describe it? Are there any interesting features?
+
+3. Create three new columns in your data:
+    - `total`: the sum of boy baptisims and girl baptisms
+    - `ratio`: the number of girl baptisms divided by the number of boy baptisms
+    - `prop_girls`: the proportion of girl baptisms
+
+4. Draw a line plot of the total number of baptisms per year. How often were there more boys born than girls?
+
+5.  Draw a plot of the proportion of boys born over time. What do you see? Discuss this plot. Can it be improved?
+
+6.  Use the internet or help in R to create a **TERRIBLE** graph, which has none of the good attributes from the previous question. Comment on what makes it terrible.
+
+## Homework
+
+Create a new Quarto document called `week 2 homework` and save it in your `week 2 folder`. Your answers should include R code, tables or plots where appropriate, and short written interpretations.
+
+### 1. Boys and girls as proportions
+
+The Arbuthnot data records the number of boys and girls baptised each year.
+
+Create a new data frame called `arbuthnot_summary` that adds the following columns:
+
+* `total`, the total number of baptisms
+* `prop_boys`, the proportion of baptisms that were boys
+* `prop_girls`, the proportion of baptisms that were girls
+* `difference`, the number of boys minus the number of girls
+
+Then use `head()` to display the first 10 rows of your new data frame.
+
+Write a sentence explaining what `prop_boys` and `prop_girls` mean.
+
+### 2. How often were there more boys than girls?
+
+Create a new logical column called `more_boys`, which is `TRUE` when there were more boys than girls in a year and `FALSE` otherwise. Use `count()` to count how many years had more boys than girls. Then calculate the proportion of years in which there were more boys than girls. Write a short interpretation of your result.
+
+### 3. Comparing observed results with a simple assumption
+
+Suppose that, in each year, boys and girls were equally likely to be born. Under this simple assumption, the expected proportion of boys would be:
+
+```{r}
+p_boy <- 0.5
+```
+
+Compare this value with the observed average proportion of boys in the Arbuthnot data. Use `summarise()` to calculate:
+
+* the average proportion of boys
+* the average proportion of girls
+* the average difference between boys and girls
+
+Write a short paragraph comparing the observed data with the simple assumption that boys and girls are equally likely.
+
+### 4. Simulating births under equal probability
+
+Now use simulation to explore what might happen if boys and girls were equally likely. Choose one year from the Arbuthnot data. For that year, find the total number of baptisms. Then simulate that number of births. Count how many boys and girls appeared in your simulated data. Compare the simulated result with the actual number of boys and girls in that year. Write a short interpretation. Was the simulated result close to the actual result?
+
+### 5. Simulating many years
+
+Instead of simulating only one year, simulate the same number of baptisms for every year in the Arbuthnot data under the assumption that boys and girls are equally likely.
+
+For each year, calculate:
+
+* the simulated number of boys
+* the simulated number of girls
+* whether the simulated number of boys is greater than the simulated number of girls
+
+Then count how many simulated years had more boys than girls. Compare this with the actual Arbuthnot data. Write a paragraph explaining whether the real data look surprising compared with the simulation.
+
+### 6. Visualising the proportion of boys over time
+
+Create a line plot showing `prop_boys` over time. Add a horizontal line at `0.5` to show the value expected if boys and girls were equally likely. Your plot should include:
+
+* a clear title
+* useful axis labels
+* a short caption
+* an appropriate theme
+
+Write a short paragraph describing what the plot shows.
+
+### 7. Extension: repeated simulation
+
+Repeat the simulation from Question 5 many times, for example 1,000 times. For each simulation, record how many years had more boys than girls. Create a histogram of the results. Then compare the actual number of years with more boys than girls to the simulated distribution.
+
+Write a short interpretation:
+
+* Is the actual result common or unusual under the equal-probability assumption?
+* What does this suggest about the Arbuthnot data?
+* What assumptions are being made in this simulation?
+
+

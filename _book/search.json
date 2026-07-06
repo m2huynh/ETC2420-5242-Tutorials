@@ -1,0 +1,332 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Tutorials",
+    "section": "",
+    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n1 + 1\n\n[1] 2",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "week02.html",
+    "href": "week02.html",
+    "title": "1  Tutorial Week 2",
+    "section": "",
+    "text": "2 Introduction\nThis tutorial provides a hands-on introduction to R and RStudio. It complements the material on StartR, acting both as revision and extension of that content.\nThe structure of this tutorial is typical of what you will do over the semester. You will need to think about how to manipulate a given dataset, how to visualise it effectively, and what you can learn from it. To start with, we focus mostly on developing your knowledge of R and programming skills. As the semester progresses, we will shift emphasis to learn and practice statistical concepts and skills.\nLearning goals for this week\nIf you are already a confident user of R and RStudio, this introduction will be straightforward. You will finish quickly and can use your time to expand your capabilities through the later StartR modules, or investigate other resources. You can also use this introduction as a reference later in the unit.\nIf you are an R beginner, or need a refresher, take you time to work through each part of this tutorial. Perhaps make a list of the different packages or commands as you learn them, and note on which tutorial or other reference on which they appear so that you can find them again when you need to do something similar later on.\nFor everyone, as the unit progresses, you are encouraged to explore beyond what the tasks dictate; a willingness to experiment will make you a much better programmer and data analyst. It will also give you the space to be able to think beyond the code, and to appreciate that having a computational perspective can really help you to understand data and the relevance (and limitations!) of modern statistics/econometrics/actuarial/analytics techniques.\nOnce you have both R and RStudio installed, you are ready to start the tutorial activities. So let’s begin with the fundamental building blocks of R and RStudio: the interface, reading in data, and some basic commands.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#project",
+    "href": "week02.html#project",
+    "title": "1  Tutorial Week 2",
+    "section": "3.1 Project",
+    "text": "3.1 Project\nA project in RStudio is essentially a folder that contains all the relevant files in one place. With the help of the project, you don’t need to worry about whether the file you want to open is in the current working directory (the place you are working at).\nCreate a project for this unit. Go to File and then New Project. Select New Directory if you want to create a new folder to contain you files, or select Existing Directory if you want to use an existing folder.\nBe sure to create a data folder; call it data, to stick with convention. It is up to you how you set up the directories. You could create a folder for each week; if so, then also create a data folder in each one.\nRemember to open this project every time you want to work on this unit. We recommend not saving the “Workspace image” (the data you have loaded, the functions you have defined, etc.) when you quit R or switch to a different project, so you can have a fresh start next time you open RStudio.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#packages",
+    "href": "week02.html#packages",
+    "title": "1  Tutorial Week 2",
+    "section": "3.2 Packages",
+    "text": "3.2 Packages\nWe will use the tidyverse and tinytex packages (you should have seen these in the StartR module), and we will always use them. It is probably the first thing that you should add to your Quarto file – more on this below.\n\n3.2.1 The tinytex package\nThe tinytex package enables us to generate publication quality documents directly to PDF. It also allows us to use LaTeX to create equations in our documents. The LaTeX commands also work if we render to HTML, but we need an extra step to convert this to PDF. Rendering directly to PDF is our strong preference in this unit.\nThe tinytex package can be somewhat temperamental (and takes a while to install). If you have any issues, please attend a consultation and we will try and help you. Please do not ask for help with tinytex in the tutorial, we will not have enough time to diagnose the problem. Simply render to HTML.\n\n\n3.2.2 The tidyverse package\nThe tidyverse package is actually a suite of packages, including those that are designed for data wrangling and data visualisation. These packages share common philosophies and are designed to work together. Over time the packages contained within the tidyverse have changed. You can find more about the packages in the tidyverse at https://www.tidyverse.org/.\nThroughout this unit, we will use many of the packages in the tidyverse. For today, the key ones are:\n\nreadr: Reads data in from various types of file and makes it available in\n\n\n\ndplyr: Manipulates data (e.g. transform, filter, select, summarise)\ntidyr: Tools for putting data into a “tidy” format that is suitable for analysis and plotting.\nggplot2: A suite of tools for plotting data.\n\nThe other packages in the tidyverse are more specialised, but we will use several of them occasionally, including:\n\npurrr: Primarily useful when you need to do apply the same function to every element of a list.\nstringr: For manipulating strings (sets of characters).\nforcats: A toolbox for manipulating categorical variables.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#install-the-packages",
+    "href": "week02.html#install-the-packages",
+    "title": "1  Tutorial Week 2",
+    "section": "3.3 Install the packages",
+    "text": "3.3 Install the packages\nThroughout the unit we will need more packages. Sometimes this will just be to use a specialised function. So we need to learn how to install a new package.\nIf tidyverse is not already available in your R environment, install it by typing the following line of code into the Console pane of your RStudio session. (You do not need to install the package again if it is already installed.)\n\ninstall.packages(\"tidyverse\")\n\nNote: You may need to select a server from which to download; any of the servers should work.\nYou can find the list of installed package names listed in the RStudio Packages pane. Notice a description of the package and the installed version number is also listed.\nAn R tip: In the code above you’ll notice that there is an opening bracket and a closing bracket. Similarly, the quotation marks (\") come in pairs. RStudio tries to help you out here by colouring anything inside the quotation marks a different colour. And if you put your cursor near a bracket, its pair should be highlighted. This will be useful later when we want to do more than one thing at a time.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#load-package-libraries",
+    "href": "week02.html#load-package-libraries",
+    "title": "1  Tutorial Week 2",
+    "section": "3.4 Load package libraries",
+    "text": "3.4 Load package libraries\nNext, you need to load the tidyverse package into your current session (you shouldn’t need to load the tinytex package, but you can if you wish). We do this with the library() function. Run the following lines in your Console pane:\n\nlibrary(tidyverse)\n\nWarning: package 'ggplot2' was built under R version 4.5.3\n\n\nWarning: package 'readr' was built under R version 4.5.2\n\n\nWarning: package 'purrr' was built under R version 4.5.2\n\n\nWarning: package 'dplyr' was built under R version 4.5.3\n\n\nWarning: package 'stringr' was built under R version 4.5.2\n\n\nYou always need to load a package before you can use any of the functions in it. This has to be done every time you start a new RStudio session. If you forget to do this, R will complain because it won’t be able to find the function you’re looking for.\n(R complains a lot. This might be discouraging at first, but don’t take it personally. It’s only a computer system so it is not smart enough to work out everything on its own. Treat the warning and errors messages as reminders about steps that need to be done.)\nUsually a package will only need to be installed on to your machine once, but you need to load them each time you start a new RStudio session. We typically use the console to install packages, and load packages in a code chunk at the beginning of our file (see “Load Arbuthnot’s dataset” below).",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#create-a-new-quarto-file",
+    "href": "week02.html#create-a-new-quarto-file",
+    "title": "1  Tutorial Week 2",
+    "section": "4.1 Create a new Quarto file",
+    "text": "4.1 Create a new Quarto file\nGo to: File → New File → Quarto Document….\nA window will pop up and your cursor should be on “Untitled”. There is also a space for the Author and below are selections for file types. In the title box, type “Tutorial 1” then OK.\nThe first few lines (delineated by ---) are called the YAML header. This is where you can set document settings; refer to StartR for more info.\nThere will be some example text to show you some basic features of Quarto. Have a look if you haven’t seen it before, and then feel free to delete it.\nQuarto has its own typesetting syntax. For example, the hash symbol # is used to denote section headings.\nThe Quarto cheatsheet is a handy reference:\nhttps://rstudio.github.io/cheatsheets/html/quarto.html",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#name-and-save-your-quarto-file",
+    "href": "week02.html#name-and-save-your-quarto-file",
+    "title": "1  Tutorial Week 2",
+    "section": "4.2 Name and save your Quarto file",
+    "text": "4.2 Name and save your Quarto file\nWe recommend getting into the habit of using a standard format for your filenames. The convention we will require for all the work that you will submit looks like this:\n\ntutorial01_IDnnnnnnnn.qmd\n\nwith your Monash student ID number replacing the segment “nnnnnnnn” in the filename.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#install-the-knitr-package",
+    "href": "week02.html#install-the-knitr-package",
+    "title": "1  Tutorial Week 2",
+    "section": "4.3 Install the knitr package",
+    "text": "4.3 Install the knitr package\nYou can render your Quarto file and produce either a HTML, DOCX or PDF version of your report. Behind the scenes, RStudio does this using the knitr package. If this isn’t already installed, you can install it using the same approach described earlier.\nThis time you may see a warning message, recommending that you let RStudio automatically restart R installing the package. Answer Yes to the question: Do you want to restart R prior to installing?\nOnce the installation is finished, click on the Render button, which you will see at the top of the Editor pane.\nToday we will try to render to PDF (if you have tinytex installed), which will open the PDF file if successful.\nIf you don’t have tinytex installed, just render your file to the HTML format. When you press the Render button, a browser window might pop up to display your rendered report, or an R viewer (a browser-like window) might pop up instead. You can control which one it is by choosing Preview in Window or Preview in Viewer Pane in the drop-down menu just to the right of the Render button.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#running-code-chunks-within-the-editor-pane",
+    "href": "week02.html#running-code-chunks-within-the-editor-pane",
+    "title": "1  Tutorial Week 2",
+    "section": "4.4 Running code chunks within the Editor pane",
+    "text": "4.4 Running code chunks within the Editor pane\nIf you you want to check whether a line of R code in a code chunk produces the desired result, you can:\n\nRun the entire chunk, by clicking on the green sideways triangle button in the top right corner of the code chunk, or\nRun selected code in the chunk, by highlighting the relevant lines of code and then clicking the button marked Run on the top right corner of the Editor pane.\nFor other options, open the menu next to the Run button.\n\nIf at any point you need to refresh all of your calculations up to that point, you can Run All Chunks Above the chunk you’re working in by clicking on the down arrow in the code chunk.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#keeping-things-neat",
+    "href": "week02.html#keeping-things-neat",
+    "title": "1  Tutorial Week 2",
+    "section": "4.5 Keeping things neat",
+    "text": "4.5 Keeping things neat\nNow continue working through the rest of this document. Your first task will be to replicate some of these steps using another data set.\nPlease be sure that the answers you provide to each question are clearly labeled, and that the corresponding code chunk is also clearly identified. Marks will be given for neat and clear presentation for any submitted work.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#load-arbuthnots-dataset",
+    "href": "week02.html#load-arbuthnots-dataset",
+    "title": "1  Tutorial Week 2",
+    "section": "5.1 Load Arbuthnot’s dataset",
+    "text": "5.1 Load Arbuthnot’s dataset\nSave the file arbuthnot.csv to your project and put it in a folder called data.\nIn your Quarto file, create a new code chunk and add the following code:\n\nlibrary(tidyverse)\n\narbuthnot &lt;- read_csv(\"data/arbuthnot.csv\")\n\n\n5.1.1 A note about code chunks\nCode chunks are where Quarto knows to use R and put the results into our report. Notice that the chunk is shaded, this reminds us that this section is R code.\nIn Quarto, code chunks are created by typing 3 backticks (```) followed by “r” in curly brackets (no space), then 3 more backticks at the end of the chunk.\nIn the curly brackets, we can also add add a name and set various options. The chunk above is named load-packages (see this in the Quarto version of the notes). The options control how the code will be run and displayed when the document is rendered. Some of they key options are:\n\neval = TRUE or eval = FALSE: Whether to run the code (the default) or not\necho = TRUE or echo = FALSE: Whether to print the code (the default) or not\nmessage = TRUE or message = FALSE: Whether or not to print diagnostic messages generated by running the code.\nerror = TRUE or error = FALSE: This specifies what to do if any errors occur. The default behaviour is error = FALSE, which stops the compilation every time you see an error. If you know the code has an error and you want the document to continue rendering anyway (for example, the purpose of the chunk is to demonstrate a particular error), you can set error = TRUE.\n\nWe can put any number of these options (and several others) together, separated by commas.\nThe settings for the chunk above will mean that during rendering it will:\n\nrun the code chunk,\nprint the code chunk in the output, and\nnot print any diagnostic messages from R.\n\nThe code itself loads the tidyverse package, then creates a tibble called arbuthnot by reading in the CSV file. If all has gone well, you should see an entry called arbuthnot in your Environment tab in the top-right pane in RStudio, with 82 observations of 3 variables.\n\n\n5.1.2 Keeping your code\nWhile you are working through the tutorial, you may want to compute quantities or create plots that are not directly related to an exercise. We suggest that you keep these code chunks but hide them from being rendered.\nSee examples below, in the Quarto versions of these notes.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#tibbles",
+    "href": "week02.html#tibbles",
+    "title": "1  Tutorial Week 2",
+    "section": "5.2 Tibbles",
+    "text": "5.2 Tibbles\nThe arbuthnot object you have created is called a tibble. This is one of R’s most important data types and is used widely throughout the tidyverse. It holds rectangular or tabular data. That is, data where each row has the same number of entries, so it forms a “rectangle” with a particular number of rows and columns. Each column can be different types (numbers, strings, dates, etc.)\nTibbles are a relatively recent addition to R and comec from the tibble package, which is part of the tidyverse. For information, see Chapter 10, in R for Data Science.\nR tip: Names are case-sensitive in R. That means you can refer to the above tibble by arbuthnot, but typing Arbuthnot will not work.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#the-viewer-pane",
+    "href": "week02.html#the-viewer-pane",
+    "title": "1  Tutorial Week 2",
+    "section": "5.3 The Viewer pane",
+    "text": "5.3 The Viewer pane\nView the arbuthnot tibble by clicking on it in the Environment pane. This will load into a Viewer pane in the upper-left part of RStudio, next to the Editor pane(s).\nThe arbuthnot tibble contains 82 rows and 3 columns. While you will be able to see four columns of numbers in the Viewer pane, the first column is not actually part of the tibble. Each row represents a different year, shown in the first column of the tibble, and the second and third columns contain the numbers of boys and girls (respectively) baptised in the year corresponding to the entry in column 1. Use the scrollbar on the right-hand side of the Viewer pane to examine the complete data set.\nThe format of the tibble is important. Each of the column entries in a given row relates to the same year, so the 82 rows correspond to 82 distinct cases. The three columns represent three different attributes of a case, or variables, namely the year, the number of boys baptised and the number of girls baptised.\nYou can close the data viewer by clicking on the “\\(\\times\\)” in the Viewer tab.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#take-a-glimpse-at-the-data",
+    "href": "week02.html#take-a-glimpse-at-the-data",
+    "title": "1  Tutorial Week 2",
+    "section": "5.4 Take a ‘glimpse’ at the data",
+    "text": "5.4 Take a ‘glimpse’ at the data\nAnother way to take a look at this tibble is to use the glimpse() function:\n\nglimpse(arbuthnot)\n\nThis function comes from the broom package, which is included in the tidyverse. To try it out, just type the command above into your Console pane.\nThe glimpse() function does not change the format of the tibble, it merely uses the tibble as an input, and prints out an alternative format without modifying the tibble itself.\nYou could also include the above line of code in your file, inside a code chunk. Make sure it comes after the command that loads the dataset (you have to load the data before you can do something with it!).",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#print-a-variable",
+    "href": "week02.html#print-a-variable",
+    "title": "1  Tutorial Week 2",
+    "section": "5.5 Print a variable",
+    "text": "5.5 Print a variable\nWe can access a variable contained in a single column of a tibble using command such as:\n\narbuthnot$boys\n\n [1] 5218 4858 4422 4994 5158 5035 5106 4917 4703 5359 5366 5518 5470 5460 4793\n[16] 4107 4047 3768 3796 3363 3079 2890 3231 3220 3196 3441 3655 3668 3396 3157\n[31] 3209 3724 4748 5216 5411 6041 5114 4678 5616 6073 6506 6278 6449 6443 6073\n[46] 6113 6058 6552 6423 6568 6247 6548 6822 6909 7577 7575 7484 7575 7737 7487\n[61] 7604 7909 7662 7602 7676 6985 7263 7632 8062 8426 7911 7578 8102 8031 7765\n[76] 6113 8366 7952 8379 8239 7840 7640\n\n\nThis command will only show the number of boys baptised each year. The dollar sign ($) extracts the column of the tibble according to the name that follows it, in this case it takes the column boys from the tibble arbuthnot.\nRStudio tip: When you are typing, you can often just type the first few characters and then press the tab key on your keyboard to complete the typing for you. When there are multiple options, they will pop up for you to see. Try typing arbuthnot$ and then press the tab key. You should see the three column names come up as options.\nNotice the way R has printed these data. When we looked at the complete tibble, we saw 82 rows, one on each line of the display. Now having extracted only a single column, the data are no longer structured in a table with other variables, and instead are displayed one after another. This object is an example of a vector, which is used to represent a set of numbers of the same type. R has added numbers in square brackets along the left-hand side of the printout to indicate locations within the vector. For example, 5218 follows [1], indicating that 5218 is the first entry in the vector. And if [33] starts a line, then that would mean the first number on that line would represent the 33rd entry in the vector.\nExercise 1\n\nWhat line of R code would you use to extract the vector containing just the counts of girls baptised? Would it be a good idea to print it in an assignment?",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#data-visualisation",
+    "href": "week02.html#data-visualisation",
+    "title": "1  Tutorial Week 2",
+    "section": "5.6 Data visualisation",
+    "text": "5.6 Data visualisation\nR has some powerful functions for making graphics easily. We can create a simple plot of the number of girls baptised per year with the command:\n\nggplot(data = arbuthnot, aes(x = year, y = girls)) +\n  geom_point()\n\n\n\n\n\n\n\n\nWe use the ggplot() function to build plots as follows:\n\nThe first argument is always the dataset.\nNext, you specify how the variables from the dataset should be assigned to visual dimensions (“aesthetics”) of the plot, such as the x- and y-axes. You do this with the command: aes(x = x_variable, y = y_variable).\nFinally, you specify geometric objects (“geoms”) to add to the plot. Somewhat unconventionally, these are added using the plus symbol (+). In this case, we want to create a scatter plot, so we draw points by using geom_point(). If you want a line plot instead, you would use geom_line().\n\nWe can customise the visualisation further in many different ways. For example, to draw pink triangles instead of black circles, we would use: geom_point(colour = \"pink\", shape = 17).\nTo find out more, a good reference is the ggplot2 cheat sheet: https://rstudio.github.io/cheatsheets/html/data-visualization.html\nR also documents all of its functions extensively. To learn what a function does and its arguments that are available to you, just type in a question mark followed by the name of the function that you’re interested in. Try the following in your Console:\n\n?ggplot\n\nNotice that the help file appears in the lower-right panel. You can toggle between plots and help files using the tabs at the top of that panel.\nFinally, if you ever get stuck or get an error message that is confusing, you can usually find help online. Type the error message into Google and it will very often point you to the answer.\nExercise 2\n\nIs there an apparent trend in the number of girls baptized over the years? How would you describe it? Are there any interesting features?",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#r-as-a-big-calculator",
+    "href": "week02.html#r-as-a-big-calculator",
+    "title": "1  Tutorial Week 2",
+    "section": "5.7 R as a big calculator",
+    "text": "5.7 R as a big calculator\nNow, suppose we want to plot the total number of baptisms over time. To compute the total, we could use the fact that R is really just a big calculator. We can type in mathematical expressions like:\n\n5218 + 4683\n\nto get the total number of baptisms in 1629. We could repeat this once for each year, but there is a faster way. If we add the vector of baptisms for boys to that of girls, R will compute all sums with only a single command.\n\narbuthnot$boys + arbuthnot$girls\n\nWhen you run this command, you will see it prints a vector containing 82 numbers, each one representing the sum we’re after for each year in the data set. (Take a look at a few of them and verify that they are right.)\nUnfortunately, the command above doesn’t save the results. We could define a new object, using the command:\n\ntotal &lt;- arbuthnot$boys + arbuthnot$girls\n\nHowever, the vector named total created in the above code chunk would be completely separate from the original arbuthnot tibble. It would be more convenient to include the constructed total variable as another column in the tibble.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#adding-new-variables-to-a-tibble",
+    "href": "week02.html#adding-new-variables-to-a-tibble",
+    "title": "1  Tutorial Week 2",
+    "section": "5.8 Adding new variables to a tibble",
+    "text": "5.8 Adding new variables to a tibble\nSince we want to use this new total vector to generate some plots, we’ll want to save it as a new column in the arbuthnot tibble. We do this using the mutate() command from the dplyr package (loaded as part of the tidyverse). This is a useful function that will add new columns to a tibble that are constructed from the old columns.\nWe can do it as follows:\n\narbuthnot &lt;- mutate(arbuthnot, total = boys + girls)\n\nIt is possible to add several new columns at once. We just specify each one in turn, as a separate argument. For instance, if we also wanted a sex ratio (girls/boys), we could get that with:\n\narbuthnot &lt;- mutate(arbuthnot, total = boys + girls, ratio = girls / boys)\n\nIf we also wanted the proportion of girls, we could add that too:\n\narbuthnot &lt;- mutate(arbuthnot,\n                    total      = boys + girls,\n                    ratio      = girls / boys,\n                    prop_girls = girls / total)\n\nNotice that we used total as part of our definition of prop_girls. This works fine because mutate() evaluates the arguments in turn from left to right, which means the total column exists by the time we get to prop_girls. In contrast, the following version would generate an error because total doesn’t exist:\n\narbuthnot &lt;- mutate(arbuthnot,\n                    prop_girls = girls / total,\n                    total      = boys + girls, \n                    ratio      = girls / boys)\n\nIn addition to simple mathematical operators like subtraction and division, you can ask R to make comparisons like greater than (&gt;), less than (&lt;), and equality (==). For example, we can ask if the number of births of boys outnumber that of girls in each year with the expression:\n\narbuthnot &lt;- mutate(arbuthnot, more_boys = boys &gt; girls)\n\nThis command adds a new variable to the arbuthnot tibble containing the values TRUE or FALSE depending on whether the respective year had more boys than girls. This variable contains a different kind of data than we have encountered so far. All other columns in the arbuthnot tibble have values that are numerical (the year, and the number of boys and girls). Here, we have now asked R to create logical variables (also known as Boolean variables), which only have the values TRUE or FALSE. In general, data analysis will involve many different kinds of data types. One reason for using R is that it is easily able to represent and compute with many of them.\nExercises 3–4\n\nDraw a line plot of the total number of baptisms per year.\nHow often were there more boys born than girls?",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#coding-in-style",
+    "href": "week02.html#coding-in-style",
+    "title": "1  Tutorial Week 2",
+    "section": "6.1 Coding in style",
+    "text": "6.1 Coding in style\nIn some of the previous code chunks, we wrapped the code over several lines and indented the code to make it more readable. This is good practice, to help others (and your future self) easily understand your code.\nThere are a few things to remember when doing wrapping code:\n\nYou can only wrap lines that are inside brackets. Otherwise R doesn’t know that there’s more coming.\nYou should end every line with an indication that some more code is coming. Here we have a comma (,) at the end of each line, but a + or anything that requires something to the right of it will work.\n\nSome other points of style to notice:\n\nAll names are in lower case\nWords in the same name are separated by underscores (_)\nThere are spaces on either side of operators (+, /, &lt;-)\nThere is one space to the right of each comma\nThere is no space near brackets.\n\nThis might seem super pedantic and annoying, but it’s one of the most important but least flashy coding skills. Keeping consistent style that is easy to read is a core professional standard. The tidyverse style guide (https://style.tidyverse.org) is a handy reference that we recommend you follow when writing your R code.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#simplicity-via-piping",
+    "href": "week02.html#simplicity-via-piping",
+    "title": "1  Tutorial Week 2",
+    "section": "6.2 Simplicity via piping",
+    "text": "6.2 Simplicity via piping\nAn important element of modern R code is the %&gt;% operator, which is called the pipe operator. Pretty much all of the commands above should be piped, to improve readability.\nIf you’ve never seen it before, it can seem like a bit of an odd beast. It does one simple thing: it takes the output of the expression on the left and inserts (“pipes”) it into the first argument of the function that follows it.\nIn the language of mathematical functions, \\(x\\) %&gt;% \\(f(y)\\) is equivalent to \\(f(x, y)\\).\nFor example, we could write that first mutate statement in the previous section as follows:\n\narbuthnot &lt;- arbuthnot %&gt;% mutate(total = boys + girls)\n\nHere’s how to interpret what the code is doing:\n“Take the arbuthnot dataset and pipe it into the mutate() function. Mutate the arbuthnot tibble by creating a new variable, called total, that is the sum of the variables called boys and girls. Then assign the resulting tibble to the object called arbuthnot. In other words, overwrite the old arbuthnot tibble with the new version that contains the new variable.”\nThis is equivalent to going through each row and adding up the boys and girls counts for that year and recording that value in a new column called total.\nThe assignment operator (&lt;-) takes the output of everything to the right of it and saves it into the object on its left. In this case, since we already have an object called arbuthnot, this command updates (overwrites) it with the version we obtain after running mutate().\nWhat makes the piping approach so powerful is that you can chain several pipes together.\nFor instance the following commands give the same output:\n\n# Version without piping.\narbuthnot_mutated &lt;- mutate(arbuthnot, total = boys + girls, ratio = girls / boys)\n\n# Version using piping.\narbuthnot_mutated &lt;- arbuthnot %&gt;% \n  mutate(total = boys + girls) %&gt;%\n  mutate(ratio = girls / boys)\n\nThe code using pipes is easier to read because each line is doing a single step. We can read it as follows:\n“Take arbuthnot, add a total column and then add a ratio column.”",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#commenting-out-code",
+    "href": "week02.html#commenting-out-code",
+    "title": "1  Tutorial Week 2",
+    "section": "6.3 Commenting out code",
+    "text": "6.3 Commenting out code\nThe code chunk above shows how to add comments to code using #. This allows you to add any text to your code and R won’t try to run it.\nOne handy way to use this is to “turn off” any code that you no longer wish to run, but would like to retain for later. This is called “commenting out” the code.\n\n#arbuthnot$boys    &lt;-- this code will not run\narbuthnot$girls  # &lt;-- this code will run\n\n [1] 4683 4457 4102 4590 4839 4820 4928 4605 4457 4952 4784 5332 5200 4910 4617\n[16] 3997 3919 3395 3536 3181 2746 2722 2840 2908 2959 3179 3349 3382 3289 3013\n[31] 2781 3247 4107 4803 4881 5681 4858 4319 5322 5560 5829 5719 6061 6120 5822\n[46] 5738 5717 5847 6203 6033 6041 6299 6533 6744 7158 7127 7246 7119 7214 7101\n[61] 7167 7302 7392 7316 7483 6647 6713 7229 7767 7626 7452 7061 7514 7656 7683\n[76] 5738 7779 7417 7687 7623 7380 7288\n\n\nExercises 5–7\n\nDraw a plot of the proportion of boys born over time. What do you see?\nDiscuss this plot. Can it be improved?\nUse the internet or help in R to create a TERRIBLE graph, which has none of the good attributes from exercise 6.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week02.html#footnotes",
+    "href": "week02.html#footnotes",
+    "title": "1  Tutorial Week 2",
+    "section": "",
+    "text": "Arbuthnot, J. (1710). “An argument for divine providence, taken from the constant regularity observed in the births of both sexes,” , Vol 27, pp 186–190.↩︎",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tutorial Week 2</span>"
+    ]
+  },
+  {
+    "objectID": "week03.html",
+    "href": "week03.html",
+    "title": "2  Week 3, Notes & Exercises",
+    "section": "",
+    "text": "3 Introduction\nIn this tutorial we will practise doing probability calculations in R, using simulation as a tool to answer tricky questions, modelling using probability distributions, and using randomisation as part of designing a study.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Week 3, Notes & Exercises</span>"
+    ]
+  },
+  {
+    "objectID": "week03.html#normal-distribution",
+    "href": "week03.html#normal-distribution",
+    "title": "2  Week 3, Notes & Exercises",
+    "section": "4.1 Normal distribution",
+    "text": "4.1 Normal distribution\nFor most distributions, R provides four functions. The convention is that each function has the same name with but a prefix to denote what the function does. Here are the four functions for the normal distribution:\n\ndnorm() – calculates the probability density function (pdf)\npnorm() – calculates the cumulative distribution function (cdf)\nqnorm() – calculates quantiles (inverse cdf)\nrnorm() – generates random numbers\n\nGiven a set of values, dnorm() returns the value of the pdf at each point. The default is to work with a standard normal distribution (\\(\\mu = 0\\) and \\(\\sigma = 1\\)), but you can change this by specifying different function arguments (see the help page for more info). Try the following and think about what each one is calculating (discuss and compare your ideas with your classmates):\n\ndnorm(0)\ndnorm(0) * sqrt(2 * pi)\ndnorm(0, mean = 4, sd = 2)\ndnorm(c(-1, 0, 1))\nx &lt;- seq(-20, 20, by = 0.1)\ny &lt;- dnorm(x)\nggplot() + aes(x = x, y = y) + geom_point()\ny &lt;- dnorm(x, mean = 2.5, sd = 0.5)\nggplot() + aes(x = x, y = y) + geom_point()\n\nThe function pnorm() is similar, but it calculates the cdf instead of the pdf. Thus, the output consists of actual probabilities rather than probability densities. Try the following and think about what each one is calculating (discuss and compare your ideas with your classmates):\n\npnorm(0)\npnorm(1)\npnorm(1, lower.tail = FALSE)\npnorm(0, mean = 2, sd = 3)\nx &lt;- seq(-20, 20, by = 0.1)\ny &lt;- pnorm(x)\nggplot() + aes(x = x, y = y) + geom_point()\ny &lt;- pnorm(x, mean = 3, sd = 4)\nggplot() + aes(x = x, y = y) + geom_point()\n\nThe function qnorm() does the inverse of pnorm(). The input needs to be a probability, and it will return the quantile that corresponds to that probability. Try the following and think about what each one is calculating (discuss and compare your ideas with your classmates):\n\nqnorm(c(0.25, 0.5, 0.75), mean = 1, sd = 2)\nx &lt;- seq(0, 1, by = 0.05)\ny &lt;- qnorm(x)\nggplot() + aes(x = x, y = y) + geom_point()\ny &lt;- qnorm(x, mean = 3, sd = 2)\nggplot() + aes(x = x, y = y) + geom_point()\ny &lt;- qnorm(x, mean = 3, sd = 0.1)\nggplot() + aes(x = x, y = y) + geom_point()\n\nThe function rnorm() is a bit different to the others. Rather than calculating some aspect of a normal distribution, it will randomly generate realisations from it. The first argument to the function is the number of realisations you want. Try the following and think about what each one is calculating (discuss and compare your ideas with your classmates):\n\nrnorm(6)\nrnorm(6, mean = 3, sd = 3)\ny &lt;- rnorm(250)\nggplot() + aes(x = y) + geom_histogram()\ny &lt;- rnorm(250, mean = -2)\nggplot() + aes(x = y) + geom_histogram()",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Week 3, Notes & Exercises</span>"
+    ]
+  },
+  {
+    "objectID": "week03.html#binomial-distributions",
+    "href": "week03.html#binomial-distributions",
+    "title": "2  Week 3, Notes & Exercises",
+    "section": "4.2 Binomial distributions",
+    "text": "4.2 Binomial distributions\nR has the same set of four functions for working with a binomial distribution, similar to the ones shown above for the normal distribution. Run help(\"Binomial\") to see the help page that lists them.\nYou use them in exactly the same way. However, note that the binomial distribution is discrete rather than continuous, so it will have a probability mass function (pmf) rather than a probability density function (pdf).\nThe function dbinom() in fact calculates the pmf, despite the ‘d’ in its name. That means the following code calculates a true probability, not a density:\n\ndbinom(3, size = 5, prob = 0.4)\n\n[1] 0.2304\n\n\nThis calculates \\(\\Pr(X = 3)\\) where \\(X \\sim \\mathrm{Bi}(5, 0.4)\\).\nThis is possibly a little confusing if you think of the d- prefix as an abbreviation for ‘density’, but it does at least maintain a consistent convention across all of the distributions. Namely, for continuous distributions the d- function gives a pdf, and for discrete distributions it gives a pmf.\nThe function pbinom() calculates a cdf, similar to the corresponding normal example above. However, since it is discrete we need to remember that the probability includes the specified value. For example:\n\npbinom(3, size = 5, prob = 0.4)\n\n[1] 0.91296\n\n\nThis calculates \\(\\Pr(X \\leqslant 3)\\) where \\(X \\sim \\mathrm{Bi}(5, 0.4)\\). If instead we wanted \\(\\Pr(X &lt; 3)\\), then we should actually calculate \\(\\Pr(X \\leqslant 2)\\).",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Week 3, Notes & Exercises</span>"
+    ]
+  },
+  {
+    "objectID": "week03.html#arbitrary-finite-discrete-distributions",
+    "href": "week03.html#arbitrary-finite-discrete-distributions",
+    "title": "2  Week 3, Notes & Exercises",
+    "section": "4.3 Arbitrary finite discrete distributions",
+    "text": "4.3 Arbitrary finite discrete distributions\nYou can use the sample() function to simulate from any finite discrete distribution, by specifying a set of values and associated probabilities.\nFor example, to select a random day of the week, where the chance of a weekend is 50% and a weekday is 50%, you could use:\n\ndays &lt;- c(\"Mon\", \"Tue\", \"Wed\", \"Thu\", \"Fri\", \"Sat\", \"Sun\")\nprob &lt;- c(  0.1,   0.1,   0.1,   0.1,   0.1,  0.25,  0.25)\nsample(days, size = 1, prob = prob)\n\n[1] \"Thu\"\n\n\nNote that the default is to sample without replacement. If you want independent and identically distributed (iid) realisations then you need so specify replace = TRUE.\nFor example, to generate 10 coin flips, you could use:\n\nsample(c(\"H\", \"T\"), size = 10, replace = TRUE)\n\n [1] \"H\" \"T\" \"H\" \"H\" \"T\" \"H\" \"T\" \"H\" \"H\" \"H\"\n\n\nIf we do not specify the prob argument, then R will make each value equally likely.\nIf we do not specify the size argument, then R will return as many items as given in the first argument. If we also do not specify the replace argument (or set it to FALSE), then this simply means that R will return a random permutation (a “random shuffle”) of the given values. For example, a random order of the days of the week can be obtained using:\n\nsample(days)\n\n[1] \"Wed\" \"Fri\" \"Sat\" \"Thu\" \"Tue\" \"Sun\" \"Mon\"",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Week 3, Notes & Exercises</span>"
+    ]
+  },
+  {
+    "objectID": "week03.html#exercises",
+    "href": "week03.html#exercises",
+    "title": "2  Week 3, Notes & Exercises",
+    "section": "4.4 Exercises",
+    "text": "4.4 Exercises\n\nCalculate the following probabilities using R.\n\nThe probability of getting exactly 4 heads when flipping a fair coin 8 times.\nThe probability of getting at most 15 heads when flipping a fair coin 28 times.\nThe probability of getting more than 12 heads when flipping a fair coin 18 times.\nThe probability of getting an odd number of heads when flipping a fair coin 14 times.\n\nExplore the Poisson distribution. Find its help page. Calculate the following for a Poisson distribution with parameter \\(\\lambda = 5\\):\n\nThe probability of observing a 3.\nThe probability of observing a number of at most 2.\nThe probability of observing a number of at least 4.\nGenerate 6 realisations.\n\nCalculate the following quantiles using R:\n\nThe 75th percentile (0.75 quantile) of a standard normal.\nThe 30th percentile of a t-distribution with 10 degrees of freedom.\nThe median of a gamma distribution with shape parameter 2 and rate parameter 3.\n\nLet \\(X_1, X_2, \\dots, X_9\\) be a random sample. We are told that \\(\\mathbb{E}(X_3) = 7\\) and \\(\\mathrm{var}(X_4) = 4\\).\n\nWhat is \\(\\mathrm{sd}(X_2)\\)?\nWhat is \\(\\mathrm{var}(X_7 + X_8)\\)?\nWhat is an approximate distribution of the sample mean, \\(\\bar{X}\\)?\n\nLet \\(X \\sim \\mathrm{N}(1, 2)\\). What is \\(\\mathbb{E}(X^2)\\)? Approximate this by simulating a large number of normal random variables and doing an appropriate calculation.\nUse simulations to verify the law of large numbers (LLN) when sampling from each of the following distributions:\n\nNormal\nExponential\nPoisson\nCauchy\n\nWhat do you notice? Can you explain your findings?",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Week 3, Notes & Exercises</span>"
+    ]
+  },
+  {
+    "objectID": "week03.html#lunch-for-two",
+    "href": "week03.html#lunch-for-two",
+    "title": "2  Week 3, Notes & Exercises",
+    "section": "5.1 Lunch for two",
+    "text": "5.1 Lunch for two\n\nYou decide to have lunch at your favourite cafe today, and arrive there at a random time between 12pm and 1pm. Your friend also arrives there at a random time between 12pm and 1pm. Each of you stay exactly 30 minutes at the cafe. What is the probability that the two of you will meet at the cafe?\n\nFor convenience, we can we model the arrival time as a number between 0 and 1. This makes each person’s arrival time follow uniform distribution on the interval \\([0,1]\\). Let’s simulate many such arrival times:\n\nN &lt;- 5000\nperson1 &lt;- runif(N, min = 0, max = 1)\nperson2 &lt;- runif(N, min = 0, max = 1)\n\nThe two people will meet if their arrival times are within 30 minutes of each other, which corresponds to a difference of 0.5 in this mode. Thus, we can count how often the simulated values differ by 0.5.\n\ndid_meet &lt;- abs(person1 - person2) &lt; 0.5\nmean(did_meet)\n\n[1] 0.7538\n\n\nWe see that there’s about a 75% chance of meeting.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Week 3, Notes & Exercises</span>"
+    ]
+  },
+  {
+    "objectID": "week03.html#just-keep-flipping",
+    "href": "week03.html#just-keep-flipping",
+    "title": "2  Week 3, Notes & Exercises",
+    "section": "5.2 Just keep flipping",
+    "text": "5.2 Just keep flipping\nSometimes it is easier to use a loop when creating a simulation. Consider the following problem:\n\nWhat’s the expected number of coin ﬂips until you get two heads in a row?\n\nWe need to simulate coin flips, stopping when we get two in a row, but keeping a count of how many flips we have done. Let’s write a function to carry that out:\n\nflips_simulation &lt;- function() {\n  # Initialise counts.\n  num_flips &lt;- 0\n  num_heads_in_row &lt;- 0\n  \n  # Keep flipping coins until you get 2 in a row.\n  while (num_heads_in_row &lt; 2) {\n    \n    # Flip a coin.\n    new_flip  &lt;- sample(c(\"H\", \"T\"), size = 1)\n    num_flips &lt;- num_flips + 1\n    \n    # Increment the counts, depending on what you flipped.\n    if (new_flip == \"H\") {\n        num_heads_in_row &lt;- num_heads_in_row + 1\n      } else {\n        num_heads_in_row &lt;- 0\n      }\n  }\n\n  return(num_flips)\n}\n\nNow we just need to run that over and over. The handy replicate() function lets us do that easily:\n\nnum_flips &lt;- replicate(5000, flips_simulation())\nmean(num_flips)\n\n[1] 6.088\n\n\nWe expect to flip the coin about 6 times until we get two heads in a row.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Week 3, Notes & Exercises</span>"
+    ]
+  },
+  {
+    "objectID": "week03.html#exercises-1",
+    "href": "week03.html#exercises-1",
+    "title": "2  Week 3, Notes & Exercises",
+    "section": "5.3 Exercises",
+    "text": "5.3 Exercises\n\nYou have 20 letters and 20 envelopes. Each letter belongs to a speciﬁc envelope. You place the letters randomly in the envelopes, with one letter per envelope. What is the expected number of letters that will be in their correct envelope?\nYou take a wooden ruler and break it into two parts at random point uniformly along its length. Compare to the original length of the ruler, what is the expected length of the smaller part?\nYou toss a fair coin repeatedly until you get 5 tails in a row. What is the expected number of coin tosses?\nYou play the following game: You roll a fair die (equally likely to get any of the integers 1 to 6). If the die shows any number from 1 to 5, that is your score. However, if it shows a 6, then you score 5 points and get to roll the die again. This can continue many times, each time adding the number to your score until you no longer roll a 6. What is your expected score?\nConsider again the birthday problem from the lecture. What is the minimum number of students you need to have more than a 50% probability of having at two students that share a birthday?",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Week 3, Notes & Exercises</span>"
+    ]
+  },
+  {
+    "objectID": "week03.html#exercise",
+    "href": "week03.html#exercise",
+    "title": "2  Week 3, Notes & Exercises",
+    "section": "6.1 Exercise",
+    "text": "6.1 Exercise\n\nMy journey to campus each day involves taking a tram, then a train, then a bus. The duration of each leg can be modelled with gamma distributions, as follows:\n\nTram: gamma with shape 40 and rate 4\nTrain: gamma with shape 120 and rate 6\nBus: gamma with shape 35 and rate 5\n\nSimulate and visualise the distribution of the total journey time. Approximate the mean and standard deviation of this distribution. What’s the probability that it takes me longer than 40 minutes to get to campus?",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Week 3, Notes & Exercises</span>"
+    ]
+  },
+  {
+    "objectID": "week03.html#exercises-2",
+    "href": "week03.html#exercises-2",
+    "title": "2  Week 3, Notes & Exercises",
+    "section": "7.1 Exercises",
+    "text": "7.1 Exercises\n\nYou are investigating the energy efficiency of houses along a major road. There are 500 houses along the road, having street numbers consecutively from 1 to 500. You won’t have time to inspect every house, but can survey 20 of them to determine their energy ratings. You plan to do this via a random sample. Generate a list of 20 houses to inspect.\nYou wish to learn about the experience of students and educators at a university, via a survey of 30 people. At this university, there are 5000 students and 200 educators. In the personnel database, the students have ID numbers 1 to 5000, and the educators have ID numbers 9001 to 9200. For your survey, you want half of your sample to be students and half to be educators. Design a suitable sample. (Note: this will require you to generate separate random samples of students and educators. This is known as a stratified random sample.)\nYou have developed a new soft drink and are wondering whether the colour of the can makes a difference to how people perceive the taste and their willingness to buy it. You wish to examine this via an experiment. You recruit 40 participants and have cans in two different colours, green and orange.\n\nAssign the cans randomly to the participants, so that half receive green cans and half receive orange cans.\nYour business partner tries to replicate your experiment, using a separate set of participants, but instead of randomly allocating the cans he allowed the participants to choose which one they wanted. Which version of the experiment is more useful, and why?",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Week 3, Notes & Exercises</span>"
+    ]
+  }
+]

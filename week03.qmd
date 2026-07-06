@@ -1,0 +1,743 @@
+---
+title: "Week 3"
+---
+
+```{r}
+#| include: false
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, warning = FALSE, message = FALSE)
+library(tinytex)
+```
+
+## Introduction
+
+This week we will begin by playing the rock-paper-scissors game below.
+
+1.  Choose one if the three options (Rock, Paper or Scissors) then click **Submit**.
+2.  The computer will do the same.
+3.  If you beat the computer you get one point. If the computer wins, then you lose point. A draw is worth 0 points.
+4.  After the first game is completed, click **Next game**.
+5.  The winner is whoever has the most points after 10 games.
+
+```{=html}
+<iframe 
+  src="interactive/rps_10_game_tracker_fixed_final_left.html"
+  width="100%"
+  height="320"
+  scrolling="no"
+  style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+</iframe>
+```
+
+How did you go? Did you finish ahead of the computer, or did the computer finish ahead of you?
+
+At first, rock-paper-scissors looks like a simple game of chance. There are three possible choices, and each choice beats one option, loses to one option, and draws with itself. If both players choose completely at random, neither player should have a long-run advantage. Over many rounds, we would expect wins, losses, and draws to occur at roughly similar rates.
+
+But the computer in this game was not choosing completely at random.
+
+::: {.callout-note collapse="true"}
+### Click the see the computer's strategy
+
+-   if it won the previous round, it stayed with the same choice;
+-   if it lost the previous round, it shifted to the next choice in the sequence (rock -\> paper -\> scissors -\> rock -\> etc.);
+-   if the previous round was a draw, it chose randomly.
+
+This is called a **win-stay, lose-shift** strategy.
+:::
+
+If you chose randomly, the computer may have been difficult to beat. But if you paid attention to the previous round, you may have started to predict what the computer was likely to do next. The computer’s choices were not random in the same way as flipping a coin or rolling a fair die. They had structure.
+
+This is the important statistical idea. The sample space stayed the same in every round. But the process that generated the computer’s choice changed from a purely random process to a patterned process. Once there is a pattern, the previous outcome can contain useful information about the next outcome.
+
+So the first question might be:
+
+> What is the probability of winning rock-paper-scissors?
+
+But the better statistical question is:
+
+> Are the choices being generated randomly, or is there a pattern in the process?
+
+In this tutorial, we will:
+
+1.  Define the sample space for rock-paper-scissors
+2.  Use R to simulate random choices from that sample space
+3.  List all possible outcomes from one round of the game
+4.  Calculate the probability of winning, losing, or drawing when both players choose randomly
+5.  simulate many rounds to compare theoretical probability with long-run results
+6.  Introduce a simple win-stay, lose-shift strategy
+7.  Compare random play with patterned play
+8.  Use the results to think about how the process generating outcomes changes the probabilities we observe
+
+## Tasks
+
+**Note**: Create a Quarto document and your Project folder and save it in your `week 3` folder.
+
+### Part 1: Setting up the game in R
+
+We will begin by setting up the basic pieces of the game.
+
+Before we simulate anything, we need to tell R what the possible choices are and how to choose from them.
+
+:::: callout-note
+#### Question 1
+
+Load the packages we will use in this tutorial.
+
+Complete the code below by replacing the `...`.
+
+```{r}
+#| label: rps-load-packages
+#| eval: false
+#| message: false
+#| warning: false
+
+library(...)
+library(...)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+#| label: rps-load-packages-solution
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(gt)
+```
+
+We use `tidyverse` for data wrangling and simulation, and `gt` for displaying tables.
+:::
+::::
+
+:::: callout-note
+#### Question 2
+
+Create an object called `choices` that contains the three possible choices in rock-paper-scissors.
+
+The three choices should be:
+
+$$
+\text{Rock},\quad \text{Paper},\quad \text{Scissors}
+$$
+
+Complete the code below.
+
+```{r}
+#| label: rps-create-choices
+#| eval: false
+
+choices <- c(..., ..., ...)
+
+choices
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+#| label: rps-create-choices-solution
+
+choices <- c("Rock", "Paper", "Scissors")
+
+choices
+```
+
+The function `c()` combines values into a vector. Here, the vector `choices` stores the sample space for one player's choice.
+:::
+::::
+
+:::: callout-note
+#### Question 3
+
+Use `sample()` to randomly choose one option from `choices`.
+
+Complete the code below.
+
+```{r}
+#| label: rps-sample-one-choice
+#| eval: false
+
+sample(..., size = ...)
+```
+
+Run the code a few times. Do you get the same result every time?
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+#| label: rps-sample-one-choice-solution
+
+sample(choices, size = 1)
+```
+
+The first argument tells R what values it can choose from. The argument `size = 1` tells R to choose one value.
+
+If you run this code several times, you should usually see different choices appear.
+:::
+::::
+
+:::: callout-note
+#### Question 4
+
+Write a helper function called `choose_random()`.
+
+This function should randomly choose one option from `choices`.
+
+Complete the code below.
+
+```{r}
+#| label: rps-choose-random-function
+#| eval: false
+
+choose_random <- function() {
+  sample(..., size = ...)
+}
+
+choose_random()
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+#| label: rps-choose-random-function-solution
+
+choose_random <- function() {
+  sample(choices, size = 1)
+}
+
+choose_random()
+```
+
+This function makes the later code easier to read. Instead of writing `sample(choices, size = 1)` every time, we can write `choose_random()`.
+:::
+::::
+
+### Part 2: Coding the rules of rock-paper-scissors
+
+Now we need to teach R the rules of the game.
+
+The rules are:
+
+-   Rock beats Scissors.
+-   Scissors beats Paper.
+-   Paper beats Rock.
+-   If both players choose the same option, the round is a draw.
+
+We will write a function that takes two choices as inputs and returns the result of the round.
+
+:::: callout-note
+#### Question 5
+
+Complete the function below.
+
+The function should return:
+
+-   `"Draw"` if both players choose the same option;
+-   `"You win"` if Player A wins;
+-   `"Computer wins"` if Player B wins.
+
+```{r}
+#| label: rps-result-function
+#| eval: false
+
+rps_result <- function(player_a, player_b) {
+  
+  case_when(
+    player_a == player_b ~ ...,
+    player_a == "Rock" & player_b == "Scissors" ~ ...,
+    player_a == "Scissors" & player_b == "Paper" ~ ...,
+    player_a == "Paper" & player_b == "Rock" ~ ...,
+    TRUE ~ ...
+  )
+}
+```
+
+Test your function using the code below.
+
+```{r}
+#| label: rps-test-result-function
+#| eval: false
+
+rps_result("Rock", "Scissors")
+rps_result("Rock", "Paper")
+rps_result("Paper", "Paper")
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+#| label: rps-result-function-solution
+
+rps_result <- function(player_a, player_b) {
+  
+  case_when(
+    player_a == player_b ~ "Draw",
+    player_a == "Rock" & player_b == "Scissors" ~ "You win",
+    player_a == "Scissors" & player_b == "Paper" ~ "You win",
+    player_a == "Paper" & player_b == "Rock" ~ "You win",
+    TRUE ~ "Computer wins"
+  )
+}
+
+rps_result("Rock", "Scissors")
+rps_result("Rock", "Paper")
+rps_result("Paper", "Paper")
+```
+
+The first example returns `"You win"` because Rock beats Scissors.
+
+The second example returns `"Computer wins"` because Paper beats Rock.
+
+The third example returns `"Draw"` because both players chose Paper.
+:::
+::::
+
+:::: callout-note
+#### Question 6
+
+Use your function to check the result of the following rounds.
+
+Complete the missing parts of the code.
+
+```{r}
+#| label: rps-check-results
+#| eval: false
+
+rps_result("Scissors", ...)
+rps_result(..., "Rock")
+rps_result("Rock", ...)
+```
+
+Try to create one example where:
+
+-   Player A wins;
+-   the computer wins;
+-   the round is a draw.
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+One possible solution is:
+
+```{r}
+#| label: rps-check-results-solution
+
+rps_result("Scissors", "Paper")
+rps_result("Scissors", "Rock")
+rps_result("Rock", "Rock")
+```
+
+These examples produce:
+
+-   `"You win"` because Scissors beats Paper;
+-   `"Computer wins"` because Rock beats Scissors;
+-   `"Draw"` because both players chose Rock.
+
+There are other correct answers.
+:::
+::::
+
+### Part 3: Simulating one random round
+
+Now that we have the choices and the rules, we can simulate one round where both players choose randomly.
+
+:::: callout-note
+#### Question 7
+
+Write a function called `play_random_round()`.
+
+The function should:
+
+1.  randomly choose Player A's option;
+2.  randomly choose the computer's option;
+3.  calculate the result;
+4.  return the choices and result in a tibble.
+
+Complete the code below.
+
+```{r}
+#| label: rps-one-random-round
+#| eval: false
+
+play_random_round <- function() {
+  
+  player_a <- ...
+  player_b <- ...
+  
+  tibble(
+    player_a = player_a,
+    player_b = player_b,
+    result = ...
+  )
+}
+
+play_random_round()
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+#| label: rps-one-random-round-solution
+
+play_random_round <- function() {
+  
+  player_a <- choose_random()
+  player_b <- choose_random()
+  
+  tibble(
+    player_a = player_a,
+    player_b = player_b,
+    result = rps_result(player_a, player_b)
+  )
+}
+
+play_random_round()
+```
+
+This function simulates one round of the game. Since both players choose randomly, the output may change each time you run it.
+:::
+::::
+
+:::: callout-note
+#### Question 8
+
+Run `play_random_round()` several times.
+
+What do you notice?
+
+```{r}
+#| label: rps-run-one-round-many-times
+#| eval: false
+
+play_random_round()
+play_random_round()
+play_random_round()
+play_random_round()
+play_random_round()
+```
+
+::: {.callout-important collapse="true"}
+#### Click for discussion
+
+The results will usually differ from one run to the next because both choices are random.
+
+This is one reason simulation is useful. We can repeat a random process many times and look for long-run patterns.
+:::
+::::
+
+### Part 4: Simulating many random rounds
+
+One round does not tell us very much. Probability becomes easier to see when we repeat the process many times.
+
+:::: callout-note
+#### Question 9
+
+Simulate 10,000 random rounds.
+
+Complete the code below.
+
+```{r}
+#| label: rps-many-random-rounds
+#| eval: false
+
+set.seed(2420)
+
+n_rounds <- ...
+
+random_results <- map_dfr(
+  1:n_rounds,
+  ~ ...
+)
+
+random_results
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+#| label: rps-many-random-rounds-solution
+
+set.seed(2420)
+
+n_rounds <- 10000
+
+random_results <- map_dfr(
+  1:n_rounds,
+  ~ play_random_round()
+)
+
+random_results
+```
+
+The function `map_dfr()` repeats `play_random_round()` many times and combines the results into one data frame.
+
+The line `set.seed(2420)` makes the simulation reproducible. This means the same random numbers are used each time you render the document.
+:::
+::::
+
+:::: callout-note
+#### Question 10
+
+Count how many times each result occurred.
+
+Then calculate the proportion of rounds with each result.
+
+```{r}
+#| label: rps-random-summary
+#| eval: false
+
+random_summary <- random_results |>
+  count(...) |>
+  mutate(
+    proportion = ...
+  )
+
+random_summary
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+#| label: rps-random-summary-solution
+
+random_summary <- random_results |>
+  count(result) |>
+  mutate(
+    proportion = n / sum(n)
+  )
+
+random_summary
+```
+
+The function `count(result)` counts the number of rows for each result.
+
+The column `n` is the count. The line `proportion = n / sum(n)` turns the counts into proportions.
+
+If both players choose randomly, each result should be close to:
+
+$$
+\frac{1}{3}
+$$
+
+over many rounds.
+:::
+::::
+
+:::: callout-note
+#### Question 11
+
+Display the summary using a `gt` table.
+
+Complete the code below.
+
+```{r}
+#| label: rps-random-summary-table
+#| eval: false
+
+random_summary |>
+  mutate(
+    proportion = round(proportion, ...)
+  ) |>
+  gt() |>
+  cols_label(
+    result = "Result",
+    n = "Number of rounds",
+    proportion = "Proportion"
+  ) |>
+  cols_align(
+    align = "center",
+    columns = everything()
+  )
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+#| label: rps-random-summary-table-solution
+
+random_summary |>
+  mutate(
+    proportion = round(proportion, 3)
+  ) |>
+  gt() |>
+  cols_label(
+    result = "Result",
+    n = "Number of rounds",
+    proportion = "Proportion"
+  ) |>
+  cols_align(
+    align = "center",
+    columns = everything()
+  )
+```
+
+Rounding the proportion to three decimal places makes the table easier to read.
+:::
+::::
+
+## Homework: Adding a strategy to the simulation
+
+In the tutorial, we simulated rock-paper-scissors under a simple random model. In that model, both players chose randomly on every round. But in the game you played at the start, the computer did something different. It used a simple strategy:
+
+-   if the computer won the previous round, it stayed with the same choice;
+-   if the computer lost the previous round, it switched to the next choice in the sequence;
+-   if the previous round was a draw, it chose randomly.
+
+This is called a **win-stay, lose-switch** strategy. Your task is to modify the simulation so that the computer uses this strategy.
+
+Write a simulation where:
+
+1.  Player A chooses randomly each round.
+
+2.  The computer chooses randomly in the first round.
+
+3.  From the second round onward, the computer uses the result of the previous round:
+
+    -   if the computer won, it repeats its previous choice;
+    -   if the computer lost, it switches to the next option;
+    -   if the round was a draw, it chooses randomly.
+
+4.  Simulate 10,000 rounds.
+
+5.  Count the number and proportion of times that Player A wins, the computer wins, and the round is a draw.
+
+### Hint 1: Start with the choices
+
+You will still need the same sample space:
+
+```{r}
+#| eval: false
+
+choices <- c("Rock", "Paper", "Scissors")
+```
+
+### Hint 2: Write a function for random choice
+
+You can reuse the function from the tutorial.
+
+```{r}
+#| eval: false
+
+choose_random <- function() {
+  sample(choices, size = 1)
+}
+```
+
+### Hint 3: Write a function for switching
+
+The computer needs to know what to switch to after it loses.
+
+Use this sequence:
+
+$$
+\text{Rock} \rightarrow \text{Paper} \rightarrow \text{Scissors} \rightarrow \text{Rock}
+$$
+
+Start with this function and fill in the missing parts.
+
+```{r}
+#| eval: false
+
+switch_choice <- function(choice) {
+  
+  case_when(
+    choice == "Rock" ~ ...,
+    choice == "Paper" ~ ...,
+    choice == "Scissors" ~ ...
+  )
+}
+```
+
+### Hint 4: You need memory
+
+This simulation is different from the random simulation because the computer's current choice depends on what happened in the previous round.
+
+That means you need to keep track of:
+
+-   the computer's previous choice;
+-   the result of the previous round.
+
+A useful structure is to create an empty results table first.
+
+```{r}
+#| eval: false
+
+results <- tibble(
+  round = 1:n_rounds,
+  player_a = NA_character_,
+  computer = NA_character_,
+  result = NA_character_
+)
+```
+
+### Hint 5: Use a loop
+
+Because each round depends on the previous round, a `for` loop is a reasonable approach.
+
+Here is a starting structure.
+
+```{r}
+#| eval: false
+
+for (i in 1:n_rounds) {
+  
+  player_a <- choose_random()
+  
+  if (i == 1) {
+    
+    computer <- ...
+    
+  } else {
+    
+    previous_computer <- results$computer[i - 1]
+    previous_result <- results$result[i - 1]
+    
+    computer <- case_when(
+      previous_result == "Computer wins" ~ ...,
+      previous_result == "You win" ~ ...,
+      previous_result == "Draw" ~ ...
+    )
+  }
+  
+  result <- rps_result(player_a, computer)
+  
+  results$player_a[i] <- player_a
+  results$computer[i] <- computer
+  results$result[i] <- result
+}
+```
+
+### Hint 6: Summarise the simulation
+
+After the simulation has run, count the results.
+
+```{r}
+#| eval: false
+
+results |>
+  count(result) |>
+  mutate(
+    proportion = n / sum(n)
+  )
+```
+
+### Questions to answer
+
+After you have completed the simulation, answer the following questions.
+
+1.  Are the results close to one-third for each outcome?
+2.  Does the computer's strategy make it win more often against a randomly choosing player?
+3.  Why might a strategy create structure in the sequence of choices, but not necessarily lead to more wins?
+4.  What would Player A need to do to take advantage of the computer's pattern?
+
+## Extension
+
+Modify the simulation so that Player A does not choose randomly. Instead, Player A should try to predict the computer's next move. If Player A can predict what the computer is likely to choose, Player A should choose the option that beats it. For example, if Player A predicts that the computer will choose Rock, Player A should choose Paper.

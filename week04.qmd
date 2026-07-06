@@ -1,0 +1,1003 @@
+---
+title: "Week 4"
+---
+
+```{r}
+#| include: false
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, warning = FALSE, message = FALSE)
+library(tinytex)
+library(tidyverse)
+```
+
+## Introduction
+
+Imagine four university friends are taking the unit: **Statistical Thinking**. Throughout the semester, they have usually done quite well. Their final exam is scheduled for Monday morning. However, the day before the exam, they party too hard, sleep in, and miss the exam.
+
+They decide to write to their professor and ask for a chance to sit a make-up exam. Their email says:
+
+> *This morning, on our way to campus, one of the car tyres was punctured. We had to pull over on the side of the road. Because it was raining, it was difficult to change the tyre. We were eventually able to change it, but this is why we were late to campus and missed the exam.*
+
+Assume you are the professor and your task is to rate this excuse. Use a scale from 1 (not believable at all) to 10 (completely believable). You only need to submit one response.
+
+::: {.callout-note}
+
+```{=html}
+<iframe 
+  src="https://docs.google.com/forms/d/e/1FAIpQLScteay5Ss7DnGUCp_MzshgelixLbNKTT_6agdAkWI2s1aTnCw/viewform?embedded=true"
+  width="100%" 
+  height="500" 
+  frameborder="0" 
+  marginheight="0" 
+  marginwidth="0">
+  Loading...
+</iframe>
+```
+
+:::
+
+::: {.callout-note}
+#### Click to see how students are rating this excuse
+<center>
+[Results Link](https://docs.google.com/spreadsheets/d/e/2PACX-1vTzAYn2kTzTzKFBzL7YEnWD8fZwAjrtGzsFiTl2jV-7L3H7yXglfJmQ_6TCYMTLXTgG2RosbOIjP9sK/pubchart?oid=641081874&format=interactive)
+</center>
+:::
+
+::: {.callout-tip collapse="true"}
+
+### Click to reveal the ending
+
+The professor accepted the students' excuse and allowed all four of them to sit a make-up exam.
+
+But there was a catch:
+
+- The professor placed each student in a different room.
+- Each student received a single exam paper.
+- On the front page were a few standard statistics questions worth 5 marks in total.
+- After completing those questions, the students reached a note telling them to turn over the page.
+- On the second page, there was only one question, and it was worth 95 marks:
+
+<center>*Which tyre was it?*</center>
+
+<br>
+
+:::
+
+## What did we just measure?
+
+At first, this activity looks like a simple rating task. Each person read the same excuse and gave it a score from 1 to 10. But from a statistical point of view, something more interesting happened.
+
+Everyone saw the same information, but not everyone gave the same rating.
+
+- Some people may have found the excuse believable.
+- Others may have been more suspicious.
+- Some may have focused on the punctured tyre.
+- Others may have focused on the fact that all four students missed the same exam.
+
+This means the rating is not simply a fact. It is a measurement produced by a judgement process.
+
+We can think of each rating as:
+
+$$
+\text{Observed rating}
+=
+\text{Perceived believability}
++
+\text{Rating error}
+$$
+
+The phrase *rating error* does not mean you made a mistake. It means that the rating depends on the person making the judgement, the assumptions they bring, and the criteria they use.
+
+Some of this variation may be random. For example, one student may happen to focus on the rain, while another focuses on the timing of the excuse. Some of the variation may be systematic. For example, some students may be generally more trusting, while others may be consistently more sceptical.
+
+This is why ratings are useful for thinking about measurement. They look numerical, but they are still produced by a process.
+
+## Tasks
+
+Now that the class has rated the excuse, we can analyse the ratings as data.
+
+In this part of the tutorial, we will practise:
+
+1. entering rating data into R,
+2. plotting the distribution of ratings,
+3. calculating summary statistics,
+4. interpreting variation,
+5. connecting the results back to measurement error.
+
+For now, we will use a small example dataset. Later, you can replace these values with the real class ratings.
+
+:::: {.callout-note}
+#### Question 1: Create the ratings data
+
+The following ratings were given by 15 students:
+
+$$
+2,\ 3,\ 4,\ 4,\ 5,\ 5,\ 5,\ 6,\ 6,\ 7,\ 7,\ 8,\ 8,\ 9,\ 10
+$$
+
+Create a tibble called `excuse_ratings` with two columns:
+
+- `student`, which numbers the students from 1 to 15,
+- `rating`, which stores each believability rating.
+
+Complete the code below.
+
+```{r}
+excuse_ratings <- tibble(
+  student = ___,
+  rating = c(___)
+)
+
+excuse_ratings
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+excuse_ratings <- tibble(
+  student = 1:15,
+  rating = c(2, 3, 4, 4, 5, 5, 5, 6, 6, 7, 7, 8, 8, 9, 10)
+)
+
+excuse_ratings
+```
+
+The function `tibble()` creates a data frame. The column `student = 1:15` creates the numbers 1 to 15. The column `rating` stores the ratings.
+:::
+::::
+
+:::: {.callout-note}
+#### Question 2: Plot the ratings
+
+A useful first step is to plot the distribution of ratings.
+
+Complete the code below to make a bar chart of the ratings.
+
+```{r}
+excuse_ratings |>
+  ggplot(aes(x = ___)) +
+  geom____ +
+  scale_x_continuous(breaks = ___) +
+  labs(
+    x = "Believability rating",
+    y = "Number of students"
+  )
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+excuse_ratings |>
+  ggplot(aes(x = rating)) +
+  geom_bar() +
+  scale_x_continuous(breaks = 1:10) +
+  labs(
+    x = "Believability rating",
+    y = "Number of students"
+  )
+```
+
+The function `geom_bar()` counts how many times each rating appears. The line `scale_x_continuous(breaks = 1:10)` makes sure the x-axis displays the full rating scale from 1 to 10.
+:::
+::::
+
+:::: {.callout-note}
+#### Question 3: Summarise the ratings
+
+Now calculate some summary statistics.
+
+Complete the code below.
+
+```{r}
+excuse_ratings |>
+  summarise(
+    n_students = ___,
+    mean_rating = ___,
+    median_rating = ___,
+    sd_rating = ___,
+    lowest_rating = ___,
+    highest_rating = ___
+  )
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+excuse_ratings |>
+  summarise(
+    n_students = n(),
+    mean_rating = mean(rating),
+    median_rating = median(rating),
+    sd_rating = sd(rating),
+    lowest_rating = min(rating),
+    highest_rating = max(rating)
+  )
+```
+
+Here:
+
+- `n()` counts the number of students,
+- `mean()` calculates the average rating,
+- `median()` gives the middle rating,
+- `sd()` calculates the standard deviation,
+- `min()` gives the lowest rating,
+- `max()` gives the highest rating.
+:::
+::::
+
+:::: {.callout-note}
+#### Question 4: Add an error column
+
+Suppose we decide, for the sake of the tutorial, that the reference rating for the excuse is 6.
+
+This does not mean 6 is the true rating. Believability is subjective. But choosing a reference value lets us practise the idea of error.
+
+We define:
+
+$$
+\text{Error}
+=
+\text{Observed rating}
+-
+\text{Reference rating}
+$$
+
+Complete the code below to add an `error` column.
+
+```{r}
+reference_rating <- 6
+
+excuse_ratings <- excuse_ratings |>
+  mutate(
+    error = ___ - ___
+  )
+
+excuse_ratings
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+reference_rating <- 6
+
+excuse_ratings <- excuse_ratings |>
+  mutate(
+    error = rating - reference_rating
+  )
+
+excuse_ratings
+```
+
+If `error` is negative, the student rated the excuse below the reference rating. If `error` is positive, the student rated it above the reference rating.
+:::
+::::
+
+:::: {.callout-note}
+#### Question 5: Plot the errors
+
+Now plot the errors instead of the ratings.
+
+Complete the code below.
+
+```{r}
+excuse_ratings |>
+  ggplot(aes(x = ___)) +
+  geom_bar() +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  labs(
+    x = "Error",
+    y = "Number of students"
+  )
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+excuse_ratings |>
+  ggplot(aes(x = error)) +
+  geom_bar() +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  labs(
+    x = "Error",
+    y = "Number of students"
+  )
+```
+
+The dashed line marks zero error. Ratings to the left of zero are below the reference rating. Ratings to the right of zero are above the reference rating.
+:::
+::::
+
+:::: {.callout-note}
+#### Question 6: Mean error and absolute error
+
+There are different ways to summarise error.
+
+The **mean error** tells us whether ratings tend to be above or below the reference rating.
+
+The **mean absolute error** tells us how far ratings are from the reference rating on average, ignoring whether they are above or below.
+
+Complete the code below.
+
+```{r}
+excuse_ratings |>
+  summarise(
+    mean_error = ___,
+    mean_absolute_error = ___
+  )
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+excuse_ratings |>
+  summarise(
+    mean_error = mean(error),
+    mean_absolute_error = mean(abs(error))
+  )
+```
+
+The function `abs()` returns the absolute value. This removes the negative signs, so errors above and below the reference rating do not cancel out.
+:::
+::::
+
+:::: {.callout-note}
+#### Question 7: Simulate a more sceptical class
+
+Now imagine another class is more sceptical. Their ratings are:
+
+$$
+1,\ 2,\ 2,\ 3,\ 3,\ 3,\ 4,\ 4,\ 4,\ 5,\ 5,\ 6,\ 6,\ 7,\ 8
+$$
+
+Create a tibble called `sceptical_ratings`.
+
+```{r}
+sceptical_ratings <- tibble(
+  student = ___,
+  rating = c(___)
+)
+
+sceptical_ratings
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+sceptical_ratings <- tibble(
+  student = 1:15,
+  rating = c(1, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 6, 6, 7, 8)
+)
+
+sceptical_ratings
+```
+:::
+::::
+
+:::: {.callout-note}
+#### Question 8: Compare two classes
+
+Combine the original class and the sceptical class into one dataset. Then calculate the mean and standard deviation for each class.
+
+Complete the code below.
+
+```{r}
+all_ratings <- bind_rows(
+  excuse_ratings |>
+    mutate(class = "Original class"),
+  sceptical_ratings |>
+    mutate(class = "Sceptical class")
+)
+
+all_ratings |>
+  group_by(___) |>
+  summarise(
+    mean_rating = ___,
+    sd_rating = ___,
+    .groups = "drop"
+  )
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+all_ratings <- bind_rows(
+  excuse_ratings |>
+    mutate(class = "Original class"),
+  sceptical_ratings |>
+    mutate(class = "Sceptical class")
+)
+
+all_ratings |>
+  group_by(class) |>
+  summarise(
+    mean_rating = mean(rating),
+    sd_rating = sd(rating),
+    .groups = "drop"
+  )
+```
+
+The function `group_by(class)` tells R to calculate the summaries separately for each class.
+:::
+::::
+
+:::: {.callout-note}
+#### Question 9: Plot the two classes
+
+Now make a plot comparing the two classes.
+
+Complete the code below.
+
+```{r}
+all_ratings |>
+  ggplot(aes(x = rating)) +
+  geom_bar() +
+  facet_wrap(~ ___) +
+  scale_x_continuous(breaks = 1:10) +
+  labs(
+    x = "Believability rating",
+    y = "Number of students"
+  )
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+all_ratings |>
+  ggplot(aes(x = rating)) +
+  geom_bar() +
+  facet_wrap(~ class) +
+  scale_x_continuous(breaks = 1:10) +
+  labs(
+    x = "Believability rating",
+    y = "Number of students"
+  )
+```
+
+The function `facet_wrap()` creates a separate panel for each class.
+:::
+::::
+
+:::: {.callout-note}
+#### Question 10: Interpret the measurement process
+
+Answer the following questions in words.
+
+1. Which class gave the excuse a higher average rating?
+2. Which class had more variation in ratings?
+3. What might cause one class to be more sceptical than another?
+4. What would count as random error in this rating process?
+5. What would count as systematic error?
+6. Would a rubric make the ratings more consistent?
+7. Could a rubric also introduce bias?
+
+::: {.callout-important collapse="true"}
+#### Click for discussion
+
+Possible answers:
+
+1. The original class should have the higher average rating.
+2. The class with the larger standard deviation has more variation.
+3. One class may be more sceptical because of prior experience, classroom culture, how the story was framed, or how seriously they view missing an exam.
+4. Random error could include students noticing different details, interpreting the scale differently, or being in different moods.
+5. Systematic error could include some students being consistently harsher, consistently more trusting, or consistently influenced by details such as rain, carpooling, or the fact that all four students missed the exam.
+6. A rubric might reduce variation by making the criteria clearer.
+7. A rubric could introduce bias if it rewards some features of the excuse and ignores others.
+:::
+::::
+
+:::: {.callout-note}
+#### Question 11: Drawing a normal curve for the ratings
+
+In the previous questions, we treated the class ratings as observed data. Now we will use the normal distribution as a simple model for how ratings might vary in a much larger group.
+
+Suppose believability ratings for the excuse are approximately centred around 5.5, with a standard deviation of 1.8.
+
+We can write this as:
+
+$$
+X \sim N(5.5, 1.8)
+$$
+
+The function `dnorm()` gives the height of the normal curve at different values.
+
+Complete the code below to create and plot a normal curve for the ratings.
+
+```{r}
+rating_curve <- tibble(
+  rating = seq(from = ___, to = ___, length.out = 1000),
+  density = dnorm(
+    x = ___,
+    mean = ___,
+    sd = ___
+  )
+)
+
+rating_curve |>
+  ggplot(aes(x = ___, y = ___)) +
+  geom_line(linewidth = 1) +
+  geom_vline(xintercept = ___, linetype = "dashed") +
+  labs(
+    x = "Believability rating",
+    y = "Density"
+  )
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+rating_curve <- tibble(
+  rating = seq(from = 1, to = 10, length.out = 1000),
+  density = dnorm(
+    x = rating,
+    mean = 5.5,
+    sd = 1.8
+  )
+)
+
+rating_curve |>
+  ggplot(aes(x = rating, y = density)) +
+  geom_line(linewidth = 1) +
+  geom_vline(xintercept = 5.5, linetype = "dashed") +
+  labs(
+    x = "Believability rating",
+    y = "Density"
+  )
+```
+
+The dashed line marks the mean rating. The curve is highest near the mean because ratings close to 5.5 are the most likely under this model.
+:::
+::::
+
+:::: {.callout-note}
+#### Question 12: Using `pnorm()` to calculate probabilities
+
+The function `pnorm()` calculates the probability of being less than or equal to a value.
+
+Suppose we want to know the probability that a randomly selected student gives the excuse a rating of 4 or lower.
+
+Then calculate the probability that a student gives a rating of 8 or higher.
+
+Complete the code below.
+
+```{r}
+prob_low <- pnorm(
+  q = ___,
+  mean = ___,
+  sd = ___
+)
+
+prob_high <- 1 - pnorm(
+  q = ___,
+  mean = ___,
+  sd = ___
+)
+
+prob_low
+prob_high
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+prob_low <- pnorm(
+  q = 4,
+  mean = 5.5,
+  sd = 1.8
+)
+
+prob_high <- 1 - pnorm(
+  q = 8,
+  mean = 5.5,
+  sd = 1.8
+)
+
+prob_low
+prob_high
+```
+
+This gives:
+
+$$
+P(X \le 4)
+$$
+
+and
+
+$$
+P(X \ge 8)
+$$
+
+Strictly, because the normal distribution is continuous, the second probability is the probability of being greater than 8. For our purposes, it is a useful approximation to ratings of 8 or higher.
+:::
+::::
+
+:::: {.callout-note}
+#### Question 13: Using `qnorm()` to find cut-offs
+
+The function `qnorm()` works in the opposite direction to `pnorm()`.
+
+Instead of asking:
+
+> What probability is below this rating?
+
+it asks:
+
+> What rating has this probability below it?
+
+Use `qnorm()` to find:
+
+1. the rating below which the lowest 25% of ratings fall,
+2. the rating above which the highest 10% of ratings fall.
+
+Complete the code below.
+
+```{r}
+cutoff_25 <- qnorm(
+  p = ___,
+  mean = ___,
+  sd = ___
+)
+
+cutoff_top_10 <- qnorm(
+  p = ___,
+  mean = ___,
+  sd = ___
+)
+
+cutoff_25
+cutoff_top_10
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+cutoff_25 <- qnorm(
+  p = 0.25,
+  mean = 5.5,
+  sd = 1.8
+)
+
+cutoff_top_10 <- qnorm(
+  p = 0.90,
+  mean = 5.5,
+  sd = 1.8
+)
+
+cutoff_25
+cutoff_top_10
+```
+
+The first value is the 25th percentile. The second value is the 90th percentile, so about 10% of ratings are expected to fall above it.
+:::
+::::
+
+:::: {.callout-note}
+#### Question 14: Using `rnorm()` to simulate ratings
+
+The function `rnorm()` generates random values from a normal distribution.
+
+Use `rnorm()` to simulate 1000 ratings from a normal distribution with mean 5.5 and standard deviation 1.8.
+
+Then keep only simulated ratings inside the 1 to 10 rating scale and plot the result.
+
+```{r}
+set.seed(24205242)
+
+simulated_ratings <- tibble(
+  student = 1:___,
+  rating = rnorm(
+    n = ___,
+    mean = ___,
+    sd = ___
+  )
+)
+
+simulated_ratings <- simulated_ratings |>
+  filter(rating >= ___, rating <= ___)
+
+simulated_ratings |>
+  ggplot(aes(x = ___)) +
+  geom_histogram(bins = 25) +
+  geom_vline(xintercept = ___, linetype = "dashed") +
+  labs(
+    x = "Simulated believability rating",
+    y = "Number of simulated students"
+  )
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+set.seed(24205242)
+
+simulated_ratings <- tibble(
+  student = 1:1000,
+  rating = rnorm(
+    n = 1000,
+    mean = 5.5,
+    sd = 1.8
+  )
+)
+
+simulated_ratings <- simulated_ratings |>
+  filter(rating >= 1, rating <= 10)
+
+simulated_ratings |>
+  ggplot(aes(x = rating)) +
+  geom_histogram(bins = 25) +
+  geom_vline(xintercept = 5.5, linetype = "dashed") +
+  labs(
+    x = "Simulated believability rating",
+    y = "Number of simulated students"
+  )
+```
+
+The simulated ratings will not all be whole numbers. They may also include values below 1 or above 10 before filtering. This happens because the normal distribution is continuous and has no fixed minimum or maximum.
+:::
+::::
+
+:::: {.callout-note}
+#### Question 15: Comparing two rating processes
+
+Now suppose two classes rate the same excuse.
+
+Class A is moderately sceptical:
+
+$$
+X_A \sim N(5.5, 1.8)
+$$
+
+Class B is more trusting:
+
+$$
+X_B \sim N(7.0, 1.8)
+$$
+
+Both classes have the same standard deviation, but different means.
+
+Complete the code below to create and plot both normal curves.
+
+```{r}
+rating_curves <- bind_rows(
+  tibble(
+    class = "Class A: moderately sceptical",
+    rating = seq(1, 10, length.out = 1000),
+    density = dnorm(rating, mean = ___, sd = ___)
+  ),
+  tibble(
+    class = "Class B: more trusting",
+    rating = seq(1, 10, length.out = 1000),
+    density = dnorm(rating, mean = ___, sd = ___)
+  )
+)
+
+rating_curves |>
+  ggplot(aes(x = rating, y = density, linetype = class)) +
+  geom_line(linewidth = 1) +
+  labs(
+    x = "Believability rating",
+    y = "Density",
+    linetype = "Rating process"
+  )
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+rating_curves <- bind_rows(
+  tibble(
+    class = "Class A: moderately sceptical",
+    rating = seq(1, 10, length.out = 1000),
+    density = dnorm(rating, mean = 5.5, sd = 1.8)
+  ),
+  tibble(
+    class = "Class B: more trusting",
+    rating = seq(1, 10, length.out = 1000),
+    density = dnorm(rating, mean = 7.0, sd = 1.8)
+  )
+)
+
+rating_curves |>
+  ggplot(aes(x = rating, y = density, linetype = class)) +
+  geom_line(linewidth = 1) +
+  labs(
+    x = "Believability rating",
+    y = "Density",
+    linetype = "Rating process"
+  )
+```
+
+The two curves have the same spread, but Class B is shifted to the right. This represents a systematic difference in the rating process: one class tends to give higher ratings.
+:::
+::::
+
+:::: {.callout-note}
+#### Question 16: Same mean, different variation
+
+Now suppose two classes have the same average rating but different amounts of disagreement.
+
+Class C:
+
+$$
+X_C \sim N(5.5, 1.0)
+$$
+
+Class D:
+
+$$
+X_D \sim N(5.5, 2.5)
+$$
+
+Complete the code below.
+
+```{r}
+variation_curves <- bind_rows(
+  tibble(
+    class = "Class C: more agreement",
+    rating = seq(1, 10, length.out = 1000),
+    density = dnorm(rating, mean = ___, sd = ___)
+  ),
+  tibble(
+    class = "Class D: more disagreement",
+    rating = seq(1, 10, length.out = 1000),
+    density = dnorm(rating, mean = ___, sd = ___)
+  )
+)
+
+variation_curves |>
+  ggplot(aes(x = rating, y = density, linetype = class)) +
+  geom_line(linewidth = 1) +
+  labs(
+    x = "Believability rating",
+    y = "Density",
+    linetype = "Rating process"
+  )
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+variation_curves <- bind_rows(
+  tibble(
+    class = "Class C: more agreement",
+    rating = seq(1, 10, length.out = 1000),
+    density = dnorm(rating, mean = 5.5, sd = 1.0)
+  ),
+  tibble(
+    class = "Class D: more disagreement",
+    rating = seq(1, 10, length.out = 1000),
+    density = dnorm(rating, mean = 5.5, sd = 2.5)
+  )
+)
+
+variation_curves |>
+  ggplot(aes(x = rating, y = density, linetype = class)) +
+  geom_line(linewidth = 1) +
+  labs(
+    x = "Believability rating",
+    y = "Density",
+    linetype = "Rating process"
+  )
+```
+
+The two classes have the same centre, but different spreads. Class C has more agreement because ratings are tightly clustered around the mean. Class D has more disagreement because ratings are more spread out.
+:::
+::::
+
+:::: {.callout-note}
+#### Question 17: Interpret the normal models
+
+Answer the following questions in words.
+
+1. In the normal model $X \sim N(5.5, 1.8)$, what does 5.5 represent?
+2. What does 1.8 represent?
+3. What does `dnorm()` calculate?
+4. What does `pnorm()` calculate?
+5. What does `qnorm()` calculate?
+6. What does `rnorm()` do?
+7. Why might a normal model be imperfect for ratings from 1 to 10?
+8. What would a larger standard deviation mean in this context?
+
+::: {.callout-important collapse="true"}
+#### Click for discussion
+
+Possible answers:
+
+1. The value 5.5 represents the centre, or mean, of the rating process.
+2. The value 1.8 represents the standard deviation, or spread, of the ratings.
+3. `dnorm()` calculates the height of the normal curve at a given value.
+4. `pnorm()` calculates the probability of being below a given value.
+5. `qnorm()` calculates the value corresponding to a given cumulative probability.
+6. `rnorm()` generates random values from a normal distribution.
+7. A normal model is imperfect because ratings are bounded between 1 and 10, often whole numbers, and may be influenced by judgement, context, and class discussion.
+8. A larger standard deviation would mean more disagreement between students. Ratings would be more spread out.
+:::
+::::
+
+## Homework
+
+In the tutorial, we treated believability ratings as measurements produced by a judgement process. For homework, you will extend this idea by building a small simulation study. Your goal is to investigate how different kinds of rating behaviour affect the results we see.
+
+### The scenario
+
+A class is asked to rate the students' excuse from 1 to 10.
+
+Suppose there is an underlying average believability level of:
+
+$$
+\mu = 5.5
+$$
+
+This does not mean the excuse has a true objective rating of 5.5. It is just a modelling assumption: in a large group, ratings tend to centre around 5.5.
+
+However, different classes may rate the same excuse differently depending on the measurement process.
+
+You will compare three possible rating processes.
+
+| Rating process | Description |
+|---|---|
+| Process A | A balanced class: ratings are centred around 5.5 with moderate variation. |
+| Process B | A sceptical class: ratings are shifted downward. |
+| Process C | A divided class: half the students are sceptical and half are trusting. |
+
+### Instructions
+
+1. Create a tibble called `balanced_class` with 200 simulated ratings. Assume: $X_A \sim N(5.5, 1.5)$
+2. Now create a tibble called `sceptical_class` with 200 simulated ratings. Assume the class is more sceptical, so ratings are shifted downward: $X_B \sim N(4.2, 1.5)$
+3. Now create a more challenging model. Suppose the class is divided into two groups:
+
+    - 100 sceptical students, with ratings centred around 3.5,
+    - 100 trusting students, with ratings centred around 7.0.
+
+    This creates a **mixture distribution**. Create a tibble called `divided_class`.
+
+4. Combine the three simulated datasets into one tibble called `all_classes`.
+
+5. Make a plot comparing the rating distributions for the three processes.
+
+6. Now create a second plot using density curves.
+
+### Questions to answer
+
+1. Which rating process has the highest mean rating?
+2. Which rating process has the lowest mean rating?
+3. Which rating process has the largest standard deviation?
+4. Which process shows the strongest disagreement between students?
+5. Which process looks most like a bell curve?
+6. Which process does **not** look like a single bell curve?
+7. Why might the divided class be misleading if we only report the mean?
+8. What does this simulation show about subjective measurement?
+
+
+## Extension
+
+Now create a fourth process of your own.
+
+You might choose one of the following:
+
+- a very generous class,
+- a very harsh class,
+- a class with very little variation,
+- a class with very high variation,
+- a class where most students are sceptical but a few are very trusting,
+- a class where ratings are almost evenly spread from 1 to 10.
+
+Create a tibble called `my_class`. Then combine it with the previous data and plot all four processes.
+
+
+
+

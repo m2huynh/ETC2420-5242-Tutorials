@@ -1,0 +1,40 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "ETC2420/5242 Tutorials"
+  sidebar:
+    align: left
+    style: floating
+    collapse-level: 3
+    pinned: true
+  chapters:
+    - index.qmd
+    - start.qmd
+    - week01.qmd
+    - week02.qmd
+    - week03.qmd
+    - week04.qmd
+    - week06.qmd
+
+format:
+  html:
+    self-contained: false
+    css: 
+      - styles.css
+      - include/webex.css
+    include-after-body: 
+      - include/webex.js
+    theme:
+      light: 
+        - flatly
+        #- custom.scss
+      dark: 
+        - darkly
+        #- custom.scss
+    number-sections: false
+  pdf: default
+
+editor: visual
+

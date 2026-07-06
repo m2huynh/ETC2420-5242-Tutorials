@@ -1,0 +1,89 @@
+---
+title: "week07"
+---
+
+<style>
+.distractor-box {
+  height: 650px;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 2px solid #22c55e;
+  background: #0f172a;
+  color: #22c55e;
+  font-family: system-ui, sans-serif;
+  font-weight: 700;
+  padding: 12px;
+}
+
+.scrolling-distractions {
+  animation: scroll-up 18s linear infinite;
+}
+
+.scrolling-distractions p {
+  font-size: 20px;
+  margin: 0 0 26px 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(34, 197, 94, 0.12);
+}
+
+@keyframes scroll-up {
+  from {
+    transform: translateY(650px);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+</style>
+
+:::: {.columns}
+
+::: {.column width="65%"}
+<iframe 
+  src="https://kolor.moro.es/" 
+  width="100%" 
+  height="650" 
+  style="border: none; border-radius: 8px;"
+  loading="lazy">
+</iframe>
+:::
+
+::: {.column width="35%"}
+<div class="distractor-box">
+  <div class="scrolling-distractions">
+    <p>New message: Are you free tonight?</p>
+    <p>Your phone buzzed.</p>
+    <p>Someone tagged you in a photo.</p>
+    <p>Assignment due soon.</p>
+    <p>Battery low: 3% remaining.</p>
+    <p>Breaking news alert.</p>
+    <p>Group chat: 17 new messages.</p>
+    <p>New email from your lecturer.</p>
+    <p>Calendar reminder: meeting in 5 minutes.</p>
+    <p>Your food delivery is nearby.</p>
+    <p>Someone is calling you.</p>
+    <p>Storage almost full.</p>
+    <p>Wi-Fi disconnected.</p>
+    <p>Friend request received.</p>
+    <p>Update available.</p>
+  </div>
+</div>
+:::
+
+::::
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

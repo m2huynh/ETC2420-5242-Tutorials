@@ -1,0 +1,677 @@
+---
+title: "Tutorial: Hypothesis Testing"
+format: html
+---
+
+```{r, include=FALSE}
+library(tidyverse)
+library(gt)
+library(scales)
+```
+
+## Overview
+
+In this tutorial, we will turn hypothesis testing into an experiment.
+
+In Chapter 5, we saw that hypothesis testing starts with a claim, or a default explanation, and asks whether the data are surprising under that explanation. The logic is simple, but powerful:
+
+> What would the data look like if there were no real effect?
+
+Today we will test whether distraction affects performance in a simple tower-stacking game. Some students will play the standard version of the game. Other students will play a version with distracting messages appearing during the task. We will then collect the class results and use them to test whether the distraction group performs worse than the control group.
+
+By the end of this tutorial, you should be able to:
+
+1. translate a research question into a null hypothesis and an alternative hypothesis;
+2. identify the parameter being tested and the statistic used as evidence;
+3. calculate a difference in sample means;
+4. calculate a standard error for a difference in means;
+5. calculate and interpret a t-statistic;
+6. calculate and interpret a p-value;
+7. use `t.test()` to carry out a two-sample hypothesis test in R;
+8. report a hypothesis test alongside an estimate and confidence interval.
+
+## Part 1: The experiment
+
+The game below is a simple stacking task. A block moves from side to side. Your job is to click, tap, or press the space bar to place the moving block on top of the previous block. The closer you are to the block below, the longer your tower can grow.
+
+There are two experimental conditions:
+
+- **Control**: the standard game, with no additional distraction.
+- **Distraction**: the game displays a distracting message after each successful stack.
+
+The response variable is your final score.
+
+```{=html}
+<iframe 
+  src="stack_game(6).html"
+  width="100%" 
+  height="720"
+  style="border: none;"
+></iframe>
+```
+
+:::: {.callout-important}
+## Before you begin
+
+Your tutor will assign you to either the **Control** group or the **Distraction** group.
+
+Do not choose your own group unless your tutor asks you to. The comparison is more meaningful if the groups are assigned before the game is played.
+
+Play the game once. Record your final score and your group.
+::::
+
+:::: {.callout-note}
+## Question 1
+
+Before collecting the data, write the research question in words.
+
+What are we trying to find out?
+
+::: {.callout-important collapse="true"}
+## Click for sample answer
+
+A suitable research question is:
+
+> Do students who play the stacking game under distraction score lower, on average, than students who play the standard version of the game?
+
+This is a comparison of two population means. We are not just interested in whether one particular student scores higher or lower. We want to know whether the average score differs between the two conditions.
+:::
+::::
+
+:::: {.callout-note}
+## Question 2
+
+Let:
+
+$$
+\mu_C = \text{mean score for students in the control condition}
+$$
+
+and:
+
+$$
+\mu_D = \text{mean score for students in the distraction condition}.
+$$
+
+Write the null hypothesis and alternative hypothesis for the claim that distraction reduces performance.
+
+::: {.callout-important collapse="true"}
+## Click for solution
+
+The null hypothesis is that the distraction does not reduce average performance. We can write this as:
+
+$$
+H_0: \mu_C - \mu_D = 0.
+$$
+
+The alternative hypothesis is that the control group has a higher mean score than the distraction group:
+
+$$
+H_1: \mu_C - \mu_D > 0.
+$$
+
+Equivalently, we could write:
+
+$$
+H_0: \mu_C = \mu_D
+$$
+
+and:
+
+$$
+H_1: \mu_C > \mu_D.
+$$
+
+This is a one-sided test because the research question is directional. We expect the distraction group to do worse.
+:::
+::::
+
+:::: {.callout-note}
+## Question 3
+
+Identify the parameter and statistic in this experiment.
+
+1. What is the population parameter?
+2. What is the sample statistic?
+
+::: {.callout-important collapse="true"}
+## Click for solution
+
+The population parameter is the true difference in mean game score between the control and distraction conditions:
+
+$$
+\mu_C - \mu_D.
+$$
+
+The sample statistic is the observed difference in sample means:
+
+$$
+\bar{x}_C - \bar{x}_D.
+$$
+
+The parameter is unknown. The statistic is calculated from our class data and used as evidence about the parameter.
+:::
+::::
+
+## Enter the class data
+
+After everyone has played the game once, enter the class results below.
+
+Replace the example rows with your class data. Each row should contain one student's group and score.
+
+```{r}
+class_results <- tribble(
+  ~student_id, ~group, ~score,
+  1, "Control", 14,
+  2, "Distraction", 9,
+  3, "Control", 11,
+  4, "Distraction", 7,
+  5, "Control", 18,
+  6, "Distraction", 10
+)
+```
+
+:::: {.callout-important}
+## Important
+
+The data above are only example values. Replace them with the actual class results before answering the questions.
+
+Make sure the group names are written consistently as `"Control"` and `"Distraction"`.
+::::
+
+Before analysing the data, we will make sure R uses the groups in the order we want. This helps us interpret the difference as:
+
+$$
+\text{Control mean} - \text{Distraction mean}.
+$$
+
+```{r}
+class_results <- class_results |>
+  mutate(
+    group = factor(group, levels = c("Control", "Distraction"))
+  )
+```
+
+:::: {.callout-note}
+## Question 4
+
+Check the data.
+
+1. How many students are in each group?
+2. What is the mean score in each group?
+3. What is the standard deviation in each group?
+
+```{r}
+# Your code here
+```
+
+::: {.callout-important collapse="true"}
+## Click for solution
+
+```{r}
+summary_table <- class_results |>
+  group_by(group) |>
+  summarise(
+    n = n(),
+    mean_score = mean(score),
+    sd_score = sd(score),
+    .groups = "drop"
+  )
+
+summary_table |>
+  gt() |>
+  fmt_number(
+    columns = c(mean_score, sd_score),
+    decimals = 2
+  )
+```
+
+The mean score in each group is a point estimate. The standard deviation describes how much scores vary within each group.
+:::
+::::
+
+:::: {.callout-note}
+## Question 5
+
+Create a visualisation comparing scores between the control and distraction groups.
+
+```{r}
+# Your code here
+```
+
+::: {.callout-important collapse="true"}
+## Click for solution
+
+One option is a boxplot with individual points:
+
+```{r}
+ggplot(class_results, aes(x = group, y = score)) +
+  geom_boxplot(width = 0.45, outlier.shape = NA) +
+  geom_jitter(width = 0.08, height = 0, alpha = 0.7) +
+  labs(
+    x = "Experimental condition",
+    y = "Game score",
+    title = "Stacking game scores by condition"
+  ) +
+  theme_minimal()
+```
+
+The plot helps us see both the group averages and the variation within each group. A hypothesis test should not be interpreted without looking at the data first.
+:::
+::::
+
+## Part 2: Manual hypothesis test
+
+We will now calculate the main ingredients of the hypothesis test by hand using R as a calculator.
+
+The hypotheses are:
+
+$$
+H_0: \mu_C - \mu_D = 0
+$$
+
+$$
+H_1: \mu_C - \mu_D > 0.
+$$
+
+The sample statistic is:
+
+$$
+\bar{x}_C - \bar{x}_D.
+$$
+
+If the control mean is much higher than the distraction mean, this statistic will be positive.
+
+:::: {.callout-note}
+## Question 6
+
+Calculate the observed difference in sample means:
+
+$$
+\bar{x}_C - \bar{x}_D.
+$$
+
+```{r}
+# Your code here
+```
+
+::: {.callout-important collapse="true"}
+## Click for solution
+
+```{r}
+mean_control <- class_results |>
+  filter(group == "Control") |>
+  pull(score) |>
+  mean()
+
+mean_distraction <- class_results |>
+  filter(group == "Distraction") |>
+  pull(score) |>
+  mean()
+
+mean_difference <- mean_control - mean_distraction
+mean_difference
+```
+
+A positive value means the control group had a higher sample mean. A negative value means the distraction group had a higher sample mean.
+
+The observed difference is an estimate of:
+
+$$
+\mu_C - \mu_D.
+$$
+:::
+::::
+
+:::: {.callout-note}
+## Question 7
+
+Calculate the standard error of the difference in sample means.
+
+Use:
+
+$$
+SE(\bar{x}_C - \bar{x}_D)
+=
+\sqrt{
+\frac{s_C^2}{n_C}
++
+\frac{s_D^2}{n_D}
+}.
+$$
+
+```{r}
+# Your code here
+```
+
+::: {.callout-important collapse="true"}
+## Click for solution
+
+```{r}
+control_scores <- class_results |>
+  filter(group == "Control") |>
+  pull(score)
+
+distraction_scores <- class_results |>
+  filter(group == "Distraction") |>
+  pull(score)
+
+n_control <- length(control_scores)
+n_distraction <- length(distraction_scores)
+
+sd_control <- sd(control_scores)
+sd_distraction <- sd(distraction_scores)
+
+se_difference <- sqrt(
+  sd_control^2 / n_control +
+    sd_distraction^2 / n_distraction
+)
+
+se_difference
+```
+
+The standard error tells us how much the difference in sample means would tend to vary from sample to sample.
+
+A larger standard error means the observed difference is less precise. A smaller standard error means the observed difference is more precise.
+:::
+::::
+
+:::: {.callout-note}
+## Question 8
+
+Calculate the t-statistic.
+
+Use:
+
+$$
+t
+=
+\frac{(\bar{x}_C - \bar{x}_D) - 0}{SE(\bar{x}_C - \bar{x}_D)}.
+$$
+
+```{r}
+# Your code here
+```
+
+::: {.callout-important collapse="true"}
+## Click for solution
+
+```{r}
+t_stat <- mean_difference / se_difference
+
+t_stat
+```
+
+The t-statistic measures how many standard errors the observed difference is above the null value of 0.
+
+If the t-statistic is close to 0, the observed difference is small relative to its standard error. If the t-statistic is large and positive, the control group performed better by more than we would usually expect from sampling variation alone.
+:::
+::::
+
+:::: {.callout-note}
+## Question 9
+
+Use the Welch degrees of freedom formula below to calculate an approximate p-value for the one-sided test.
+
+$$
+df
+=
+\frac{
+\left(\frac{s_C^2}{n_C} + \frac{s_D^2}{n_D}\right)^2
+}{
+\frac{(s_C^2/n_C)^2}{n_C - 1}
++
+\frac{(s_D^2/n_D)^2}{n_D - 1}
+}.
+$$
+
+Then calculate:
+
+$$
+P(T \geq t_{obs}).
+$$
+
+```{r}
+# Your code here
+```
+
+::: {.callout-important collapse="true"}
+## Click for solution
+
+```{r}
+welch_df <- (
+  (sd_control^2 / n_control + sd_distraction^2 / n_distraction)^2
+) / (
+  ((sd_control^2 / n_control)^2 / (n_control - 1)) +
+    ((sd_distraction^2 / n_distraction)^2 / (n_distraction - 1))
+)
+
+p_value <- pt(t_stat, df = welch_df, lower.tail = FALSE)
+
+welch_df
+p_value
+```
+
+The p-value is calculated under the assumption that the two population means are equal.
+
+For this one-sided test, it asks:
+
+> If distraction had no effect on mean score, how unusual would it be to observe a difference at least this favourable to the control group?
+
+If the p-value is small, the data are less compatible with the no-effect explanation.
+:::
+::::
+
+:::: {.callout-note}
+## Question 10
+
+Make a conclusion at the 5% significance level.
+
+Use your p-value from Question 9.
+
+::: {.callout-important collapse="true"}
+## Click for sample answer
+
+If the p-value is less than 0.05, we reject $H_0$ at the 5% significance level.
+
+A suitable conclusion is:
+
+> The class data provide evidence that the mean stacking score is lower under distraction than under the control condition. The control group had a higher sample mean, and the p-value was below 0.05.
+
+If the p-value is greater than 0.05, we fail to reject $H_0$ at the 5% significance level.
+
+A suitable conclusion is:
+
+> The class data do not provide strong evidence, at the 5% level, that distraction reduces mean stacking score. This does not prove that distraction has no effect. The study may have too few observations, or the scores may be too variable.
+
+In either case, the conclusion should mention the estimated difference in means, not just the p-value.
+:::
+::::
+
+## Part 3: Using `t.test()` in R
+
+The manual calculations above help us understand what the test is doing. In practice, we usually use `t.test()`.
+
+For this experiment, the groups are independent. A student in the control group is not paired with a particular student in the distraction group. So we use a two-sample t-test.
+
+The default two-sample t-test in R is Welch's t-test, which allows the two groups to have different variances.
+
+:::: {.callout-note}
+## Question 11
+
+Use `t.test()` to test whether the control group has a higher mean score than the distraction group.
+
+```{r}
+# Your code here
+```
+
+::: {.callout-important collapse="true"}
+## Click for solution
+
+```{r}
+t.test(
+  score ~ group,
+  data = class_results,
+  alternative = "greater"
+)
+```
+
+Because we set the factor levels earlier as `Control` then `Distraction`, the test is comparing:
+
+$$
+\mu_C - \mu_D.
+$$
+
+The argument `alternative = "greater"` means the alternative hypothesis is:
+
+$$
+\mu_C > \mu_D.
+$$
+
+Always check the group order before using a one-sided test.
+:::
+::::
+
+:::: {.callout-note}
+## Question 12
+
+Use `t.test()` to construct a 95% confidence interval for the difference in mean scores.
+
+Use a two-sided version of the test so that the interval has both a lower and upper bound.
+
+```{r}
+# Your code here
+```
+
+::: {.callout-important collapse="true"}
+## Click for solution
+
+```{r}
+test_two_sided <- t.test(
+  score ~ group,
+  data = class_results,
+  alternative = "two.sided",
+  conf.level = 0.95
+)
+
+test_two_sided
+```
+
+To extract the confidence interval:
+
+```{r}
+test_two_sided$conf.int
+```
+
+This confidence interval estimates:
+
+$$
+\mu_C - \mu_D.
+$$
+
+If the whole interval is above 0, the data suggest that the control group has a higher mean score. If the interval includes 0, then a difference of 0 remains compatible with the data.
+:::
+::::
+
+:::: {.callout-note}
+## Question 13
+
+Write a short report of the result.
+
+Your report should include:
+
+1. the research question;
+2. the estimated difference in means;
+3. the confidence interval;
+4. the p-value;
+5. a careful conclusion.
+
+::: {.callout-important collapse="true"}
+## Click for sample answer
+
+Your numbers will depend on the class data. A suitable structure is:
+
+> We tested whether distraction reduced performance in a tower-stacking game. The control group had a mean score of `r round(mean_control, 2)`, while the distraction group had a mean score of `r round(mean_distraction, 2)`. The estimated difference was `r round(mean_difference, 2)` points, calculated as control minus distraction. A two-sided 95% confidence interval for the difference was from `r round(test_two_sided$conf.int[1], 2)` to `r round(test_two_sided$conf.int[2], 2)` points. For the one-sided hypothesis test that the control mean is higher than the distraction mean, the p-value was `r round(t.test(score ~ group, data = class_results, alternative = "greater")$p.value, 3)`. These results suggest that [insert your conclusion based on the p-value and confidence interval].
+
+A careful conclusion avoids saying that the test proves distraction has an effect. It should refer to evidence, uncertainty, and the size of the estimated effect.
+:::
+::::
+
+## Part 4: Thinking critically about the experiment
+
+Hypothesis testing is not only about calculation. The quality of the conclusion depends on the design of the study and the way the data were collected.
+
+:::: {.callout-note}
+## Question 14
+
+Why was it important for students to be assigned to groups before playing the game?
+
+::: {.callout-important collapse="true"}
+## Click for solution
+
+If students choose their own group, the groups may differ before the experiment even starts. For example, students who are confident at games might choose the distraction condition, or students who want an easier task might choose the control condition.
+
+Assigning students to groups before playing helps make the groups more comparable. This means that differences in scores are more plausibly due to the condition rather than pre-existing differences between students.
+:::
+::::
+
+:::: {.callout-note}
+## Question 15
+
+Suppose the p-value is greater than 0.05. Does this prove that distraction has no effect on performance? Explain.
+
+::: {.callout-important collapse="true"}
+## Click for solution
+
+No. A p-value greater than 0.05 means the data did not provide strong enough evidence against the null hypothesis at the 5% level.
+
+It does not prove that distraction has no effect.
+
+There are several possible explanations for a non-significant result:
+
+- distraction may genuinely have little or no effect;
+- the class sample may be too small;
+- scores may be highly variable;
+- the game may not measure the kind of performance affected by distraction;
+- some students in the distraction group may ignore the messages.
+
+This is why we should report the estimated difference and confidence interval, not only the p-value.
+:::
+::::
+
+:::: {.callout-note}
+## Question 16
+
+Suppose the p-value is less than 0.05. Does this prove that distraction causes lower performance? Explain.
+
+::: {.callout-important collapse="true"}
+## Click for solution
+
+No. A small p-value provides evidence against the no-effect explanation, but it does not prove the conclusion with certainty.
+
+The strength of the causal interpretation depends on the design. If students were randomly assigned to the two conditions and the experiment was run fairly, then a causal interpretation is more reasonable.
+
+However, we should still be careful. The sample is probably small, the game is simple, and the class may not represent a wider population. The result may show evidence in this classroom setting without proving a universal claim about all distractions and all performance tasks.
+:::
+::::
+
+## Wrap-up
+
+In this tutorial, we used a simple game to carry out a hypothesis test from start to finish.
+
+We began with a research question:
+
+> Does distraction reduce performance?
+
+We translated that question into hypotheses, collected data, calculated a difference in means, measured that difference in standard errors, and used a p-value to assess how surprising the result would be if there were no real difference between the groups.
+
+The key lesson is that a hypothesis test is not only a formula. It is a way of organising statistical thinking:
+
+1. define the question;
+2. state the claim being tested;
+3. collect data in a way that makes the comparison meaningful;
+4. calculate an estimate and standard error;
+5. interpret the p-value carefully;
+6. report the result with uncertainty and context.
+
+A good statistical conclusion should never stop at “significant” or “not significant”. It should say what was estimated, how uncertain the estimate is, and what the result means in the context of the study.
