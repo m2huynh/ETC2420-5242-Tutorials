@@ -1,0 +1,475 @@
+---
+title: "Week 5"
+format: html
+---
+
+```{r, include=FALSE}
+library(tidyverse)
+library(gt)
+library(scales)
+households <- read.csv("data/households.csv")
+```
+
+## Introduction
+
+This week we will begin by taking a sample of households from a fictitious town to estimate `weekly_income`.
+
+1. Begin by allocating `points` to create your field surveyor. You only have 10 points to allocate, so think carefully about the kind of surveyor you want to build. Some choices may help you reach more households, while others may help you collect cleaner information. 
+2. Once you have allocated your points, click the **Build surveyor** button.
+3. On the next screen, click the **Take sample** button. This will provide you with a random household from this town. You will also get an *estimate* for the mean income. How good this estimate is will depend on how you created your surveyor. 
+
+```{=html}
+<iframe 
+  src="interactive/surveyor_builder.html"
+  width="100%" 
+  height="500"
+  style="border: none;"
+></iframe>
+```
+
+## Tasks
+
+### Part 1: Your estimate
+
+Create a Quarto document in your Project folder and save it in your `week 5` folder. Then click on the **Copy** button from your app and paste it into your copy document. Assign it the name `my_sample`.
+
+```{r, eval=FALSE}
+# Paste your data below
+
+my_sample <- c()
+```
+
+
+:::: {.callout-note}
+#### Question 1
+
+How many households are in your sample?
+
+Write R code to calculate the sample size.
+
+```{r}
+# Your code here
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r, eval=FALSE}
+length(my_sample)
+```
+
+The sample size is the number of households your surveyor successfully recorded.
+
+If your sample size is small, your estimate will usually be more wobbly. If your sample size is larger, your estimate will usually be more stable, but it is still only one sample.
+:::
+::::
+
+:::: {.callout-note}
+#### Question 2
+
+Calculate the sample mean, sample median, and sample standard deviation of weekly household income.
+
+```{r, eval=FALSE}
+library(tidyverse)
+library(gt)
+tibble(
+  statistic = c("Sample mean", "Sample median", "Sample standard deviation"),
+  value = c(
+    _____,
+    _____,
+    _____
+  )
+) |>
+  gt() |>
+  fmt_currency(
+    columns = ___,
+    currency = "___",
+    decimals = ___
+  )
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r, eval=FALSE}
+tibble(
+  statistic = c("Sample mean", "Sample median", "Sample standard deviation"),
+  value = c(
+    mean(my_sample),
+    median(my_sample),
+    sd(my_sample)
+  )
+) |>
+  gt() |>
+  fmt_currency(
+    columns = value,
+    currency = "AUD",
+    decimals = 0
+  )
+```
+
+:::
+::::
+
+:::: {.callout-note}
+#### Question 3
+
+Suppose the target parameter is the true mean weekly income of all households in the town.
+
+1. What is the parameter?
+2. What is the statistic?
+3. What is your point estimate?
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+The parameter is the true mean weekly income of all households in the town. We could write this as:
+
+$$
+\mu
+$$
+
+The statistic is the sample mean:
+
+$$
+\bar{x}
+$$
+
+Your point estimate is:
+
+```{r, eval=FALSE}
+mean(my_sample)
+```
+
+:::
+::::
+
+:::: {.callout-note}
+#### Question 4
+
+Calculate the standard error of the sample mean.
+
+Use:
+
+$$
+se(\bar{x}) = \frac{s}{\sqrt{n}}
+$$
+
+```{r, eval=FALSE}
+n <- _____
+s <- _____
+se <- _____
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r, eval=FALSE}
+n <- length(my_sample)
+s <- sd(my_sample)
+se <- s / sqrt(n)
+
+se
+```
+
+:::
+::::
+
+:::: {.callout-note}
+#### Question 5
+
+Construct a *rough* interval estimate using:
+
+$$
+\bar{x} \pm 2 \times se(\bar{x})
+$$
+
+```{r, eval=FALSE}
+xbar <- ____
+n <- ____
+s <- ____
+se <- ____
+
+rough_lower <- ____
+rough_upper <- ____
+
+c(rough_lower, rough_upper)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r, eval=FALSE}
+xbar <- mean(my_sample)
+n <- length(my_sample)
+s <- sd(my_sample)
+se <- s / sqrt(n)
+
+rough_lower <- xbar - 2 * se
+rough_upper <- xbar + 2 * se
+
+c(rough_lower, rough_upper)
+```
+
+:::
+::::
+
+:::: {.callout-note}
+#### Question 6
+
+Construct a formal 95% confidence interval for the population mean weekly income using `t.test()`.
+
+```{r, eval=FALSE}
+t.test(____, 
+       conf.level = ____)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r, eval=FALSE}
+t.test(my_sample, 
+       conf.level = 0.95)
+```
+
+To extract the confidence interval directly:
+
+```{r, eval=FALSE}
+ci <- t.test(my_sample, conf.level = 0.95)$conf.int
+ci
+```
+
+:::
+::::
+
+:::: {.callout-note}
+#### Question 7
+
+Compare your result with another student.
+
+1. Did you get the same sample size?
+2. Did you get the same point estimate?
+3. Did you get the same confidence interval?
+4. Why or why not?
+
+::: {.callout-important collapse="true"}
+#### Click for sample answer
+
+Different students will usually get different samples. Because the sample is different, the sample mean, standard error, and confidence interval will also differ. This is not a contradiction. It is sampling variation. The population is the same town, but each student observes only one part of it. Each sample gives one estimate of the unknown population mean.
+:::
+::::
+
+### Part 2: Estimation with a larger dataset
+
+In the first part of the tutorial, you only had one small sample. In this part, we will work with a larger dataset of 1,000 households.
+
+<center>
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(downloadthis)
+download_file(
+  path = "data/households.csv",
+  button_label = "households",
+  button_type = 'success'
+)
+```
+</center><br>
+
+:::: {.callout-note}
+#### Question 8
+
+Use the `households` dataset to estimate the mean weekly household income.
+
+Calculate:
+
+1. the sample mean;
+2. the sample standard deviation;
+3. the standard error;
+
+```{r, eval=FALSE}
+income_summary <- households |>
+  summarise(
+    n = ____,
+    mean_income = ____,
+    sd_income = ____,
+    se_income = ____
+  )
+
+income_summary |>
+  gt() |>
+  fmt_currency(
+    columns = c(____, ____, ____),
+    currency = "____",
+    decimals = ____
+  )
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+income_summary <- households |>
+  summarise(
+    n = n(),
+    mean_income = mean(weekly_income),
+    sd_income = sd(weekly_income),
+    se_income = sd_income / sqrt(n)
+  )
+
+income_summary |>
+  gt() |>
+  fmt_currency(
+    columns = c(mean_income, sd_income, se_income),
+    currency = "AUD",
+    decimals = 0
+  )
+```
+
+:::
+::::
+
+:::: {.callout-note}
+#### Question 9
+
+Calculate a 95% confidence interval using the `t.test()` function
+
+```{r, eval=FALSE}
+t.test(____, 
+       conf.level = ____)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+t.test(households$weekly_income, 
+       conf.level = 0.95)
+```
+
+:::
+::::
+
+:::: {.callout-note}
+#### Question 10
+
+Estimate the proportion of households with weekly income below $1,000.
+
+```{r, eval=FALSE}
+households |>
+  summarise(
+    n = ____,
+    below_1000 = ____,
+    prop_below_1000 = ____
+  ) |>
+  gt() |>
+  fmt_percent(
+    columns = ____,
+    decimals = ____
+  )
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+households |>
+  summarise(
+    n = n(),
+    below_1000 = sum(weekly_income < 1000),
+    prop_below_1000 = mean(weekly_income < 1000)
+  ) |>
+  gt() |>
+  fmt_percent(
+    columns = prop_below_1000,
+    decimals = 1
+  )
+```
+
+:::
+::::
+
+:::: {.callout-note}
+#### Question 11
+
+Compare mean weekly income between capital city households and regional households.
+
+1. Calculate the mean income in each group.
+2. Use `t.test()` to construct a 95% confidence interval for the difference in means.
+
+```{r, eval=FALSE}
+# Mean for each group
+households |>
+  group_by(____) |>
+  summarise(
+    mean_income = ____
+  )
+
+# Difference and 95% CI in sample means
+t.test(
+  ____ ~ ____,
+  data = ____,
+  conf.level = ____
+)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+households |>
+  group_by(region) |>
+  summarise(
+    mean_income = mean(weekly_income)
+  )
+    
+```
+
+Now use Welch's two-sample t interval:
+
+```{r}
+t.test(
+  weekly_income ~ region,
+  data = households,
+  conf.level = 0.95
+)
+```
+
+:::
+::::
+
+:::: {.callout-note}
+#### Question 12
+
+Is the regional comparison an independent-samples problem or a paired-samples problem? Explain.
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+This is an independent-samples problem.
+
+A capital city household is not naturally matched to a particular regional household. The two groups are separate.
+
+The parameter is:
+
+$$
+\mu_{\text{capital}} - \mu_{\text{regional}}
+$$
+
+The point estimate is:
+
+$$
+\bar{x}_{\text{capital}} - \bar{x}_{\text{regional}}
+$$
+:::
+::::
+
+## Homework
+
+Now compare `income_2025` and `income_2026` for the same households. Create a Quarto report that addresses the following questions:
+
+1. Explain why this is a **paired** comparison (and not independent).
+2. Calculate the change in income for each household (use income_2026 - income_2025)
+3. Estimate the mean change.
+4. Use `t.test()` to construct a 95% confidence interval for the mean change.
+5. Create one visualisation that helps explain one of your estimates from Part 2.
+
+

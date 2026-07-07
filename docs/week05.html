@@ -1,0 +1,2689 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Week 5 – ETC2420/5242 Tutorials</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./week06.html" rel="next">
+<link href="./week04.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c27fdc8e5b00b532d2d5a75ada188648.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-b9e11ad5a37ead2aabff839d95ae3857.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-c27fdc8e5b00b532d2d5a75ada188648.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="site_libs/font-awesome-6.7.2/js/script.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="include/webex.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week05.html"><span class="chapter-title">Week 5</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">ETC2420/5242 Tutorials</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./start.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Getting Started</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week01.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Week 1</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week02.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Week 2</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week03.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Week 3</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week04.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Week 4</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week05.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Week 5</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week06.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Week 6</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#tasks" id="toc-tasks" class="nav-link" data-scroll-target="#tasks">Tasks</a>
+  <ul class="collapse">
+  <li><a href="#part-1-your-estimate" id="toc-part-1-your-estimate" class="nav-link" data-scroll-target="#part-1-your-estimate">Part 1: Your estimate</a></li>
+  <li><a href="#part-2-estimation-with-a-larger-dataset" id="toc-part-2-estimation-with-a-larger-dataset" class="nav-link" data-scroll-target="#part-2-estimation-with-a-larger-dataset">Part 2: Estimation with a larger dataset</a></li>
+  </ul></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework">Homework</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Week 5</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>This week we will begin by taking a sample of households from a fictitious town to estimate <code>weekly_income</code>.</p>
+<ol type="1">
+<li>Begin by allocating <code>points</code> to create your field surveyor. You only have 10 points to allocate, so think carefully about the kind of surveyor you want to build. Some choices may help you reach more households, while others may help you collect cleaner information.</li>
+<li>Once you have allocated your points, click the <strong>Build surveyor</strong> button.</li>
+<li>On the next screen, click the <strong>Take sample</strong> button. This will provide you with a random household from this town. You will also get an <em>estimate</em> for the mean income. How good this estimate is will depend on how you created your surveyor.</li>
+</ol>
+<iframe src="interactive/surveyor_builder.html" width="100%" height="500" style="border: none;"></iframe>
+</section>
+<section id="tasks" class="level2">
+<h2 class="anchored" data-anchor-id="tasks">Tasks</h2>
+<section id="part-1-your-estimate" class="level3">
+<h3 class="anchored" data-anchor-id="part-1-your-estimate">Part 1: Your estimate</h3>
+<p>Create a Quarto document in your Project folder and save it in your <code>week 5</code> folder. Then click on the <strong>Copy</strong> button from your app and paste it into your copy document. Assign it the name <code>my_sample</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paste your data below</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>my_sample <span class="ot">&lt;-</span> <span class="fu">c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>How many households are in your sample?</p>
+<p>Write R code to calculate the sample size.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click for solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(my_sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The sample size is the number of households your surveyor successfully recorded.</p>
+<p>If your sample size is small, your estimate will usually be more wobbly. If your sample size is larger, your estimate will usually be more stable, but it is still only one sample.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Calculate the sample mean, sample median, and sample standard deviation of weekly household income.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">statistic =</span> <span class="fu">c</span>(<span class="st">"Sample mean"</span>, <span class="st">"Sample median"</span>, <span class="st">"Sample standard deviation"</span>),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    _____,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    _____,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    _____</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_currency</span>(</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> ___,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">currency =</span> <span class="st">"___"</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">decimals =</span> ___</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click for solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">statistic =</span> <span class="fu">c</span>(<span class="st">"Sample mean"</span>, <span class="st">"Sample median"</span>, <span class="st">"Sample standard deviation"</span>),</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean</span>(my_sample),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">median</span>(my_sample),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sd</span>(my_sample)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_currency</span>(</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> value,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">currency =</span> <span class="st">"AUD"</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">decimals =</span> <span class="dv">0</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose the target parameter is the true mean weekly income of all households in the town.</p>
+<ol type="1">
+<li>What is the parameter?</li>
+<li>What is the statistic?</li>
+<li>What is your point estimate?</li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click for solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The parameter is the true mean weekly income of all households in the town. We could write this as:</p>
+<p><span class="math display">\[
+\mu
+\]</span></p>
+<p>The statistic is the sample mean:</p>
+<p><span class="math display">\[
+\bar{x}
+\]</span></p>
+<p>Your point estimate is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(my_sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Calculate the standard error of the sample mean.</p>
+<p>Use:</p>
+<p><span class="math display">\[
+se(\bar{x}) = \frac{s}{\sqrt{n}}
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> _____</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> _____</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> _____</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click for solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(my_sample)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">sd</span>(my_sample)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> s <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>se</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Construct a <em>rough</em> interval estimate using:</p>
+<p><span class="math display">\[
+\bar{x} \pm 2 \times se(\bar{x})
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">&lt;-</span> ____</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> ____</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> ____</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> ____</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>rough_lower <span class="ot">&lt;-</span> ____</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>rough_upper <span class="ot">&lt;-</span> ____</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(rough_lower, rough_upper)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click for solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">&lt;-</span> <span class="fu">mean</span>(my_sample)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(my_sample)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">sd</span>(my_sample)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> s <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>rough_lower <span class="ot">&lt;-</span> xbar <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> se</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>rough_upper <span class="ot">&lt;-</span> xbar <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> se</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(rough_lower, rough_upper)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Construct a formal 95% confidence interval for the population mean weekly income using <code>t.test()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(____, </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">conf.level =</span> ____)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click for solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(my_sample, </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To extract the confidence interval directly:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> <span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.95</span>)<span class="sc">$</span>conf.int</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ci</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compare your result with another student.</p>
+<ol type="1">
+<li>Did you get the same sample size?</li>
+<li>Did you get the same point estimate?</li>
+<li>Did you get the same confidence interval?</li>
+<li>Why or why not?</li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click for sample answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Different students will usually get different samples. Because the sample is different, the sample mean, standard error, and confidence interval will also differ. This is not a contradiction. It is sampling variation. The population is the same town, but each student observes only one part of it. Each sample gives one estimate of the unknown population mean.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="part-2-estimation-with-a-larger-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="part-2-estimation-with-a-larger-dataset">Part 2: Estimation with a larger dataset</h3>
+<p>In the first part of the tutorial, you only had one small sample. In this part, we will work with a larger dataset of 1,000 households.</p>
+<center>
+<div class="cell">
+<div class="cell-output-display">
+<button class="btn btn-success" onclick="
+    async function downloadFile(event) {
+      event.preventDefault();
+      try {
+        const response = await fetch('data:text/csv;base64,IiIsImhvdXNlaG9sZF9pZCIsInJlZ2lvbiIsImFkdWx0cyIsImNoaWxkcmVuIiwiaG91c2Vob2xkX3NpemUiLCJyZWNlaXZlc19zdXBwb3J0Iiwid2Vla2x5X2luY29tZSIsIndlZWtseV9yZW50IiwiaW5jb21lXzIwMjUiLCJpbmNvbWVfMjAyNiINCiIxIiwxLCJDYXBpdGFsIGNpdHkiLDQsMCw0LCJZZXMiLDgxMSw0MjMsODI3LDg4MQ0KIjIiLDIsIkNhcGl0YWwgY2l0eSIsMSwzLDQsIk5vIiwxNzM1LDYyMSwxNjM5LDE3NjINCiIzIiwzLCJDYXBpdGFsIGNpdHkiLDIsMyw1LCJObyIsMTIzMyw0NDksMTI1MiwxMjgyDQoiNCIsNCwiQ2FwaXRhbCBjaXR5IiwzLDEsNCwiWWVzIiwxMTUzLDMzOCwxMDkyLDExMzkNCiI1Iiw1LCJSZWdpb25hbCIsMiwwLDIsIk5vIiwxMjEzLDM3NSwxMjIwLDExNjANCiI2Iiw2LCJSZWdpb25hbCIsMiwyLDQsIk5vIiwzMjM3LDEwMDUsMzAzOSwzMjI5DQoiNyIsNywiQ2FwaXRhbCBjaXR5IiwxLDQsNSwiWWVzIiwyMTQyLDY0NywyMDY3LDIxOTANCiI4Iiw4LCJSZWdpb25hbCIsMiw0LDYsIk5vIiwxMzk5LDQ3MiwxMzAzLDE0OTQNCiI5Iiw5LCJDYXBpdGFsIGNpdHkiLDEsMSwyLCJObyIsODQ3LDI1OSw4MDgsNzE5DQoiMTAiLDEwLCJDYXBpdGFsIGNpdHkiLDMsMiw1LCJZZXMiLDQwMzUsMTQxMyw0MDIzLDQzNzANCiIxMSIsMTEsIkNhcGl0YWwgY2l0eSIsMiwyLDQsIk5vIiwxMTk3LDY0OSwxMjA0LDEwNjMNCiIxMiIsMTIsIkNhcGl0YWwgY2l0eSIsNCwzLDcsIk5vIiwyMzM4LDgxNSwyMzAyLDIxOTYNCiIxMyIsMTMsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIlllcyIsMTY1Miw2MTYsMTYyMiwxNjE3DQoiMTQiLDE0LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJZZXMiLDEyNjksNjA1LDExODMsMTMyNg0KIjE1IiwxNSwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDIwNDYsNzE4LDIwNDgsMjIyMg0KIjE2IiwxNiwiUmVnaW9uYWwiLDIsMiw0LCJObyIsMTEyNiwzOTQsMTA5NCwxMjYzDQoiMTciLDE3LCJSZWdpb25hbCIsMSwxLDIsIk5vIiwxODI1LDY5MCwxODEwLDIwMDMNCiIxOCIsMTgsIlJlZ2lvbmFsIiw0LDIsNiwiTm8iLDE1ODgsNjE1LDE1ODcsMTU3OA0KIjE5IiwxOSwiUmVnaW9uYWwiLDEsMCwxLCJZZXMiLDQ0OSwxMjAsNDM4LDM1OA0KIjIwIiwyMCwiUmVnaW9uYWwiLDIsMCwyLCJObyIsMTM5OCwzMDksMTMwOSwxMjI2DQoiMjEiLDIxLCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTczOCw3MzEsMTYzNSwxNjIzDQoiMjIiLDIyLCJSZWdpb25hbCIsMywzLDYsIlllcyIsMjI1MSw1OTAsMjEwNiwxODU2DQoiMjMiLDIzLCJSZWdpb25hbCIsMSwzLDQsIlllcyIsMTYyNCw0NTQsMTU0MSwxMzMxDQoiMjQiLDI0LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJZZXMiLDEyOTQsNTE5LDEyMzQsMTI0Mg0KIjI1IiwyNSwiQ2FwaXRhbCBjaXR5IiwxLDMsNCwiTm8iLDIxMTgsODU0LDE5NTgsMTk2OA0KIjI2IiwyNiwiUmVnaW9uYWwiLDEsMCwxLCJObyIsMTU1NSw1MjYsMTUwOSwxNTQ2DQoiMjciLDI3LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTQ3Nyw0ODgsMTM4MiwxODQ5DQoiMjgiLDI4LCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsMTM4MSw1MDcsMTI3NywxMjkwDQoiMjkiLDI5LCJDYXBpdGFsIGNpdHkiLDEsMiwzLCJObyIsMjA0Myw2NjYsMjA1MiwyMjYwDQoiMzAiLDMwLCJSZWdpb25hbCIsMiwyLDQsIlllcyIsNzcxLDI4OSw3MTAsNTQ3DQoiMzEiLDMxLCJSZWdpb25hbCIsMiwwLDIsIk5vIiwxNzk2LDUyOCwxODI1LDIwMDUNCiIzMiIsMzIsIlJlZ2lvbmFsIiwyLDIsNCwiTm8iLDE0MzAsNDc5LDEzODcsMTI5MQ0KIjMzIiwzMywiQ2FwaXRhbCBjaXR5IiwzLDIsNSwiTm8iLDI2NDgsOTYzLDI0NzEsMjUxNA0KIjM0IiwzNCwiUmVnaW9uYWwiLDQsMSw1LCJObyIsMTU0Niw0MzksMTUyOSwxNDExDQoiMzUiLDM1LCJSZWdpb25hbCIsMiwwLDIsIlllcyIsMTQwNCw0MjUsMTQyNywxNTQ4DQoiMzYiLDM2LCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsMTk2Niw3OTQsMTkwMSwyMDE4DQoiMzciLDM3LCJSZWdpb25hbCIsMSwwLDEsIk5vIiwxNTAyLDY1OCwxMzk5LDE3NzcNCiIzOCIsMzgsIkNhcGl0YWwgY2l0eSIsNCwwLDQsIk5vIiwxNzE2LDY0MSwxNjQwLDE4OTANCiIzOSIsMzksIkNhcGl0YWwgY2l0eSIsMiwwLDIsIlllcyIsMTIzNiw0OTYsMTE1MiwxMzEwDQoiNDAiLDQwLCJSZWdpb25hbCIsMiwwLDIsIk5vIiwyNTg1LDc3NSwyNDYzLDI0ODENCiI0MSIsNDEsIkNhcGl0YWwgY2l0eSIsNCwyLDYsIk5vIiwyNTQ4LDk3NiwyMzU0LDIyODcNCiI0MiIsNDIsIlJlZ2lvbmFsIiwzLDAsMywiTm8iLDE5NTQsNjI4LDE5MzAsMTk1MQ0KIjQzIiw0MywiUmVnaW9uYWwiLDIsMCwyLCJObyIsMzE3OSw5MjIsMzE3NiwzMTE4DQoiNDQiLDQ0LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJZZXMiLDEyOTQsNDc2LDEyMTYsMTI4OA0KIjQ1Iiw0NSwiQ2FwaXRhbCBjaXR5IiwzLDAsMywiTm8iLDMwMjIsOTU0LDMwNzksMzE0NA0KIjQ2Iiw0NiwiQ2FwaXRhbCBjaXR5IiwzLDQsNywiTm8iLDEzNzMsNjI5LDEzMjksMTQ2Nw0KIjQ3Iiw0NywiQ2FwaXRhbCBjaXR5IiwzLDAsMywiTm8iLDE1MjQsNzUwLDE0NzQsMTQ4Mg0KIjQ4Iiw0OCwiQ2FwaXRhbCBjaXR5IiwxLDIsMywiWWVzIiwxMzg0LDU0MiwxMzA3LDEyODMNCiI0OSIsNDksIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxMjAyLDU5NywxMjIwLDEyNjUNCiI1MCIsNTAsIkNhcGl0YWwgY2l0eSIsMiwyLDQsIlllcyIsMTY3Miw3MDMsMTY5MywxNzExDQoiNTEiLDUxLCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsMjEwMyw2ODcsMTk5NiwyMTMxDQoiNTIiLDUyLCJSZWdpb25hbCIsMSwxLDIsIk5vIiwxMTExLDM0MCwxMDYyLDExOTQNCiI1MyIsNTMsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiw3OTcsNDYzLDc3MCw2ODINCiI1NCIsNTQsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIlllcyIsMTcwNSw1NjAsMTY1OCwxNDk2DQoiNTUiLDU1LCJDYXBpdGFsIGNpdHkiLDMsMCwzLCJObyIsMTYwOCw3MDUsMTUyMiwxNTk0DQoiNTYiLDU2LCJSZWdpb25hbCIsMiwwLDIsIk5vIiwxMzI0LDM0OSwxMzA3LDEzNDgNCiI1NyIsNTcsIkNhcGl0YWwgY2l0eSIsMywwLDMsIlllcyIsMTY2MSwzODksMTU1MSwxNjYwDQoiNTgiLDU4LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMjM3Miw5MzYsMjM0OSwyNDA3DQoiNTkiLDU5LCJDYXBpdGFsIGNpdHkiLDEsMiwzLCJZZXMiLDEzNTUsMzg0LDEyODMsMTI5Mg0KIjYwIiw2MCwiUmVnaW9uYWwiLDIsMSwzLCJObyIsMTc2Myw3NjYsMTY0MCwxNzUzDQoiNjEiLDYxLCJSZWdpb25hbCIsMiwyLDQsIlllcyIsOTk2LDUzMSw5MzEsMTE3NA0KIjYyIiw2MiwiQ2FwaXRhbCBjaXR5IiwxLDAsMSwiWWVzIiwxMDkyLDM4NiwxMDMyLDEyMDINCiI2MyIsNjMsIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDY5OCwyODAsNjkyLDg0NA0KIjY0Iiw2NCwiQ2FwaXRhbCBjaXR5IiwxLDAsMSwiTm8iLDk5NCw0MTYsOTIxLDk0Nw0KIjY1Iiw2NSwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDc5NCwzMDQsNzU2LDc3NA0KIjY2Iiw2NiwiQ2FwaXRhbCBjaXR5IiwxLDQsNSwiTm8iLDE2OTksNzcxLDE2OTksMTc3OQ0KIjY3Iiw2NywiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDEyNDYsNTM4LDExNzksMTI4Mg0KIjY4Iiw2OCwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDIxNjEsODM2LDIwMzMsMTkxNg0KIjY5Iiw2OSwiUmVnaW9uYWwiLDIsMSwzLCJZZXMiLDEzMzksNDQ1LDEyODgsMTA1MQ0KIjcwIiw3MCwiUmVnaW9uYWwiLDIsMSwzLCJObyIsMTE1NywzMTQsMTE3OCwxMTk0DQoiNzEiLDcxLCJSZWdpb25hbCIsMSwwLDEsIk5vIiwxMTkyLDIyMCwxMTUwLDEyNTANCiI3MiIsNzIsIlJlZ2lvbmFsIiwyLDIsNCwiTm8iLDE0NzIsMzU1LDE0MTAsMTMxOQ0KIjczIiw3MywiQ2FwaXRhbCBjaXR5IiwxLDIsMywiTm8iLDE2NzQsNjM1LDE1NzMsMTUxNQ0KIjc0Iiw3NCwiUmVnaW9uYWwiLDEsMCwxLCJZZXMiLDY2MywzMTQsNjIwLDg5Ng0KIjc1Iiw3NSwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDE4MTksNjE1LDE4MTUsMTU1OA0KIjc2Iiw3NiwiQ2FwaXRhbCBjaXR5IiwzLDAsMywiWWVzIiw0NTIsMTg0LDQ0MCw1NzANCiI3NyIsNzcsIkNhcGl0YWwgY2l0eSIsMiwyLDQsIk5vIiwxNDIwLDUzNCwxNDE1LDE4MzANCiI3OCIsNzgsIlJlZ2lvbmFsIiwxLDEsMiwiTm8iLDIxNDUsNjkzLDIxODAsMjIyMA0KIjc5Iiw3OSwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDEzMTUsNDg2LDEzNDEsMTY2MQ0KIjgwIiw4MCwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiWWVzIiwxMTA4LDU3MSwxMDQyLDEwMTYNCiI4MSIsODEsIkNhcGl0YWwgY2l0eSIsNCwzLDcsIk5vIiwxNjkyLDcxNiwxNjcwLDIwNjYNCiI4MiIsODIsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxNzk2LDc0OCwxNjg3LDE4MjgNCiI4MyIsODMsIlJlZ2lvbmFsIiwxLDMsNCwiTm8iLDE3ODMsNTY0LDE3NDUsMTc0Nw0KIjg0Iiw4NCwiUmVnaW9uYWwiLDMsMCwzLCJObyIsMTYzMSw1OTgsMTY2MCwxNDY3DQoiODUiLDg1LCJSZWdpb25hbCIsNCwxLDUsIk5vIiw5OTIsMjY3LDk2MywxMTYwDQoiODYiLDg2LCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsMTE1OSw1MjAsMTE3OCwxMTg3DQoiODciLDg3LCJSZWdpb25hbCIsMiwyLDQsIk5vIiwxMTA4LDM0NywxMTEzLDEwNjUNCiI4OCIsODgsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwzMDk3LDEyODIsMjg5NywzMDQ4DQoiODkiLDg5LCJSZWdpb25hbCIsMywzLDYsIk5vIiwxNzQzLDU0NSwxNjY2LDE3MzUNCiI5MCIsOTAsIlJlZ2lvbmFsIiwyLDAsMiwiWWVzIiwxMTYxLDQ2MSwxMTU0LDExODcNCiI5MSIsOTEsIkNhcGl0YWwgY2l0eSIsMiwzLDUsIlllcyIsNzI1LDQ2Miw2ODAsOTAxDQoiOTIiLDkyLCJDYXBpdGFsIGNpdHkiLDIsMyw1LCJObyIsOTA4LDM0Nyw5MTcsMTAyOQ0KIjkzIiw5MywiQ2FwaXRhbCBjaXR5IiwzLDAsMywiTm8iLDE4NjMsNTc3LDE4MjIsMTgzMA0KIjk0Iiw5NCwiUmVnaW9uYWwiLDEsMCwxLCJObyIsMTUwNywzOTYsMTUzNSwxMTc2DQoiOTUiLDk1LCJSZWdpb25hbCIsMSwyLDMsIlllcyIsMTEzNiw0NzgsMTExMSwxMDM3DQoiOTYiLDk2LCJSZWdpb25hbCIsMSwwLDEsIlllcyIsOTU3LDQ1Myw5MDgsOTYxDQoiOTciLDk3LCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsOTA0LDM2NCw4MzUsNzM5DQoiOTgiLDk4LCJSZWdpb25hbCIsMiwwLDIsIk5vIiw5ODUsMjIxLDkyNywxMDIwDQoiOTkiLDk5LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTAwMywzMDIsMTAxMSwxMDA0DQoiMTAwIiwxMDAsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwyMDIxLDgxMiwxOTIwLDIwOTINCiIxMDEiLDEwMSwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDIzNzcsNzA2LDIzODcsMjMyNA0KIjEwMiIsMTAyLCJSZWdpb25hbCIsMiwyLDQsIk5vIiw3NjcsMjg2LDcwOCw1MDENCiIxMDMiLDEwMywiUmVnaW9uYWwiLDIsMiw0LCJObyIsMjE2Miw2NjksMjE4MywyNDkxDQoiMTA0IiwxMDQsIkNhcGl0YWwgY2l0eSIsMSwyLDMsIk5vIiwxODA0LDY5MywxNzUzLDE5MDANCiIxMDUiLDEwNSwiQ2FwaXRhbCBjaXR5Iiw0LDAsNCwiWWVzIiwxNTc3LDU5OSwxNTUzLDE1OTYNCiIxMDYiLDEwNiwiQ2FwaXRhbCBjaXR5IiwzLDQsNywiTm8iLDE4MzgsNTgxLDE4NDIsMTg4Mg0KIjEwNyIsMTA3LCJDYXBpdGFsIGNpdHkiLDMsMiw1LCJZZXMiLDE0ODMsNTk5LDE0OTIsMTYwNw0KIjEwOCIsMTA4LCJDYXBpdGFsIGNpdHkiLDIsMyw1LCJObyIsMjQyOCwxMDc3LDI0NTMsMjQ0MA0KIjEwOSIsMTA5LCJDYXBpdGFsIGNpdHkiLDIsMyw1LCJObyIsMTYzNCw3MjUsMTUzOSwxNjg2DQoiMTEwIiwxMTAsIlJlZ2lvbmFsIiwxLDQsNSwiTm8iLDEzNDEsNTQ0LDEyNzcsMTExNg0KIjExMSIsMTExLCJDYXBpdGFsIGNpdHkiLDIsMyw1LCJZZXMiLDE5NDQsNzY2LDE4MDMsMTk3NQ0KIjExMiIsMTEyLCJSZWdpb25hbCIsMiwyLDQsIk5vIiw5MTQsMjE1LDg4Nyw5NzQNCiIxMTMiLDExMywiUmVnaW9uYWwiLDMsMCwzLCJObyIsMTc3NCw1NTYsMTgwMiwxNzgxDQoiMTE0IiwxMTQsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIk5vIiwxMDEzLDQzOSwxMDIwLDExODYNCiIxMTUiLDExNSwiQ2FwaXRhbCBjaXR5IiwzLDIsNSwiWWVzIiwxNTI3LDU5NCwxNDYyLDE1NTINCiIxMTYiLDExNiwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDEwODgsNjY2LDEwMDQsOTY0DQoiMTE3IiwxMTcsIkNhcGl0YWwgY2l0eSIsMywxLDQsIk5vIiwxNjM0LDYxOCwxNTUxLDE3MjANCiIxMTgiLDExOCwiUmVnaW9uYWwiLDMsMyw2LCJObyIsMTcwOSw1MjYsMTU5MCwxNjk5DQoiMTE5IiwxMTksIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxOTIxLDkwMiwxOTE1LDE5OTQNCiIxMjAiLDEyMCwiQ2FwaXRhbCBjaXR5IiwxLDEsMiwiTm8iLDgzMiw0MDYsODA5LDk1OQ0KIjEyMSIsMTIxLCJSZWdpb25hbCIsMiwwLDIsIk5vIiwyNTExLDY0MCwyNDIzLDIzODMNCiIxMjIiLDEyMiwiUmVnaW9uYWwiLDIsMSwzLCJObyIsMTUzMSw1NjAsMTQyNSwxNDQyDQoiMTIzIiwxMjMsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiw5MDIsNDI2LDg1MywxMTE5DQoiMTI0IiwxMjQsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIk5vIiwxNTg5LDU0OSwxNDY1LDEyNzENCiIxMjUiLDEyNSwiQ2FwaXRhbCBjaXR5IiwzLDEsNCwiTm8iLDE5MTksNzk2LDE5NTEsMjA1Ng0KIjEyNiIsMTI2LCJSZWdpb25hbCIsMSwxLDIsIk5vIiwxNDI5LDUxMiwxNDUwLDE3MDUNCiIxMjciLDEyNywiQ2FwaXRhbCBjaXR5IiwzLDAsMywiTm8iLDE4NTQsNzE5LDE3NDMsMTk4OA0KIjEyOCIsMTI4LCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsMTYxMiw2MzYsMTU4MCwxNDQ1DQoiMTI5IiwxMjksIkNhcGl0YWwgY2l0eSIsMSwwLDEsIlllcyIsMTg0Niw2OTgsMTc2OSwxNjkyDQoiMTMwIiwxMzAsIlJlZ2lvbmFsIiwyLDEsMywiWWVzIiw2NjEsMzIxLDYzOSw4MTgNCiIxMzEiLDEzMSwiUmVnaW9uYWwiLDIsMiw0LCJObyIsMTcxMiw1NjYsMTY0MiwxNDgxDQoiMTMyIiwxMzIsIlJlZ2lvbmFsIiwyLDEsMywiTm8iLDE4ODIsNzE5LDE4MTksMjAxNA0KIjEzMyIsMTMzLCJSZWdpb25hbCIsMiwyLDQsIk5vIiwxNTE5LDUwMSwxNDQ1LDE1MzQNCiIxMzQiLDEzNCwiQ2FwaXRhbCBjaXR5IiwzLDAsMywiTm8iLDExOTYsMzU0LDExMTksOTg4DQoiMTM1IiwxMzUsIlJlZ2lvbmFsIiwyLDAsMiwiWWVzIiwxMzY5LDU1MiwxMzU5LDEyMDQNCiIxMzYiLDEzNiwiUmVnaW9uYWwiLDEsMiwzLCJObyIsMTE1NCwzODEsMTExMiwxMDkxDQoiMTM3IiwxMzcsIkNhcGl0YWwgY2l0eSIsNCwxLDUsIk5vIiwxNjY1LDY2NywxNjUxLDE5MDgNCiIxMzgiLDEzOCwiUmVnaW9uYWwiLDEsMCwxLCJObyIsMTIwMSw2MzIsMTEzMCwxMjcyDQoiMTM5IiwxMzksIkNhcGl0YWwgY2l0eSIsMSwwLDEsIlllcyIsMTU1NCw2OTMsMTUxNSwxNjY4DQoiMTQwIiwxNDAsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwxNTA1LDYzMCwxNDYzLDEzMzgNCiIxNDEiLDE0MSwiUmVnaW9uYWwiLDIsMCwyLCJObyIsMTA0OCwyODcsMTAwMiw4NjcNCiIxNDIiLDE0MiwiUmVnaW9uYWwiLDIsMiw0LCJObyIsOTE2LDIxNCw4ODYsOTM1DQoiMTQzIiwxNDMsIlJlZ2lvbmFsIiwxLDAsMSwiTm8iLDIxNTEsNjUzLDIxMjEsMTk4OQ0KIjE0NCIsMTQ0LCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsMTEwMSw0OTYsMTExMSwxMzc0DQoiMTQ1IiwxNDUsIlJlZ2lvbmFsIiwyLDIsNCwiTm8iLDIyNDgsNzc5LDIyNzYsMjMzNA0KIjE0NiIsMTQ2LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMjk0Niw5NTgsMjkzNywzMjEzDQoiMTQ3IiwxNDcsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwxOTA3LDgxMiwxODgxLDE4MzQNCiIxNDgiLDE0OCwiQ2FwaXRhbCBjaXR5IiwxLDEsMiwiTm8iLDIwMDksNzM3LDIwMDIsMjE1MA0KIjE0OSIsMTQ5LCJSZWdpb25hbCIsMiwyLDQsIlllcyIsMTE5OSwzNDcsMTE4MiwxNTkwDQoiMTUwIiwxNTAsIlJlZ2lvbmFsIiwxLDAsMSwiTm8iLDg2NiwyOTAsODI4LDY0Mg0KIjE1MSIsMTUxLCJSZWdpb25hbCIsMiwwLDIsIlllcyIsMzM2MSwxMDg3LDMyMTAsMzEyMg0KIjE1MiIsMTUyLCJSZWdpb25hbCIsMiwyLDQsIk5vIiwxMTg3LDQwOSwxMTE3LDEyNTMNCiIxNTMiLDE1MywiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiWWVzIiwxMDUxLDQyOCw5OTYsMTEyOQ0KIjE1NCIsMTU0LCJSZWdpb25hbCIsMiwxLDMsIk5vIiwxMDgwLDIyMSwxMDAzLDg1Ng0KIjE1NSIsMTU1LCJDYXBpdGFsIGNpdHkiLDIsMyw1LCJZZXMiLDI2MzUsOTc1LDI1NzAsMjg4Nw0KIjE1NiIsMTU2LCJDYXBpdGFsIGNpdHkiLDQsMyw3LCJObyIsMTkwNyw3MDAsMTg0NCwxNTI5DQoiMTU3IiwxNTcsIkNhcGl0YWwgY2l0eSIsNCwwLDQsIk5vIiwxMDg4LDI2NiwxMDA1LDExNTcNCiIxNTgiLDE1OCwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiWWVzIiwxMDI1LDMyNCw5NzcsOTI2DQoiMTU5IiwxNTksIlJlZ2lvbmFsIiw0LDIsNiwiTm8iLDExMjcsMjU2LDEwOTUsMTA0Mg0KIjE2MCIsMTYwLCJDYXBpdGFsIGNpdHkiLDEsMiwzLCJObyIsMjIyOCw3OTgsMjIwOSwyMjAxDQoiMTYxIiwxNjEsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwyNTUxLDg4OCwyNjAxLDI3MDYNCiIxNjIiLDE2MiwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDEyMjksNDE3LDExNzUsMTA5NQ0KIjE2MyIsMTYzLCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMzE0MCwxMjI5LDMwODEsMzMwOA0KIjE2NCIsMTY0LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMTEyNCw1MzgsMTA4NywxMDU0DQoiMTY1IiwxNjUsIkNhcGl0YWwgY2l0eSIsMSwyLDMsIk5vIiwyMDA2LDY2NSwxOTkwLDE5NjQNCiIxNjYiLDE2NiwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDI2MzUsMTE0OSwyNDgyLDI1MDINCiIxNjciLDE2NywiUmVnaW9uYWwiLDEsMSwyLCJObyIsMTM2NSwzMzIsMTI1OSwxNTkzDQoiMTY4IiwxNjgsIlJlZ2lvbmFsIiwyLDEsMywiWWVzIiwxMzcwLDQ0NSwxMzE4LDE0MDANCiIxNjkiLDE2OSwiUmVnaW9uYWwiLDIsMyw1LCJObyIsMTkyNSw1NDQsMTc3OCwyMDE2DQoiMTcwIiwxNzAsIkNhcGl0YWwgY2l0eSIsMSwyLDMsIk5vIiwyMTEwLDg2MSwyMDIyLDIxNjINCiIxNzEiLDE3MSwiQ2FwaXRhbCBjaXR5IiwxLDAsMSwiWWVzIiw5NzcsNDA2LDk4NiwxMjkxDQoiMTcyIiwxNzIsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIk5vIiwxNzIzLDc1OSwxNjEyLDE1NzQNCiIxNzMiLDE3MywiUmVnaW9uYWwiLDIsMiw0LCJObyIsMTEzMiw0MDYsMTEyNywxMDY1DQoiMTc0IiwxNzQsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxOTUwLDgxMCwxOTg0LDIyMDANCiIxNzUiLDE3NSwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDE2OTUsNTk3LDE2NzMsMTU4Ng0KIjE3NiIsMTc2LCJDYXBpdGFsIGNpdHkiLDEsMyw0LCJObyIsMTU2OCw1OTUsMTU1MSwxNjI2DQoiMTc3IiwxNzcsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxNDU5LDY1MiwxMzcwLDE0ODUNCiIxNzgiLDE3OCwiUmVnaW9uYWwiLDIsMyw1LCJObyIsMTU4Miw0NjgsMTUyOSwxODcwDQoiMTc5IiwxNzksIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxNDc5LDY1NSwxMzY5LDEzMDkNCiIxODAiLDE4MCwiUmVnaW9uYWwiLDIsMiw0LCJObyIsMTk0Miw0OTEsMTg3MCwyMjc3DQoiMTgxIiwxODEsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxNTEyLDY0MSwxNDk4LDEzNjYNCiIxODIiLDE4MiwiUmVnaW9uYWwiLDIsMSwzLCJZZXMiLDE2NDEsODM4LDE2MTEsMTU5OQ0KIjE4MyIsMTgzLCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMTc4Myw2NzYsMTcxMCwxODA2DQoiMTg0IiwxODQsIlJlZ2lvbmFsIiw0LDMsNywiTm8iLDIzOTMsODUxLDIyNzYsMjU2MQ0KIjE4NSIsMTg1LCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJZZXMiLDk3OCw0MzUsOTE3LDk5Mg0KIjE4NiIsMTg2LCJDYXBpdGFsIGNpdHkiLDQsMCw0LCJZZXMiLDk0NCwzMTQsOTU0LDgwOA0KIjE4NyIsMTg3LCJDYXBpdGFsIGNpdHkiLDEsMSwyLCJObyIsMTQwOSw2NDAsMTM1NSwxMzI2DQoiMTg4IiwxODgsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwyMTg0LDc0NiwyMTg2LDI0MjANCiIxODkiLDE4OSwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiWWVzIiwxNzIxLDc3MCwxNjk3LDE4MTQNCiIxOTAiLDE5MCwiQ2FwaXRhbCBjaXR5IiwzLDAsMywiWWVzIiwxNjU5LDY2OSwxNTY0LDE2MzUNCiIxOTEiLDE5MSwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDEzMzUsNTkzLDEzMDAsMTQ2MQ0KIjE5MiIsMTkyLCJDYXBpdGFsIGNpdHkiLDEsMyw0LCJObyIsMTgzMyw5ODksMTY5NSwxODQ0DQoiMTkzIiwxOTMsIlJlZ2lvbmFsIiwyLDAsMiwiWWVzIiwyMzExLDY3MSwyMjYyLDI0MzYNCiIxOTQiLDE5NCwiUmVnaW9uYWwiLDMsMCwzLCJObyIsMTgzOCw1NzYsMTgzMiwxNzExDQoiMTk1IiwxOTUsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIlllcyIsOTY5LDU0NSw5ODAsNzIyDQoiMTk2IiwxOTYsIlJlZ2lvbmFsIiwyLDEsMywiTm8iLDE4MjcsNjQzLDE4MjIsMTc5MQ0KIjE5NyIsMTk3LCJSZWdpb25hbCIsMywxLDQsIlllcyIsMTIzOSwzMjcsMTE2MSwxMjk5DQoiMTk4IiwxOTgsIlJlZ2lvbmFsIiwyLDMsNSwiTm8iLDE5MzIsNjI0LDE4MDMsMTY4OA0KIjE5OSIsMTk5LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTI4NSw0MjUsMTIzMywxMzc4DQoiMjAwIiwyMDAsIlJlZ2lvbmFsIiwyLDIsNCwiTm8iLDEyODEsNDcxLDEyODUsMTEzMQ0KIjIwMSIsMjAxLCJSZWdpb25hbCIsMSw0LDUsIlllcyIsODMyLDIxMCw4MDQsOTk4DQoiMjAyIiwyMDIsIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDE3NjEsNjIyLDE3MTQsMjA2Nw0KIjIwMyIsMjAzLCJSZWdpb25hbCIsMywwLDMsIk5vIiwxMjgxLDQ0MSwxMjQ5LDExNzkNCiIyMDQiLDIwNCwiUmVnaW9uYWwiLDIsMCwyLCJZZXMiLDczMCwyMTksNzIyLDgwMQ0KIjIwNSIsMjA1LCJSZWdpb25hbCIsMiwyLDQsIk5vIiwxODcxLDYxOCwxNzk1LDE3MzENCiIyMDYiLDIwNiwiQ2FwaXRhbCBjaXR5IiwxLDAsMSwiWWVzIiwxMTcwLDUxMywxMDc4LDE0MDgNCiIyMDciLDIwNywiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDIxMzAsODc3LDE5NjAsMTg4OA0KIjIwOCIsMjA4LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsNzcxLDMzMCw3MTEsNzIwDQoiMjA5IiwyMDksIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDI3NzMsNzE4LDI4MjcsMjg0NA0KIjIxMCIsMjEwLCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMTYxMSw0NjIsMTUxMywxNzMwDQoiMjExIiwyMTEsIlJlZ2lvbmFsIiwyLDEsMywiTm8iLDIyMjUsNjI4LDIxNjYsMjI3OA0KIjIxMiIsMjEyLCJSZWdpb25hbCIsMiwwLDIsIk5vIiwyMzA0LDcxNSwyMTc1LDI1MjINCiIyMTMiLDIxMywiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDE2NDEsNjYxLDE1NTYsMTU2OQ0KIjIxNCIsMjE0LCJSZWdpb25hbCIsMSwzLDQsIk5vIiwxODIyLDY4OCwxNzA0LDE5NzcNCiIyMTUiLDIxNSwiQ2FwaXRhbCBjaXR5IiwzLDMsNiwiTm8iLDE4NDgsODEzLDE3NTEsMTY0Nw0KIjIxNiIsMjE2LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJZZXMiLDIyNjksOTE4LDIxNzUsMjMxMw0KIjIxNyIsMjE3LCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsMjA1NSw4MTgsMjA4OCwyMDYzDQoiMjE4IiwyMTgsIkNhcGl0YWwgY2l0eSIsMiwyLDQsIk5vIiwyMTcyLDY1MCwyMDEzLDE2NDYNCiIyMTkiLDIxOSwiUmVnaW9uYWwiLDEsMCwxLCJObyIsMTA1OSw0MjQsMTA0OCw4MjkNCiIyMjAiLDIyMCwiUmVnaW9uYWwiLDMsMiw1LCJObyIsMTkxMyw1ODQsMTkwOSwxODQ3DQoiMjIxIiwyMjEsIlJlZ2lvbmFsIiwyLDIsNCwiTm8iLDEyMDcsNDQ0LDExNDQsMTYxNw0KIjIyMiIsMjIyLCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMjE1OCw3NjYsMjA4MSwyMTM1DQoiMjIzIiwyMjMsIkNhcGl0YWwgY2l0eSIsMSwxLDIsIk5vIiwxMzkxLDU3NSwxMzgxLDE2NTkNCiIyMjQiLDIyNCwiUmVnaW9uYWwiLDIsMCwyLCJZZXMiLDY5OSwzNjEsNjc3LDYwMQ0KIjIyNSIsMjI1LCJDYXBpdGFsIGNpdHkiLDQsMCw0LCJZZXMiLDIyMjQsNzE2LDIxNDgsMjA4MA0KIjIyNiIsMjI2LCJSZWdpb25hbCIsMiwwLDIsIk5vIiwyMTQyLDY2NiwxOTc1LDIyMzENCiIyMjciLDIyNywiUmVnaW9uYWwiLDIsMCwyLCJZZXMiLDEzMTMsMzk0LDEzMjgsMTUzNg0KIjIyOCIsMjI4LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJZZXMiLDE0NDYsMzk5LDEzNzIsMTQ2Mg0KIjIyOSIsMjI5LCJSZWdpb25hbCIsMiwwLDIsIk5vIiwxMDQ0LDMzMiw5OTgsMTI1NQ0KIjIzMCIsMjMwLCJSZWdpb25hbCIsMiwxLDMsIk5vIiwyMDAxLDU5MiwxODc1LDE4NDENCiIyMzEiLDIzMSwiQ2FwaXRhbCBjaXR5IiwxLDEsMiwiTm8iLDE4ODUsNjI5LDE3OTIsMTg5OQ0KIjIzMiIsMjMyLCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsMTkzMSw2NzksMTgxNCwxNTg1DQoiMjMzIiwyMzMsIkNhcGl0YWwgY2l0eSIsMSwyLDMsIk5vIiwxNDY2LDcwNiwxNDU2LDE5MjgNCiIyMzQiLDIzNCwiQ2FwaXRhbCBjaXR5Iiw0LDAsNCwiWWVzIiwxMjA1LDQzMiwxMjEwLDEwNzcNCiIyMzUiLDIzNSwiUmVnaW9uYWwiLDIsMiw0LCJZZXMiLDE0NDksNDQ3LDEzNTgsMTUyNQ0KIjIzNiIsMjM2LCJSZWdpb25hbCIsNCwyLDYsIlllcyIsMzEyMSw3NTcsMjg5NywyODgwDQoiMjM3IiwyMzcsIkNhcGl0YWwgY2l0eSIsMiwyLDQsIk5vIiwxODA3LDU4OSwxNzI3LDE3MzYNCiIyMzgiLDIzOCwiQ2FwaXRhbCBjaXR5IiwyLDQsNiwiTm8iLDEzNTQsNTMzLDEyODAsMTUyOQ0KIjIzOSIsMjM5LCJSZWdpb25hbCIsMiw0LDYsIk5vIiwxOTYwLDU4OCwxODU2LDE4MjgNCiIyNDAiLDI0MCwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDI1MzQsMTEwMSwyNDg1LDIzODENCiIyNDEiLDI0MSwiQ2FwaXRhbCBjaXR5IiwzLDAsMywiTm8iLDExNjcsMzM4LDEwODUsMTA1NA0KIjI0MiIsMjQyLCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJZZXMiLDE5NDUsNzgyLDE5NTYsMTg4OQ0KIjI0MyIsMjQzLCJSZWdpb25hbCIsMiwzLDUsIlllcyIsMTI2MywzODgsMTIzMCwxMjU1DQoiMjQ0IiwyNDQsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxMTUwLDUwNSwxMDkxLDExODANCiIyNDUiLDI0NSwiUmVnaW9uYWwiLDEsMiwzLCJZZXMiLDkwNSwzNDQsODk1LDEwNzINCiIyNDYiLDI0NiwiUmVnaW9uYWwiLDIsMCwyLCJObyIsNTYyLDMyMyw1NzMsNDA0DQoiMjQ3IiwyNDcsIlJlZ2lvbmFsIiwyLDMsNSwiTm8iLDE0NDYsMzk1LDE0MzEsMTQwOA0KIjI0OCIsMjQ4LCJSZWdpb25hbCIsMiwyLDQsIk5vIiwxNDk3LDYwMSwxMzk0LDE1OTQNCiIyNDkiLDI0OSwiUmVnaW9uYWwiLDMsMiw1LCJZZXMiLDI4OTUsOTYwLDI3NjAsMjg2Mw0KIjI1MCIsMjUwLCJSZWdpb25hbCIsMSw0LDUsIlllcyIsMTQ1OCwyOTMsMTQ2NSwxNTk1DQoiMjUxIiwyNTEsIkNhcGl0YWwgY2l0eSIsMiwyLDQsIk5vIiwyMTE0LDQ4OSwyMDQ5LDIxMzANCiIyNTIiLDI1MiwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDIwNzQsOTE0LDIxMDcsMjA1Ng0KIjI1MyIsMjUzLCJSZWdpb25hbCIsMiw0LDYsIk5vIiw5NjQsMTk3LDk4MiwxMDIyDQoiMjU0IiwyNTQsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxMjA0LDQyNSwxMTY5LDEyNzYNCiIyNTUiLDI1NSwiQ2FwaXRhbCBjaXR5IiwzLDEsNCwiTm8iLDM1NTAsMTM1NiwzNTI1LDM2OTANCiIyNTYiLDI1NiwiUmVnaW9uYWwiLDIsMCwyLCJObyIsMjYxMCw4MzAsMjQyNiwyNDgwDQoiMjU3IiwyNTcsIkNhcGl0YWwgY2l0eSIsMywwLDMsIk5vIiwxMTk1LDQ2MSwxMjExLDExMzUNCiIyNTgiLDI1OCwiQ2FwaXRhbCBjaXR5IiwyLDQsNiwiTm8iLDE0MDIsNjA5LDEzMzUsMTQ5MA0KIjI1OSIsMjU5LCJDYXBpdGFsIGNpdHkiLDMsMyw2LCJObyIsMjY0Miw5NjIsMjYyMCwyNTk1DQoiMjYwIiwyNjAsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxMjE0LDU2MSwxMTc1LDEzMzkNCiIyNjEiLDI2MSwiQ2FwaXRhbCBjaXR5IiwyLDMsNSwiTm8iLDEzOTIsMzk2LDEzMTIsMTU1MQ0KIjI2MiIsMjYyLCJSZWdpb25hbCIsMSwwLDEsIk5vIiwxMTg2LDIwOCwxMTc2LDEyMDcNCiIyNjMiLDI2MywiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDI3NjMsMTAyMSwyNjMwLDIyODUNCiIyNjQiLDI2NCwiQ2FwaXRhbCBjaXR5IiwzLDAsMywiTm8iLDE5MjcsODY4LDE5NDUsMjA0Mg0KIjI2NSIsMjY1LCJSZWdpb25hbCIsMiwwLDIsIk5vIiw4NTYsMzg2LDg0MiwxMDIwDQoiMjY2IiwyNjYsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwxMzI3LDU3OCwxMzE0LDE1NjkNCiIyNjciLDI2NywiQ2FwaXRhbCBjaXR5IiwxLDAsMSwiTm8iLDE0MzksNTM0LDEzMzksMTM4MA0KIjI2OCIsMjY4LCJSZWdpb25hbCIsMiwwLDIsIk5vIiwxNTk0LDU3OSwxNTAwLDE3MTANCiIyNjkiLDI2OSwiQ2FwaXRhbCBjaXR5IiwyLDMsNSwiTm8iLDIwNzYsNzc1LDIwMDEsMjE3OQ0KIjI3MCIsMjcwLCJDYXBpdGFsIGNpdHkiLDMsMCwzLCJZZXMiLDEyNjAsMjM3LDExNzIsMTAyMw0KIjI3MSIsMjcxLCJDYXBpdGFsIGNpdHkiLDQsMCw0LCJObyIsNzk1LDM2Niw3NzQsODYyDQoiMjcyIiwyNzIsIkNhcGl0YWwgY2l0eSIsMSwxLDIsIlllcyIsMjMxMiw4OTcsMjE5MiwyMzgzDQoiMjczIiwyNzMsIlJlZ2lvbmFsIiwxLDIsMywiTm8iLDE1NzYsNDcwLDE1NTMsMTUzNQ0KIjI3NCIsMjc0LCJDYXBpdGFsIGNpdHkiLDIsMyw1LCJObyIsMzA1MywxMjkxLDMwNjYsMzI5NQ0KIjI3NSIsMjc1LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMjc5Niw5MDEsMjY1NiwyNDMxDQoiMjc2IiwyNzYsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIlllcyIsOTA2LDQ1NSw5MTIsMTIyNg0KIjI3NyIsMjc3LCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsMTc0OSw3MjgsMTYzNCwxNzE3DQoiMjc4IiwyNzgsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwxMzEwLDU0MywxMjUyLDEzMTQNCiIyNzkiLDI3OSwiQ2FwaXRhbCBjaXR5IiwxLDAsMSwiTm8iLDE1MjYsNjM4LDE0OTAsMTUyNg0KIjI4MCIsMjgwLCJDYXBpdGFsIGNpdHkiLDEsMSwyLCJZZXMiLDE2NTQsNDc4LDE2NTQsMTUwNQ0KIjI4MSIsMjgxLCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJZZXMiLDkzNCwzNjcsOTAwLDkxMQ0KIjI4MiIsMjgyLCJDYXBpdGFsIGNpdHkiLDIsNCw2LCJObyIsMzE1MCwxMTE5LDMxOTcsMzIyNg0KIjI4MyIsMjgzLCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsMTM1NSw2NTgsMTMzNSwxNDA3DQoiMjg0IiwyODQsIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDE5NTUsNTk0LDE4MDgsMTk5Mg0KIjI4NSIsMjg1LCJSZWdpb25hbCIsMSwwLDEsIk5vIiw2ODksNDE0LDY1OCw2NDgNCiIyODYiLDI4NiwiQ2FwaXRhbCBjaXR5IiwyLDMsNSwiTm8iLDE1OTksNjkwLDE1NzMsMTc0OQ0KIjI4NyIsMjg3LCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsMzIyNywxMTMyLDMwMzIsMzE2Mw0KIjI4OCIsMjg4LCJDYXBpdGFsIGNpdHkiLDMsMCwzLCJObyIsMTk0MSw2MjIsMTg1NywxNjg2DQoiMjg5IiwyODksIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxMjQyLDQ2NCwxMjMwLDk5Ng0KIjI5MCIsMjkwLCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJZZXMiLDExMzIsNTE2LDEwNDUsOTM3DQoiMjkxIiwyOTEsIlJlZ2lvbmFsIiwyLDEsMywiTm8iLDIxNjQsNTU5LDIwMzAsMTg3NA0KIjI5MiIsMjkyLCJDYXBpdGFsIGNpdHkiLDMsMCwzLCJZZXMiLDIzMDIsODg2LDIzMzgsMjQzNw0KIjI5MyIsMjkzLCJSZWdpb25hbCIsNCwwLDQsIk5vIiwxNzg1LDU2NiwxNzczLDE3NjcNCiIyOTQiLDI5NCwiQ2FwaXRhbCBjaXR5IiwxLDEsMiwiWWVzIiwxNDIwLDY3MywxNDE3LDEzMTYNCiIyOTUiLDI5NSwiUmVnaW9uYWwiLDIsMyw1LCJObyIsNjY1LDE1NCw2NjksNjMyDQoiMjk2IiwyOTYsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIk5vIiwyODQ5LDk1OCwyNzIwLDI3NzQNCiIyOTciLDI5NywiUmVnaW9uYWwiLDIsMSwzLCJObyIsMTAzOCw1NDEsMTA1MywxMTQ4DQoiMjk4IiwyOTgsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxNzc5LDY1OSwxNzYyLDE4OTUNCiIyOTkiLDI5OSwiQ2FwaXRhbCBjaXR5IiwyLDMsNSwiTm8iLDEzNTIsNjM0LDEzMjQsMTM0NA0KIjMwMCIsMzAwLCJSZWdpb25hbCIsMiwxLDMsIlllcyIsODMwLDMxMyw3NzIsNzY1DQoiMzAxIiwzMDEsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwyMjkxLDkyNywyMjkyLDIzNjgNCiIzMDIiLDMwMiwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDE1MTEsNzM0LDE1MTIsMTMzNA0KIjMwMyIsMzAzLCJDYXBpdGFsIGNpdHkiLDIsNCw2LCJObyIsMTcyNSw0NDksMTcyMiwxODcyDQoiMzA0IiwzMDQsIkNhcGl0YWwgY2l0eSIsMywyLDUsIk5vIiwxNTI2LDUxNywxNTIyLDE5ODUNCiIzMDUiLDMwNSwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDI0MTksMTAxOCwyMzI3LDIzMTANCiIzMDYiLDMwNiwiUmVnaW9uYWwiLDIsMSwzLCJZZXMiLDc1Nyw0MDYsNzUzLDU5Nw0KIjMwNyIsMzA3LCJSZWdpb25hbCIsMSwxLDIsIlllcyIsNTM3LDI0Niw1MzEsNjY4DQoiMzA4IiwzMDgsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIlllcyIsMTI0Niw1MjksMTE5NCwxMTY2DQoiMzA5IiwzMDksIlJlZ2lvbmFsIiwxLDAsMSwiTm8iLDc0OCwyMzgsNzQ1LDcyNQ0KIjMxMCIsMzEwLCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTQ4MCw1OTQsMTQ5OCwxNDUxDQoiMzExIiwzMTEsIlJlZ2lvbmFsIiwxLDMsNCwiTm8iLDc4MywyMTAsNzMyLDkzMA0KIjMxMiIsMzEyLCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMjE1Miw5MzAsMjAyMCwxODkyDQoiMzEzIiwzMTMsIkNhcGl0YWwgY2l0eSIsMSwxLDIsIk5vIiw5ODYsNDgyLDk3Nyw3MjcNCiIzMTQiLDMxNCwiUmVnaW9uYWwiLDEsMCwxLCJObyIsMTcxMCw0ODksMTcxNCwxNzQzDQoiMzE1IiwzMTUsIkNhcGl0YWwgY2l0eSIsMiw0LDYsIk5vIiwxNTgxLDYyNywxNTI5LDE1NjUNCiIzMTYiLDMxNiwiUmVnaW9uYWwiLDIsMyw1LCJObyIsNDMxNCwxMTk2LDQzMjksNDE5MA0KIjMxNyIsMzE3LCJDYXBpdGFsIGNpdHkiLDMsMCwzLCJObyIsMjgyMSwxMTAwLDI4MzcsMjk3NA0KIjMxOCIsMzE4LCJSZWdpb25hbCIsMiwxLDMsIk5vIiwxMjg1LDM5NSwxMjg3LDExNjQNCiIzMTkiLDMxOSwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiWWVzIiwxNzEyLDY1OCwxNjk1LDE3MDcNCiIzMjAiLDMyMCwiUmVnaW9uYWwiLDIsMCwyLCJObyIsMTk5OCw2NjUsMjAxOCwyMjQ2DQoiMzIxIiwzMjEsIlJlZ2lvbmFsIiwxLDEsMiwiWWVzIiwxMjQ1LDE2MCwxMTU5LDEzMjMNCiIzMjIiLDMyMiwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDE5MjEsNTY3LDE4MTAsMTc5Ng0KIjMyMyIsMzIzLCJSZWdpb25hbCIsMywyLDUsIk5vIiwyMDc3LDY0MCwyMDkzLDIxNTMNCiIzMjQiLDMyNCwiQ2FwaXRhbCBjaXR5IiwzLDEsNCwiTm8iLDE5MzEsNzQ0LDE5MjksMTc3OQ0KIjMyNSIsMzI1LCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJZZXMiLDE4NzEsNzUyLDE4NzUsMTkyNA0KIjMyNiIsMzI2LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTAzMSwzNTIsMTA1MCwxMjYwDQoiMzI3IiwzMjcsIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDE0NjEsNDcwLDE0MzEsMTgzNg0KIjMyOCIsMzI4LCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsMjU4Nyw4NzYsMjQyNiwyMzYxDQoiMzI5IiwzMjksIkNhcGl0YWwgY2l0eSIsMywyLDUsIk5vIiwyMTA5LDY2MCwyMTQwLDIzMDUNCiIzMzAiLDMzMCwiQ2FwaXRhbCBjaXR5IiwzLDIsNSwiTm8iLDIxNjcsNjcyLDIwNTYsMTc1NQ0KIjMzMSIsMzMxLCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTMyNiw1MzIsMTI1NSwxMDE4DQoiMzMyIiwzMzIsIlJlZ2lvbmFsIiwzLDIsNSwiTm8iLDEyMDEsMzM0LDExNDQsMTIyMA0KIjMzMyIsMzMzLCJDYXBpdGFsIGNpdHkiLDQsMCw0LCJZZXMiLDIxNjksNjQyLDIxODQsMjIwMA0KIjMzNCIsMzM0LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJZZXMiLDE2MzQsNjE1LDE1MjAsMTY4Mw0KIjMzNSIsMzM1LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsOTM3LDMwMSw4NjUsOTY2DQoiMzM2IiwzMzYsIkNhcGl0YWwgY2l0eSIsMiwyLDQsIlllcyIsMTM4OSw0ODIsMTMyNiwxMjIyDQoiMzM3IiwzMzcsIkNhcGl0YWwgY2l0eSIsMywwLDMsIk5vIiwxMjAwLDQ3NywxMTg2LDEzMDYNCiIzMzgiLDMzOCwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiWWVzIiwxMDYxLDE4NSwxMDUxLDE0NjgNCiIzMzkiLDMzOSwiQ2FwaXRhbCBjaXR5IiwyLDMsNSwiWWVzIiwxMjY1LDQ2MCwxMTg1LDEyMDkNCiIzNDAiLDM0MCwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiWWVzIiwxMTczLDQyMSwxMTk0LDEwNzYNCiIzNDEiLDM0MSwiUmVnaW9uYWwiLDIsMiw0LCJObyIsMTU0OSw1MDEsMTQ1OCwxNTE3DQoiMzQyIiwzNDIsIkNhcGl0YWwgY2l0eSIsMiwyLDQsIk5vIiwyMDgyLDg4NiwyMDY1LDIzODkNCiIzNDMiLDM0MywiUmVnaW9uYWwiLDIsMiw0LCJObyIsMTIzMCw1MTQsMTE5NSwxMTA5DQoiMzQ0IiwzNDQsIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDE3NDksNjEyLDE3NjIsMTgwMw0KIjM0NSIsMzQ1LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJZZXMiLDE3MDcsNzg3LDE3MjcsMTg1OA0KIjM0NiIsMzQ2LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTQ4OSw2MjAsMTQwNiwxMjExDQoiMzQ3IiwzNDcsIkNhcGl0YWwgY2l0eSIsNCwxLDUsIk5vIiwyMTY5LDY2NiwyMTY5LDIyMTMNCiIzNDgiLDM0OCwiUmVnaW9uYWwiLDIsMCwyLCJObyIsOTk2LDM5MSw5ODEsMTA2OA0KIjM0OSIsMzQ5LCJSZWdpb25hbCIsMSwwLDEsIlllcyIsOTUzLDMyNiw4OTMsMTE0Ng0KIjM1MCIsMzUwLCJSZWdpb25hbCIsMywyLDUsIk5vIiw5NTgsNDcxLDk0NCwxMTY0DQoiMzUxIiwzNTEsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwyMjM4LDg3NiwyMjc1LDIzMDUNCiIzNTIiLDM1MiwiUmVnaW9uYWwiLDEsMiwzLCJZZXMiLDgxNywyOTgsNzY4LDk0Nw0KIjM1MyIsMzUzLCJSZWdpb25hbCIsMiwyLDQsIk5vIiwxMjQ3LDM3NCwxMjA5LDEyMzkNCiIzNTQiLDM1NCwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDgyOCwyNjQsNzkyLDg4MQ0KIjM1NSIsMzU1LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMTY2NSw0NzUsMTY2NywxNTU5DQoiMzU2IiwzNTYsIkNhcGl0YWwgY2l0eSIsMywzLDYsIk5vIiwyMTE2LDcwNywyMDY3LDIxMzgNCiIzNTciLDM1NywiUmVnaW9uYWwiLDIsMSwzLCJObyIsMTc3Nyw1NzIsMTc3MiwxNzQwDQoiMzU4IiwzNTgsIkNhcGl0YWwgY2l0eSIsNCwxLDUsIk5vIiwxMzc2LDU1OSwxMzU3LDEyOTUNCiIzNTkiLDM1OSwiUmVnaW9uYWwiLDIsMCwyLCJObyIsMTkzMyw3MDYsMTg4MSwyMDUyDQoiMzYwIiwzNjAsIkNhcGl0YWwgY2l0eSIsMywyLDUsIk5vIiwyMDY0LDc2MywxOTkzLDIxMDcNCiIzNjEiLDM2MSwiQ2FwaXRhbCBjaXR5IiwyLDMsNSwiTm8iLDE5NzgsNjA4LDE4OTgsMjExNg0KIjM2MiIsMzYyLCJSZWdpb25hbCIsMiwxLDMsIk5vIiwxNzkxLDU2OCwxNjc1LDE1MjMNCiIzNjMiLDM2MywiUmVnaW9uYWwiLDIsMCwyLCJZZXMiLDE0ODUsNDY0LDE0NTIsMTE4OA0KIjM2NCIsMzY0LCJDYXBpdGFsIGNpdHkiLDIsNCw2LCJObyIsMjkwMSwxMDM3LDI5NTIsMjg1MA0KIjM2NSIsMzY1LCJSZWdpb25hbCIsMiwwLDIsIk5vIiwxNDI0LDQ2NSwxMzQ3LDEzMjQNCiIzNjYiLDM2NiwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiWWVzIiwxMjk5LDUyOCwxMjg2LDEzNjcNCiIzNjciLDM2NywiQ2FwaXRhbCBjaXR5IiwzLDEsNCwiWWVzIiwxMDc1LDMzMCwxMDMwLDgzNA0KIjM2OCIsMzY4LCJDYXBpdGFsIGNpdHkiLDQsMCw0LCJZZXMiLDEyNjQsMzk2LDEyNDcsMTM4MQ0KIjM2OSIsMzY5LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMjg1NSwxMDczLDI4MzgsMzAyNg0KIjM3MCIsMzcwLCJSZWdpb25hbCIsMiwxLDMsIk5vIiw5NjYsMzk3LDk0MCw3OTYNCiIzNzEiLDM3MSwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDIxMTcsODY5LDE5OTYsMTk1Mw0KIjM3MiIsMzcyLCJDYXBpdGFsIGNpdHkiLDMsMCwzLCJZZXMiLDE4MzIsNzMxLDE3NTEsMTcxNQ0KIjM3MyIsMzczLCJSZWdpb25hbCIsMiwwLDIsIk5vIiwxMzYwLDUyNCwxMzMwLDE1NTYNCiIzNzQiLDM3NCwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDI1MTYsODA3LDI1MzcsMjU2NQ0KIjM3NSIsMzc1LCJSZWdpb25hbCIsMiwxLDMsIk5vIiwzMDAzLDEwMTcsMjg2NSwyOTc0DQoiMzc2IiwzNzYsIkNhcGl0YWwgY2l0eSIsMSwxLDIsIlllcyIsMTQyOSw0MDEsMTM1OSwxMjQ0DQoiMzc3IiwzNzcsIkNhcGl0YWwgY2l0eSIsMiwzLDUsIk5vIiwzODEyLDEzOTksMzg2MCwzOTYyDQoiMzc4IiwzNzgsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxODYwLDcxMiwxODU4LDE3OTMNCiIzNzkiLDM3OSwiQ2FwaXRhbCBjaXR5IiwxLDEsMiwiTm8iLDIwNTQsNzgyLDE5MzEsMTk3OA0KIjM4MCIsMzgwLCJDYXBpdGFsIGNpdHkiLDMsMCwzLCJObyIsOTQ2LDEyMCw5MTUsNjkxDQoiMzgxIiwzODEsIkNhcGl0YWwgY2l0eSIsMiwyLDQsIk5vIiwyOTgzLDEwMTYsMjgwNywzMTEwDQoiMzgyIiwzODIsIlJlZ2lvbmFsIiwzLDAsMywiWWVzIiw1ODAsMTYwLDU3NCw2OTgNCiIzODMiLDM4MywiUmVnaW9uYWwiLDMsMyw2LCJObyIsMTIwMiw0NzUsMTEyOSwxMjQzDQoiMzg0IiwzODQsIkNhcGl0YWwgY2l0eSIsMywxLDQsIk5vIiwxMDI1LDM5Nyw5NzQsMTE4Ng0KIjM4NSIsMzg1LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJZZXMiLDEyMTgsNDkzLDExNjUsMTMyNg0KIjM4NiIsMzg2LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTgyNSw4MTMsMTcwNCwxNzAzDQoiMzg3IiwzODcsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwyNDAzLDg1MCwyMzAxLDIzNDENCiIzODgiLDM4OCwiQ2FwaXRhbCBjaXR5IiwzLDIsNSwiWWVzIiwxNzk2LDc5NSwxNjkwLDE4NjUNCiIzODkiLDM4OSwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDEzNjMsNTM2LDEzMzQsMTMxNQ0KIjM5MCIsMzkwLCJSZWdpb25hbCIsMiwyLDQsIlllcyIsMjQxMiw2MTksMjIzMCwyMjA0DQoiMzkxIiwzOTEsIlJlZ2lvbmFsIiwxLDEsMiwiTm8iLDU4NCwzMTEsNTg2LDkzMw0KIjM5MiIsMzkyLCJSZWdpb25hbCIsMiwwLDIsIlllcyIsNzcwLDQ2NCw3MjYsNDg3DQoiMzkzIiwzOTMsIlJlZ2lvbmFsIiwyLDIsNCwiTm8iLDE3NTMsNTg0LDE3MDgsMTkxMw0KIjM5NCIsMzk0LCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJZZXMiLDg3NCw1OTgsODYzLDk0NQ0KIjM5NSIsMzk1LCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJZZXMiLDExOTQsNTA0LDExMDYsMTIxMw0KIjM5NiIsMzk2LCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsMjc0OSwxMDcyLDI2MTgsMjU3OQ0KIjM5NyIsMzk3LCJSZWdpb25hbCIsMiwwLDIsIk5vIiwyMTkyLDczOSwyMDI1LDIxNjkNCiIzOTgiLDM5OCwiUmVnaW9uYWwiLDEsMSwyLCJZZXMiLDgxMCwxNjMsODA1LDExMTENCiIzOTkiLDM5OSwiUmVnaW9uYWwiLDIsMSwzLCJObyIsMTE2Myw0NTEsMTE1NCwxMzY4DQoiNDAwIiw0MDAsIlJlZ2lvbmFsIiwyLDAsMiwiWWVzIiw4NTcsMjg5LDgxMywxMDU0DQoiNDAxIiw0MDEsIlJlZ2lvbmFsIiwzLDAsMywiTm8iLDE0MjcsNDgyLDE0NDEsMTQ4Mw0KIjQwMiIsNDAyLCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTY2NCw2OTAsMTU3MSwxNzc1DQoiNDAzIiw0MDMsIlJlZ2lvbmFsIiwzLDAsMywiTm8iLDEyODIsNDQ3LDEzMDEsMTQ0MQ0KIjQwNCIsNDA0LCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsMjI1Niw4OTgsMjI1OCwxOTY4DQoiNDA1Iiw0MDUsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwyMTk0LDEwMTIsMjE1NSwyMzA1DQoiNDA2Iiw0MDYsIlJlZ2lvbmFsIiwyLDEsMywiWWVzIiw3MjQsMTcyLDY4Miw5MjkNCiI0MDciLDQwNywiUmVnaW9uYWwiLDEsMSwyLCJObyIsMTc0NSw2OTAsMTc0MywxNzQxDQoiNDA4Iiw0MDgsIlJlZ2lvbmFsIiwzLDEsNCwiTm8iLDE4NTgsNDg1LDE4NjAsMTg5NQ0KIjQwOSIsNDA5LCJSZWdpb25hbCIsMiwyLDQsIk5vIiwyMDY0LDU1MywxOTMwLDE3NjkNCiI0MTAiLDQxMCwiQ2FwaXRhbCBjaXR5IiwyLDMsNSwiTm8iLDM2NzksMTM2MiwzNDYyLDMzMjQNCiI0MTEiLDQxMSwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDE2NjgsNzUyLDE2MjAsMTU2MA0KIjQxMiIsNDEyLCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMTY0Nyw1ODksMTUyNywxMzQ2DQoiNDEzIiw0MTMsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiw5NDgsMTk2LDk2MywxMDg2DQoiNDE0Iiw0MTQsIlJlZ2lvbmFsIiwxLDAsMSwiTm8iLDExNTUsMjIzLDExMDEsOTM2DQoiNDE1Iiw0MTUsIlJlZ2lvbmFsIiwxLDIsMywiTm8iLDExMzksNDQ3LDExMjksMTMyOQ0KIjQxNiIsNDE2LCJSZWdpb25hbCIsMiwyLDQsIk5vIiwyNDg4LDc4NywyNDA0LDIyODkNCiI0MTciLDQxNywiQ2FwaXRhbCBjaXR5Iiw0LDIsNiwiWWVzIiwyMjM1LDgwOCwyMjYzLDIzNDgNCiI0MTgiLDQxOCwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiWWVzIiwxODIyLDU3OCwxODUxLDIwODQNCiI0MTkiLDQxOSwiUmVnaW9uYWwiLDIsNCw2LCJZZXMiLDk1NiwzMzUsOTM3LDEwMjANCiI0MjAiLDQyMCwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiWWVzIiwxNTg0LDYwNywxNjA2LDE4NTQNCiI0MjEiLDQyMSwiUmVnaW9uYWwiLDIsMyw1LCJObyIsMjAxNiw3MjIsMTg3MSwyMDIyDQoiNDIyIiw0MjIsIlJlZ2lvbmFsIiwyLDAsMiwiWWVzIiwxMTUzLDM2NSwxMTUwLDEyODINCiI0MjMiLDQyMywiQ2FwaXRhbCBjaXR5IiwxLDMsNCwiTm8iLDE5MDEsNjk5LDE4NTMsMTcxMw0KIjQyNCIsNDI0LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJZZXMiLDgzMCw0MjgsODQwLDk2MA0KIjQyNSIsNDI1LCJSZWdpb25hbCIsMiwwLDIsIk5vIiwxNDQyLDQxNCwxNDM5LDE1OTENCiI0MjYiLDQyNiwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDE2ODUsODUyLDE1NjUsMTYzNQ0KIjQyNyIsNDI3LCJSZWdpb25hbCIsMywxLDQsIk5vIiwxMTIxLDI2NywxMDc0LDExNjUNCiI0MjgiLDQyOCwiUmVnaW9uYWwiLDEsMSwyLCJObyIsMTQ0MCw1MTcsMTQ1OSwxMzkzDQoiNDI5Iiw0MjksIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwyNjMzLDk4NywyNjEwLDI1MTQNCiI0MzAiLDQzMCwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiWWVzIiwxNjYzLDg4NCwxNTc4LDE3MTANCiI0MzEiLDQzMSwiQ2FwaXRhbCBjaXR5IiwxLDAsMSwiTm8iLDkzNSwzNDMsODYxLDk5Nw0KIjQzMiIsNDMyLCJDYXBpdGFsIGNpdHkiLDIsMyw1LCJZZXMiLDIxNzQsOTkyLDIwMTMsMjA5NQ0KIjQzMyIsNDMzLCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMTA1NywzMzIsMTAxMSwxMzQ4DQoiNDM0Iiw0MzQsIkNhcGl0YWwgY2l0eSIsMiwyLDQsIlllcyIsMTQ1Nyw2MDksMTQxMSwxNDc0DQoiNDM1Iiw0MzUsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxNjM2LDcwNCwxNjA3LDE3MTkNCiI0MzYiLDQzNiwiQ2FwaXRhbCBjaXR5IiwyLDMsNSwiTm8iLDM1NTUsMTI2NywzNDQ0LDM1OTMNCiI0MzciLDQzNywiQ2FwaXRhbCBjaXR5IiwyLDMsNSwiTm8iLDExNzksNTQ5LDExMzcsMTE4Ng0KIjQzOCIsNDM4LCJDYXBpdGFsIGNpdHkiLDIsNCw2LCJObyIsMTQ3OSw1NjYsMTM4NCwxNTA2DQoiNDM5Iiw0MzksIlJlZ2lvbmFsIiwyLDAsMiwiWWVzIiwxNDkyLDU1NiwxMzc4LDE1NzcNCiI0NDAiLDQ0MCwiQ2FwaXRhbCBjaXR5IiwxLDMsNCwiTm8iLDEwNjMsNDI4LDEwNjEsMTE2Ng0KIjQ0MSIsNDQxLCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsOTgyLDM1OCw5ODcsODczDQoiNDQyIiw0NDIsIkNhcGl0YWwgY2l0eSIsMiwyLDQsIlllcyIsMTQyMCw1NjUsMTM0MSwxMjI2DQoiNDQzIiw0NDMsIlJlZ2lvbmFsIiw0LDIsNiwiWWVzIiwxMzEzLDQyOCwxMjIyLDExMjANCiI0NDQiLDQ0NCwiQ2FwaXRhbCBjaXR5IiwxLDEsMiwiTm8iLDEzMTcsNDQ4LDEzMzcsMTE2OQ0KIjQ0NSIsNDQ1LCJSZWdpb25hbCIsNCwwLDQsIk5vIiwxNDY3LDM2NywxNDc2LDE0MjQNCiI0NDYiLDQ0NiwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiWWVzIiwyNjcwLDgzMiwyNjc3LDI2NjINCiI0NDciLDQ0NywiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDE2NDYsNjE0LDE1NTksMTU3Mw0KIjQ0OCIsNDQ4LCJSZWdpb25hbCIsMiwxLDMsIk5vIiw5ODMsMTM2LDk0MSwxMTA1DQoiNDQ5Iiw0NDksIlJlZ2lvbmFsIiwxLDMsNCwiTm8iLDEzMDksMzczLDEyMzYsMTQ5MA0KIjQ1MCIsNDUwLCJSZWdpb25hbCIsMSwzLDQsIk5vIiwyNTMxLDc4NCwyNDM0LDI3MjANCiI0NTEiLDQ1MSwiUmVnaW9uYWwiLDIsMCwyLCJObyIsODQxLDMyMyw4NTUsODYwDQoiNDUyIiw0NTIsIkNhcGl0YWwgY2l0eSIsMywwLDMsIk5vIiwxODg2LDYyMSwxNzc4LDE2NDENCiI0NTMiLDQ1MywiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDMwMTYsOTQ1LDI5MDUsMjgyNQ0KIjQ1NCIsNDU0LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMjI1OCw4MTUsMjE1OCwyMjE0DQoiNDU1Iiw0NTUsIlJlZ2lvbmFsIiwyLDIsNCwiTm8iLDE2NjUsNjE2LDE2NzEsMTYzNg0KIjQ1NiIsNDU2LCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsMTY3Myw1MjUsMTYzMiwxMzcwDQoiNDU3Iiw0NTcsIkNhcGl0YWwgY2l0eSIsMiwzLDUsIk5vIiwxMjg5LDQ4OSwxMzAzLDEwNjANCiI0NTgiLDQ1OCwiQ2FwaXRhbCBjaXR5Iiw0LDIsNiwiTm8iLDI1NjUsMTA2NywyNjEyLDI1NDQNCiI0NTkiLDQ1OSwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDE4NjgsNjM2LDE3NTQsMTc3NQ0KIjQ2MCIsNDYwLCJSZWdpb25hbCIsMiwzLDUsIlllcyIsMTc5NSw2MjQsMTczNCwxNzc2DQoiNDYxIiw0NjEsIlJlZ2lvbmFsIiwyLDAsMiwiWWVzIiwxOTA3LDQzMiwxNzU4LDEzNjcNCiI0NjIiLDQ2MiwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDExNDgsNTc1LDExMjcsMTI0NQ0KIjQ2MyIsNDYzLCJDYXBpdGFsIGNpdHkiLDEsMiwzLCJObyIsMjE0Niw4MjUsMjE1MCwyMjQwDQoiNDY0Iiw0NjQsIkNhcGl0YWwgY2l0eSIsMiwyLDQsIk5vIiwxMDIxLDUxNiw5NDAsNzU5DQoiNDY1Iiw0NjUsIlJlZ2lvbmFsIiwyLDIsNCwiTm8iLDEyNjYsMzk2LDExOTUsMTI5OQ0KIjQ2NiIsNDY2LCJSZWdpb25hbCIsMiwwLDIsIlllcyIsMTI2OSw1MzgsMTIwMCwxMjAxDQoiNDY3Iiw0NjcsIlJlZ2lvbmFsIiwxLDEsMiwiTm8iLDE1ODgsNTI1LDE1MzUsMTQwMQ0KIjQ2OCIsNDY4LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMTIzMSw0NzYsMTIzNiwxMTgzDQoiNDY5Iiw0NjksIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwyNDEyLDk1NSwyMzE1LDIyODYNCiI0NzAiLDQ3MCwiQ2FwaXRhbCBjaXR5IiwxLDIsMywiWWVzIiwxMjQyLDU3MiwxMjU0LDExOTkNCiI0NzEiLDQ3MSwiQ2FwaXRhbCBjaXR5IiwxLDEsMiwiWWVzIiwxNDg3LDU1MiwxNDkyLDE1NjkNCiI0NzIiLDQ3MiwiUmVnaW9uYWwiLDIsMyw1LCJObyIsMTAzOSw0NTksMTAzOCw5MzcNCiI0NzMiLDQ3MywiUmVnaW9uYWwiLDIsMCwyLCJObyIsMTUyNSw1MDAsMTQ2MywxNzE4DQoiNDc0Iiw0NzQsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIk5vIiwxNDE3LDY1MiwxMzYxLDEzMDkNCiI0NzUiLDQ3NSwiUmVnaW9uYWwiLDIsMCwyLCJObyIsODEwLDI4OSw3NDcsODk5DQoiNDc2Iiw0NzYsIkNhcGl0YWwgY2l0eSIsMiwzLDUsIk5vIiwxNTUyLDU4OSwxNDk1LDE1MjcNCiI0NzciLDQ3NywiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDEwNjQsNTgxLDEwNTgsMTA3NA0KIjQ3OCIsNDc4LCJSZWdpb25hbCIsMSwzLDQsIk5vIiwxNDY5LDQyMiwxNDI5LDE1ODYNCiI0NzkiLDQ3OSwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDE4NDIsNzQ1LDE4MjAsMTc0Ng0KIjQ4MCIsNDgwLCJSZWdpb25hbCIsMSw0LDUsIk5vIiwxMzkxLDQ4MCwxMzI4LDExOTkNCiI0ODEiLDQ4MSwiQ2FwaXRhbCBjaXR5IiwxLDAsMSwiTm8iLDI0OTgsOTY1LDIzMDQsMjQ2NA0KIjQ4MiIsNDgyLCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJZZXMiLDE3NTUsNTU0LDE3MjcsMTg4OQ0KIjQ4MyIsNDgzLCJSZWdpb25hbCIsMiwzLDUsIk5vIiwxOTMxLDgwNiwxODE3LDIyOTQNCiI0ODQiLDQ4NCwiUmVnaW9uYWwiLDIsMCwyLCJObyIsMTc3NSw1MTMsMTY1MywxNzEyDQoiNDg1Iiw0ODUsIlJlZ2lvbmFsIiwyLDAsMiwiWWVzIiwxNzQ3LDUyNiwxNzU1LDE5MjgNCiI0ODYiLDQ4NiwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDE0NTUsNTIyLDE0NDcsMTQ1NA0KIjQ4NyIsNDg3LCJSZWdpb25hbCIsMiwwLDIsIk5vIiwxMzQ2LDM2OSwxMzczLDE0NjMNCiI0ODgiLDQ4OCwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDE3MzYsNjM4LDE2NTMsMTc0Nw0KIjQ4OSIsNDg5LCJDYXBpdGFsIGNpdHkiLDEsMiwzLCJZZXMiLDkyMiwxODksOTQwLDEwNzYNCiI0OTAiLDQ5MCwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDE1MjYsNjg0LDE0NDEsMTUyMQ0KIjQ5MSIsNDkxLCJSZWdpb25hbCIsMiwwLDIsIk5vIiwyNjEwLDc5OCwyNTgxLDI0MDkNCiI0OTIiLDQ5MiwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiWWVzIiwxNTE1LDY4OCwxNDE3LDE3NjUNCiI0OTMiLDQ5MywiQ2FwaXRhbCBjaXR5IiwxLDAsMSwiWWVzIiwxMTkzLDQ1OSwxMTMyLDExMjENCiI0OTQiLDQ5NCwiQ2FwaXRhbCBjaXR5IiwyLDMsNSwiTm8iLDEyMzUsNTEyLDEyMTgsMTE5Ng0KIjQ5NSIsNDk1LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJZZXMiLDkzMCwzNTQsOTI2LDg0OQ0KIjQ5NiIsNDk2LCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJZZXMiLDg0NSw0MjYsNzkxLDEwNDMNCiI0OTciLDQ5NywiQ2FwaXRhbCBjaXR5IiwzLDIsNSwiTm8iLDE5MjYsNzQ0LDE5NDksMTg4Mg0KIjQ5OCIsNDk4LCJDYXBpdGFsIGNpdHkiLDEsMSwyLCJZZXMiLDE3NDIsNjc5LDE2MDYsMTY4NA0KIjQ5OSIsNDk5LCJSZWdpb25hbCIsMSwzLDQsIk5vIiwxMzE4LDQzOCwxMjMzLDEyMTkNCiI1MDAiLDUwMCwiUmVnaW9uYWwiLDQsMCw0LCJZZXMiLDk2NSwxNzgsOTIxLDc4Nw0KIjUwMSIsNTAxLCJSZWdpb25hbCIsMSwxLDIsIk5vIiwxNzkxLDQ5OSwxNzY2LDE4MjYNCiI1MDIiLDUwMiwiQ2FwaXRhbCBjaXR5IiwyLDQsNiwiTm8iLDEwMTIsMjA2LDk3MCwxMDg3DQoiNTAzIiw1MDMsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxNjYyLDQwNiwxNjY3LDE2NjINCiI1MDQiLDUwNCwiUmVnaW9uYWwiLDIsMyw1LCJObyIsMTE1Niw0MDgsMTE1NywxMDc5DQoiNTA1Iiw1MDUsIlJlZ2lvbmFsIiwyLDIsNCwiTm8iLDE0NDEsNDY2LDE0NTgsMTgxNw0KIjUwNiIsNTA2LCJSZWdpb25hbCIsMSwxLDIsIk5vIiwxNTk0LDUxMywxNTY1LDE2NTINCiI1MDciLDUwNywiUmVnaW9uYWwiLDIsMCwyLCJObyIsMTQ3NCw1NDIsMTQ5OSwxNzY3DQoiNTA4Iiw1MDgsIkNhcGl0YWwgY2l0eSIsMywwLDMsIlllcyIsMjY1OSw5NjYsMjY5MiwyOTM0DQoiNTA5Iiw1MDksIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxNjkyLDYzOCwxNjQ3LDE1MzgNCiI1MTAiLDUxMCwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiWWVzIiwxMzI0LDU2MCwxMzE0LDExODMNCiI1MTEiLDUxMSwiUmVnaW9uYWwiLDIsMyw1LCJObyIsMTU3NSw0MjksMTUwNywxMjQ4DQoiNTEyIiw1MTIsIkNhcGl0YWwgY2l0eSIsMSwxLDIsIk5vIiwxNDY2LDcxNywxNDAzLDEzMjMNCiI1MTMiLDUxMywiUmVnaW9uYWwiLDIsMSwzLCJZZXMiLDI2MTUsNjkzLDI2NDksMjg4MQ0KIjUxNCIsNTE0LCJSZWdpb25hbCIsMSwwLDEsIk5vIiwxMjI0LDI4NywxMjM5LDEzOTUNCiI1MTUiLDUxNSwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiWWVzIiwxNTc0LDYyNywxNDg3LDEzNTMNCiI1MTYiLDUxNiwiQ2FwaXRhbCBjaXR5IiwxLDAsMSwiTm8iLDE1NTQsNDI1LDE0NTAsMTU0OA0KIjUxNyIsNTE3LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTMzNSw0MjMsMTM0MCwxMjg0DQoiNTE4Iiw1MTgsIlJlZ2lvbmFsIiwyLDIsNCwiWWVzIiwyMTIwLDc0MywyMTQwLDIxMzANCiI1MTkiLDUxOSwiQ2FwaXRhbCBjaXR5IiwyLDQsNiwiTm8iLDI2NjksMTAwNiwyNTU3LDI3MjMNCiI1MjAiLDUyMCwiUmVnaW9uYWwiLDIsMyw1LCJObyIsNjQ1LDE1Miw2MzYsODA2DQoiNTIxIiw1MjEsIlJlZ2lvbmFsIiwzLDIsNSwiTm8iLDE3NzksNDEzLDE3MDIsMjEyMg0KIjUyMiIsNTIyLCJDYXBpdGFsIGNpdHkiLDQsMCw0LCJZZXMiLDE3OTQsNzU0LDE3MzcsMTg3NQ0KIjUyMyIsNTIzLCJDYXBpdGFsIGNpdHkiLDIsMyw1LCJObyIsMjM3Nyw5NjcsMjIzMCwyNDg0DQoiNTI0Iiw1MjQsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIlllcyIsMTUwNSw1NDIsMTQyNCwxNzM4DQoiNTI1Iiw1MjUsIkNhcGl0YWwgY2l0eSIsMiw0LDYsIk5vIiwxNDA0LDU5NywxMzE0LDEyMzMNCiI1MjYiLDUyNiwiUmVnaW9uYWwiLDMsMyw2LCJObyIsMjA2MSw2NDksMTkzMCwxODc2DQoiNTI3Iiw1MjcsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIk5vIiwxMzM1LDUzNywxMzAyLDEzMDANCiI1MjgiLDUyOCwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiWWVzIiwxMDQxLDM3Niw5ODgsMTAxNg0KIjUyOSIsNTI5LCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJZZXMiLDE1NTEsNDU5LDE1MDksMTM4OA0KIjUzMCIsNTMwLCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJZZXMiLDIyNzgsODIyLDIxMDUsMjA1Mg0KIjUzMSIsNTMxLCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsMTk1Myw2NzAsMTgxMSwxNDk0DQoiNTMyIiw1MzIsIlJlZ2lvbmFsIiwyLDEsMywiTm8iLDg4OSwyNzksOTA0LDgyNQ0KIjUzMyIsNTMzLCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsMTQ2Miw2MjcsMTM1NSwxNTA2DQoiNTM0Iiw1MzQsIlJlZ2lvbmFsIiwyLDQsNiwiTm8iLDE2NTksNDgzLDE2NjgsMTgwMw0KIjUzNSIsNTM1LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMTM2NCw2NjYsMTI1OSwxNTg5DQoiNTM2Iiw1MzYsIkNhcGl0YWwgY2l0eSIsMSwzLDQsIk5vIiwzMjk5LDExMDQsMzA0NywzMTAzDQoiNTM3Iiw1MzcsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIk5vIiwxNjI4LDU5NiwxNjI1LDE3OTENCiI1MzgiLDUzOCwiQ2FwaXRhbCBjaXR5IiwzLDEsNCwiTm8iLDE3MDIsNjg0LDE3MjQsMTY3MA0KIjUzOSIsNTM5LCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsMTUxNyw1NjgsMTQ4NywxNzY2DQoiNTQwIiw1NDAsIkNhcGl0YWwgY2l0eSIsMiwyLDQsIlllcyIsMTc3Miw2MzAsMTY0MywyMDA0DQoiNTQxIiw1NDEsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIk5vIiwyNzQ1LDk2NiwyNTc4LDI1OTkNCiI1NDIiLDU0MiwiQ2FwaXRhbCBjaXR5IiwyLDQsNiwiTm8iLDE2NjMsNzE0LDE1NjIsMTc0NA0KIjU0MyIsNTQzLCJDYXBpdGFsIGNpdHkiLDMsMCwzLCJZZXMiLDIxNDEsODUxLDIwMjYsMjAwOQ0KIjU0NCIsNTQ0LCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsMTQ1Niw3MjAsMTM4MCwxMTIwDQoiNTQ1Iiw1NDUsIlJlZ2lvbmFsIiwxLDIsMywiTm8iLDE1MDQsNTQzLDE0ODcsMTY2OQ0KIjU0NiIsNTQ2LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTQzNSw2MTcsMTQwOSwxMzYwDQoiNTQ3Iiw1NDcsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwxMTI1LDQ3NSwxMDU1LDEwMTkNCiI1NDgiLDU0OCwiUmVnaW9uYWwiLDMsMyw2LCJObyIsODY5LDEyMCw4MDUsODEwDQoiNTQ5Iiw1NDksIkNhcGl0YWwgY2l0eSIsMywxLDQsIk5vIiwzMTIyLDEyMzksMzA4OCwyOTg1DQoiNTUwIiw1NTAsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIlllcyIsMTc5OCw2MDAsMTcwMywxOTc2DQoiNTUxIiw1NTEsIkNhcGl0YWwgY2l0eSIsNCwwLDQsIlllcyIsODU2LDM0OSw4MjAsMTAwMQ0KIjU1MiIsNTUyLCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsMTA4OSw1MjIsMTA0NiwxMDg3DQoiNTUzIiw1NTMsIkNhcGl0YWwgY2l0eSIsMSwxLDIsIk5vIiwxMDk5LDQ1OSwxMDI5LDc1MQ0KIjU1NCIsNTU0LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTE1OCw1MDQsMTE1MywxMDYzDQoiNTU1Iiw1NTUsIkNhcGl0YWwgY2l0eSIsMSwyLDMsIlllcyIsMTEwNCw1MDcsMTAyMiw5ODANCiI1NTYiLDU1NiwiUmVnaW9uYWwiLDIsMCwyLCJObyIsMTEwMSwyMDAsMTA2MiwxMTAyDQoiNTU3Iiw1NTcsIlJlZ2lvbmFsIiwyLDMsNSwiWWVzIiwxNDg4LDUyMywxNDU4LDE1MjUNCiI1NTgiLDU1OCwiQ2FwaXRhbCBjaXR5IiwxLDAsMSwiTm8iLDExODIsNTcxLDExMzksMTE0Ng0KIjU1OSIsNTU5LCJDYXBpdGFsIGNpdHkiLDEsMiwzLCJObyIsMTM0OCw1MDMsMTMzMywxMjgyDQoiNTYwIiw1NjAsIkNhcGl0YWwgY2l0eSIsMiwzLDUsIk5vIiwxNDMyLDQ1MiwxNDIwLDE0MTcNCiI1NjEiLDU2MSwiUmVnaW9uYWwiLDIsMCwyLCJObyIsMTgxOCw2NTIsMTczMSwxNjUzDQoiNTYyIiw1NjIsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxMTUxLDY2OCwxMTY5LDExNzYNCiI1NjMiLDU2MywiUmVnaW9uYWwiLDIsMyw1LCJZZXMiLDEwOTMsNDgzLDEwNjYsMTEwNA0KIjU2NCIsNTY0LCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsMzI3NywxMDgyLDMyNzAsMzI3OA0KIjU2NSIsNTY1LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJZZXMiLDEzMTgsNDkxLDEyNzUsMTIzMA0KIjU2NiIsNTY2LCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsMzMxOCwxMjEwLDMzNDEsMzE1NA0KIjU2NyIsNTY3LCJDYXBpdGFsIGNpdHkiLDMsMCwzLCJZZXMiLDE0MjEsNTc0LDEzNTIsMTM0Nw0KIjU2OCIsNTY4LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMjY3OSw5MTAsMjU5NCwyNTU4DQoiNTY5Iiw1NjksIlJlZ2lvbmFsIiwyLDAsMiwiWWVzIiwxMjE1LDI5NSwxMjAwLDExODcNCiI1NzAiLDU3MCwiQ2FwaXRhbCBjaXR5Iiw0LDAsNCwiTm8iLDExNDgsNTQxLDEwNzcsMTI0Mg0KIjU3MSIsNTcxLCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsMTIyNCw0MjksMTE1MiwxMTU1DQoiNTcyIiw1NzIsIlJlZ2lvbmFsIiwzLDEsNCwiTm8iLDEzMTUsMzgyLDEyMzAsMTM5Nw0KIjU3MyIsNTczLCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMzAyOCw5ODEsMzA2MCwzMjM5DQoiNTc0Iiw1NzQsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIlllcyIsMTM1OCw3MDQsMTMwNiwxMjE0DQoiNTc1Iiw1NzUsIlJlZ2lvbmFsIiw0LDIsNiwiTm8iLDE0MTIsMzEwLDEzNjQsMTQ3Nw0KIjU3NiIsNTc2LCJSZWdpb25hbCIsMiwwLDIsIk5vIiw4NDEsMjA4LDgyNSwxMjUyDQoiNTc3Iiw1NzcsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwxMzk1LDUzNywxMzY0LDE3OTQNCiI1NzgiLDU3OCwiUmVnaW9uYWwiLDIsMiw0LCJObyIsMTIxOCwzOTUsMTE1NiwxMjg2DQoiNTc5Iiw1NzksIkNhcGl0YWwgY2l0eSIsMywwLDMsIlllcyIsMjQxMiw5OTUsMjQyNywyNDI2DQoiNTgwIiw1ODAsIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDk5MCw0MjgsOTkwLDc5Nw0KIjU4MSIsNTgxLCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJZZXMiLDEyMTAsMzY5LDEyMTgsMTUxNQ0KIjU4MiIsNTgyLCJSZWdpb25hbCIsMiwwLDIsIk5vIiwxMTQzLDU0NiwxMTExLDExMTYNCiI1ODMiLDU4MywiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDI3MjQsMTA1NiwyNzQ3LDI2ODANCiI1ODQiLDU4NCwiUmVnaW9uYWwiLDIsMCwyLCJObyIsODQ3LDQ0OSw4MDEsOTUxDQoiNTg1Iiw1ODUsIkNhcGl0YWwgY2l0eSIsNCwxLDUsIk5vIiwzMTAyLDExOTgsMzA3OSwzMDUzDQoiNTg2Iiw1ODYsIlJlZ2lvbmFsIiwxLDEsMiwiTm8iLDE3NDYsNTQwLDE2MTYsMTY3MQ0KIjU4NyIsNTg3LCJSZWdpb25hbCIsMSwwLDEsIlllcyIsMTQxNCw0NjksMTQyMiwxNTAxDQoiNTg4Iiw1ODgsIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDEyMjgsMzk0LDExMzQsMTA2Mw0KIjU4OSIsNTg5LCJDYXBpdGFsIGNpdHkiLDMsMyw2LCJObyIsMTg3OCw2MTQsMTkxMCwyMDg3DQoiNTkwIiw1OTAsIkNhcGl0YWwgY2l0eSIsMSwzLDQsIk5vIiwxODQ5LDcxNywxNzU0LDE5NTENCiI1OTEiLDU5MSwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDI4MzcsODcyLDI2NzAsMjg3MA0KIjU5MiIsNTkyLCJDYXBpdGFsIGNpdHkiLDMsMSw0LCJObyIsMjM4Nyw5NDQsMjMzMiwyMjU4DQoiNTkzIiw1OTMsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiw3NzYsMzA4LDc4MywxMDU4DQoiNTk0Iiw1OTQsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwyMTM5LDgxOSwxOTk4LDE5NDcNCiI1OTUiLDU5NSwiQ2FwaXRhbCBjaXR5IiwxLDIsMywiTm8iLDY4OCwyNjcsNjU2LDEwOTkNCiI1OTYiLDU5NiwiQ2FwaXRhbCBjaXR5IiwzLDMsNiwiTm8iLDMwMzUsMTA5MywyOTg4LDMxMDgNCiI1OTciLDU5NywiQ2FwaXRhbCBjaXR5IiwxLDIsMywiTm8iLDIyNzksODA1LDIyODMsMjQ1Mg0KIjU5OCIsNTk4LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTkzNiw4MjYsMTg3OCwxODcxDQoiNTk5Iiw1OTksIlJlZ2lvbmFsIiwyLDAsMiwiWWVzIiwxNzE1LDU1OSwxNzI2LDE4MDINCiI2MDAiLDYwMCwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDE3ODEsNzY2LDE3NjMsMTkyOA0KIjYwMSIsNjAxLCJSZWdpb25hbCIsMiwwLDIsIk5vIiwxNjIxLDU0OCwxNTA5LDE2NzENCiI2MDIiLDYwMiwiQ2FwaXRhbCBjaXR5IiwxLDIsMywiWWVzIiwzMjEzLDEwNjQsMzAyMSwzMTMwDQoiNjAzIiw2MDMsIlJlZ2lvbmFsIiwyLDEsMywiTm8iLDkyMywzMTksODkyLDEwNDkNCiI2MDQiLDYwNCwiQ2FwaXRhbCBjaXR5IiwxLDIsMywiWWVzIiwxNjQ1LDYxNiwxNTI1LDE3NzENCiI2MDUiLDYwNSwiUmVnaW9uYWwiLDQsMiw2LCJObyIsMTE5OSw1NjQsMTEyNSwxMzIwDQoiNjA2Iiw2MDYsIkNhcGl0YWwgY2l0eSIsMSwyLDMsIlllcyIsMTc1Miw2NjYsMTYyNCwxNjY0DQoiNjA3Iiw2MDcsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIlllcyIsMTIxMywzMDksMTExNiwxNDQ0DQoiNjA4Iiw2MDgsIlJlZ2lvbmFsIiwyLDIsNCwiTm8iLDE3MjAsNjAyLDE2ODksMTczMg0KIjYwOSIsNjA5LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJZZXMiLDEyMDUsNDE2LDEyMTAsMTE2Mw0KIjYxMCIsNjEwLCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMzE3OCwxMDYwLDMwMDAsMzA2NQ0KIjYxMSIsNjExLCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMzcyNSwxMzUzLDM3NDQsMzY1Nw0KIjYxMiIsNjEyLCJSZWdpb25hbCIsMSwwLDEsIk5vIiwxMzc5LDY1OCwxMzU1LDE0NTENCiI2MTMiLDYxMywiUmVnaW9uYWwiLDMsNCw3LCJObyIsMjg3NCw5MDUsMjg3OSwzMDQ0DQoiNjE0Iiw2MTQsIkNhcGl0YWwgY2l0eSIsMywwLDMsIk5vIiwxNDQzLDcyNSwxMzgyLDEzMDANCiI2MTUiLDYxNSwiUmVnaW9uYWwiLDIsNCw2LCJObyIsMjA0OSw3MDIsMTk4MywxOTE4DQoiNjE2Iiw2MTYsIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDY4NCwzMDIsNjk1LDgzOA0KIjYxNyIsNjE3LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMjYyMiw5MzAsMjQ3NSwyNDQyDQoiNjE4Iiw2MTgsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxMjE0LDUyNSwxMTcxLDE0ODQNCiI2MTkiLDYxOSwiUmVnaW9uYWwiLDEsMSwyLCJObyIsMTE5Nyw1NzgsMTE0NSwxMjcwDQoiNjIwIiw2MjAsIkNhcGl0YWwgY2l0eSIsMywyLDUsIk5vIiwxNDA0LDYyOCwxMzEwLDEzNTgNCiI2MjEiLDYyMSwiUmVnaW9uYWwiLDEsMCwxLCJZZXMiLDEwNzMsMjg2LDEwOTEsMTE5OQ0KIjYyMiIsNjIyLCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsMTE5OSw0NDEsMTE0MCw4MDkNCiI2MjMiLDYyMywiUmVnaW9uYWwiLDQsMCw0LCJObyIsMTUxNiw0NDUsMTQ4OCwxNjA2DQoiNjI0Iiw2MjQsIlJlZ2lvbmFsIiwyLDAsMiwiWWVzIiwxMDg0LDM3OCwxMDMzLDEyNzQNCiI2MjUiLDYyNSwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDI4MzYsOTUyLDI3NTEsMjg0NQ0KIjYyNiIsNjI2LCJSZWdpb25hbCIsMywwLDMsIk5vIiwxOTAzLDU0NywxNzc4LDE3MzINCiI2MjciLDYyNywiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiWWVzIiwyMTYxLDg1MCwxOTkwLDIwMTMNCiI2MjgiLDYyOCwiQ2FwaXRhbCBjaXR5IiwzLDAsMywiWWVzIiwxMDg3LDMxMywxMDgzLDExNjUNCiI2MjkiLDYyOSwiUmVnaW9uYWwiLDMsMiw1LCJObyIsMTA5NSw0MzksMTA5NywxNDA0DQoiNjMwIiw2MzAsIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDEyMzEsMzQyLDExODIsMTM2Nw0KIjYzMSIsNjMxLCJSZWdpb25hbCIsMiwwLDIsIk5vIiwxMjA5LDQwMiwxMjMyLDExMjINCiI2MzIiLDYzMiwiUmVnaW9uYWwiLDMsMCwzLCJZZXMiLDEzNDcsMzMzLDEzMTAsMTA2OA0KIjYzMyIsNjMzLCJDYXBpdGFsIGNpdHkiLDMsMCwzLCJZZXMiLDExODUsNTg5LDExNTcsMTM2MA0KIjYzNCIsNjM0LCJSZWdpb25hbCIsMiwyLDQsIk5vIiwyMDk0LDQwNywyMTMzLDIwNzINCiI2MzUiLDYzNSwiUmVnaW9uYWwiLDQsMCw0LCJObyIsMjIwMCw2NTgsMjA4NiwyMjE0DQoiNjM2Iiw2MzYsIkNhcGl0YWwgY2l0eSIsMiwyLDQsIk5vIiwxNjcxLDYwNSwxNTQ3LDEzNTMNCiI2MzciLDYzNywiUmVnaW9uYWwiLDMsMCwzLCJObyIsMTY3MSw0MzAsMTY3OSwxNjg3DQoiNjM4Iiw2MzgsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwxODc1LDc0NSwxNzkzLDE4MjgNCiI2MzkiLDYzOSwiUmVnaW9uYWwiLDIsMCwyLCJObyIsMTI0Myw0MzUsMTIxNywxMDAwDQoiNjQwIiw2NDAsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxMzU5LDM4OSwxMjc2LDEwMzANCiI2NDEiLDY0MSwiUmVnaW9uYWwiLDIsMCwyLCJZZXMiLDE3MjcsNTU1LDE2NjgsMTU0Mg0KIjY0MiIsNjQyLCJSZWdpb25hbCIsMiw0LDYsIk5vIiwxNzA2LDU0OSwxNjU1LDE2ODgNCiI2NDMiLDY0MywiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDE1NTgsNzE4LDE1NzEsMTY0Mw0KIjY0NCIsNjQ0LCJSZWdpb25hbCIsMiwwLDIsIk5vIiwxODk2LDM5NiwxNzY4LDIwNzkNCiI2NDUiLDY0NSwiUmVnaW9uYWwiLDIsMSwzLCJZZXMiLDI2NDQsOTE0LDI1MzUsMjQ5Mg0KIjY0NiIsNjQ2LCJSZWdpb25hbCIsMiwwLDIsIlllcyIsODA2LDI5Niw3NDcsNDc1DQoiNjQ3Iiw2NDcsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIk5vIiwxNjEwLDY2MiwxNTk1LDE1MTcNCiI2NDgiLDY0OCwiQ2FwaXRhbCBjaXR5IiwzLDAsMywiTm8iLDI0ODEsODk3LDIzNjUsMjYwNQ0KIjY0OSIsNjQ5LCJSZWdpb25hbCIsMiwzLDUsIlllcyIsMjEyMiw2ODcsMjAxMSwyMjI5DQoiNjUwIiw2NTAsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIk5vIiwxNDQwLDQ5NiwxMzI3LDE2MTINCiI2NTEiLDY1MSwiUmVnaW9uYWwiLDEsMiwzLCJObyIsMTU0Myw0MjQsMTUyMSwxNDk3DQoiNjUyIiw2NTIsIlJlZ2lvbmFsIiwxLDAsMSwiTm8iLDg3NSwyNzEsODE4LDU5Nw0KIjY1MyIsNjUzLCJDYXBpdGFsIGNpdHkiLDEsMiwzLCJObyIsMjExOCw3MDAsMjEwMiwxOTcwDQoiNjU0Iiw2NTQsIlJlZ2lvbmFsIiwyLDEsMywiTm8iLDk4OSwyNjgsOTgzLDEwMzcNCiI2NTUiLDY1NSwiUmVnaW9uYWwiLDEsNCw1LCJObyIsMTk0Nyw1MDIsMTk3OCwxOTI3DQoiNjU2Iiw2NTYsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxMTY2LDQwNCwxMDc0LDEyMjQNCiI2NTciLDY1NywiQ2FwaXRhbCBjaXR5Iiw0LDEsNSwiWWVzIiwxNjkxLDU0OCwxNjA2LDE4MjQNCiI2NTgiLDY1OCwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiWWVzIiwxMDI5LDQ2NSwxMDAzLDg0Nw0KIjY1OSIsNjU5LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMjMxMywxMDUwLDIyMjMsMjM3Nw0KIjY2MCIsNjYwLCJDYXBpdGFsIGNpdHkiLDEsMyw0LCJZZXMiLDI4MDIsMTAzOSwyODU3LDI3MzINCiI2NjEiLDY2MSwiUmVnaW9uYWwiLDIsMCwyLCJZZXMiLDEyMDEsMzUyLDEyMDgsMTM4NA0KIjY2MiIsNjYyLCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMjE3OSw5MTcsMjIxMiwyMzM3DQoiNjYzIiw2NjMsIkNhcGl0YWwgY2l0eSIsMSwxLDIsIk5vIiwxNTM4LDU2NSwxNDQwLDEzMjgNCiI2NjQiLDY2NCwiUmVnaW9uYWwiLDIsMCwyLCJObyIsMTc3Myw2NDksMTgwOCwxNzg2DQoiNjY1Iiw2NjUsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIk5vIiwxMjM4LDYyNywxMjE2LDEyMTYNCiI2NjYiLDY2NiwiUmVnaW9uYWwiLDIsMCwyLCJZZXMiLDE2MjQsNDc4LDE1NDcsMTY4Nw0KIjY2NyIsNjY3LCJSZWdpb25hbCIsMiwwLDIsIk5vIiw0NjQsMTIwLDQzNCw3MzINCiI2NjgiLDY2OCwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDExOTUsNTcyLDEyMDMsMTI4MQ0KIjY2OSIsNjY5LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJZZXMiLDIxMDcsODQ2LDIwMjcsMjA3NQ0KIjY3MCIsNjcwLCJSZWdpb25hbCIsMiwwLDIsIlllcyIsMTIzMiwyODksMTE4OCwxMTc3DQoiNjcxIiw2NzEsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxMjE3LDQ1MSwxMTQwLDEyNjkNCiI2NzIiLDY3MiwiQ2FwaXRhbCBjaXR5IiwxLDAsMSwiWWVzIiw5MzYsMzE2LDkwMywxMjAwDQoiNjczIiw2NzMsIkNhcGl0YWwgY2l0eSIsMywwLDMsIk5vIiwyNzM3LDExNDAsMjUxOSwyNTIwDQoiNjc0Iiw2NzQsIkNhcGl0YWwgY2l0eSIsMywyLDUsIlllcyIsOTIwLDM0NSw4NzUsNDcxDQoiNjc1Iiw2NzUsIkNhcGl0YWwgY2l0eSIsMiw0LDYsIlllcyIsMTEyOSwzNDksMTA0OCwxMDEzDQoiNjc2Iiw2NzYsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxNDM5LDU0OSwxNDQzLDE2MTUNCiI2NzciLDY3NywiUmVnaW9uYWwiLDIsMyw1LCJObyIsODM1LDM3NCw4NDQsMTAwMA0KIjY3OCIsNjc4LCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsOTQ1LDQxOSw4NzIsOTQxDQoiNjc5Iiw2NzksIlJlZ2lvbmFsIiw0LDIsNiwiTm8iLDEyMTksNDI5LDExNDYsMTM4Mg0KIjY4MCIsNjgwLCJSZWdpb25hbCIsMiwwLDIsIk5vIiwxMjY3LDMxMywxMTgyLDEzNTgNCiI2ODEiLDY4MSwiUmVnaW9uYWwiLDIsMCwyLCJZZXMiLDEzOTEsNTAzLDEzNjEsMTMxOQ0KIjY4MiIsNjgyLCJDYXBpdGFsIGNpdHkiLDEsMSwyLCJObyIsMTc0Miw2NTcsMTYxNCwxNzM5DQoiNjgzIiw2ODMsIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDExMDEsMjE0LDExMDIsMTE3Mg0KIjY4NCIsNjg0LCJSZWdpb25hbCIsMSwwLDEsIlllcyIsMTM5Myw0MDUsMTQyMCwxNDIyDQoiNjg1Iiw2ODUsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxMjAyLDM1MSwxMTgxLDkxNw0KIjY4NiIsNjg2LCJDYXBpdGFsIGNpdHkiLDQsMSw1LCJObyIsMTgxOCw3NjMsMTY4OSwxNzAwDQoiNjg3Iiw2ODcsIlJlZ2lvbmFsIiwyLDEsMywiTm8iLDExMDEsNTI3LDExMDYsMTQxNg0KIjY4OCIsNjg4LCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsMjM5MCw5MDMsMjM3MywyNTk3DQoiNjg5Iiw2ODksIkNhcGl0YWwgY2l0eSIsMyw0LDcsIk5vIiwxNzIzLDU2OCwxNjMzLDE4NTUNCiI2OTAiLDY5MCwiQ2FwaXRhbCBjaXR5IiwzLDMsNiwiTm8iLDE0ODEsNjcyLDE0NDIsMTU1Mw0KIjY5MSIsNjkxLCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMTg4OSw2NjMsMTc5MiwxODE5DQoiNjkyIiw2OTIsIkNhcGl0YWwgY2l0eSIsMSwxLDIsIlllcyIsMTc1MSw3OTUsMTY2OCwxNDU3DQoiNjkzIiw2OTMsIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDgxMiwzNDIsODE1LDEyMjkNCiI2OTQiLDY5NCwiQ2FwaXRhbCBjaXR5Iiw0LDEsNSwiTm8iLDIyNTAsNjkwLDIyMTcsMjM0Nw0KIjY5NSIsNjk1LCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJZZXMiLDExNTEsNDYxLDEwNjcsMTM1Nw0KIjY5NiIsNjk2LCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsMTk2NCw2NTQsMTgyNywxNzI0DQoiNjk3Iiw2OTcsIkNhcGl0YWwgY2l0eSIsMiwyLDQsIlllcyIsMTM1Nyw2MDYsMTM2NCwxNDU3DQoiNjk4Iiw2OTgsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIlllcyIsODM5LDQ5OSw4MjEsOTMxDQoiNjk5Iiw2OTksIkNhcGl0YWwgY2l0eSIsMiwyLDQsIk5vIiwxNjAxLDYzOCwxNjAxLDE4NjgNCiI3MDAiLDcwMCwiQ2FwaXRhbCBjaXR5IiwyLDMsNSwiTm8iLDEyOTQsNTAzLDExOTQsMTI2NQ0KIjcwMSIsNzAxLCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsMTQ2MSw1NjcsMTQzNywxODE3DQoiNzAyIiw3MDIsIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDIzNzUsNjE2LDIyNTAsMjMyOA0KIjcwMyIsNzAzLCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTcyNiw3MjEsMTY0OSwyMDMxDQoiNzA0Iiw3MDQsIlJlZ2lvbmFsIiwyLDIsNCwiTm8iLDg2MSwzOTAsODEzLDExMDANCiI3MDUiLDcwNSwiUmVnaW9uYWwiLDIsMCwyLCJObyIsMjUyNCw3ODgsMjQ3MSwyNjI0DQoiNzA2Iiw3MDYsIkNhcGl0YWwgY2l0eSIsMiwzLDUsIlllcyIsOTM3LDM2Miw4NjcsNzM3DQoiNzA3Iiw3MDcsIkNhcGl0YWwgY2l0eSIsMywxLDQsIlllcyIsMTA5OCw0ODgsMTA1NSw2NzANCiI3MDgiLDcwOCwiUmVnaW9uYWwiLDMsMCwzLCJZZXMiLDIwMzQsNjcxLDE4OTQsMTg3MA0KIjcwOSIsNzA5LCJSZWdpb25hbCIsMSwwLDEsIk5vIiwxNjc5LDcwNywxNTYyLDE2MjgNCiI3MTAiLDcxMCwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDIwNzcsNzE1LDE5NzMsMTkxOA0KIjcxMSIsNzExLCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJZZXMiLDExNTEsNDk5LDExNTUsMTA2Mg0KIjcxMiIsNzEyLCJDYXBpdGFsIGNpdHkiLDMsMyw2LCJZZXMiLDI0NzYsODM1LDI0OTIsMjMwOA0KIjcxMyIsNzEzLCJDYXBpdGFsIGNpdHkiLDEsNCw1LCJObyIsMTk3MSw4MDQsMTk1MSwxODc3DQoiNzE0Iiw3MTQsIkNhcGl0YWwgY2l0eSIsMiw0LDYsIlllcyIsMTkyMSw3NjYsMTgzMCwyMDA3DQoiNzE1Iiw3MTUsIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDEwMTksMzE2LDk2NiwxMTQ0DQoiNzE2Iiw3MTYsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIk5vIiwxNDA3LDUyMSwxNDA1LDEzNDMNCiI3MTciLDcxNywiUmVnaW9uYWwiLDMsMCwzLCJObyIsMjM3NSw1NDUsMjE4NSwyMTM1DQoiNzE4Iiw3MTgsIkNhcGl0YWwgY2l0eSIsMywwLDMsIk5vIiwyMjg2LDk0MCwyMTI0LDI1MzYNCiI3MTkiLDcxOSwiUmVnaW9uYWwiLDEsMSwyLCJObyIsMTMzOSw0NDgsMTM0OCwxMjIxDQoiNzIwIiw3MjAsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIlllcyIsMTI3OSw1MzQsMTI4MiwxMzAwDQoiNzIxIiw3MjEsIlJlZ2lvbmFsIiwyLDIsNCwiTm8iLDE1NDEsMzc4LDE1MDEsMTY4NQ0KIjcyMiIsNzIyLCJSZWdpb25hbCIsMiwwLDIsIk5vIiwxNzQ3LDU4OCwxNzc1LDE2NzgNCiI3MjMiLDcyMywiQ2FwaXRhbCBjaXR5IiwyLDQsNiwiTm8iLDIxMzMsNjQ5LDIxNDUsMjMyMA0KIjcyNCIsNzI0LCJSZWdpb25hbCIsMywxLDQsIk5vIiwyMDgyLDYxNSwyMDMxLDIwODINCiI3MjUiLDcyNSwiUmVnaW9uYWwiLDIsMCwyLCJObyIsMjQwOCw3OTQsMjM1MSwyMjA1DQoiNzI2Iiw3MjYsIlJlZ2lvbmFsIiwzLDIsNSwiTm8iLDEyMTQsNDM0LDExNDgsMTEyOA0KIjcyNyIsNzI3LCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsMjQ3NCw3OTEsMjM3MiwyMjM2DQoiNzI4Iiw3MjgsIkNhcGl0YWwgY2l0eSIsMyw0LDcsIk5vIiwxNTYzLDU2NywxNTU5LDE0NTkNCiI3MjkiLDcyOSwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDg4Myw0MTksODUyLDg5Mw0KIjczMCIsNzMwLCJSZWdpb25hbCIsMiw0LDYsIk5vIiwxODAyLDY1MCwxNzQ4LDE3MTMNCiI3MzEiLDczMSwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDIyMDgsNjk4LDIwOTQsMjMxOQ0KIjczMiIsNzMyLCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsOTQxLDU0MSw4ODEsMTIwOQ0KIjczMyIsNzMzLCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJZZXMiLDEyMTIsNDQ5LDExMzgsMTIxNA0KIjczNCIsNzM0LCJSZWdpb25hbCIsMiwzLDUsIlllcyIsMTUyMCw1MDAsMTUxOCwxMzI2DQoiNzM1Iiw3MzUsIkNhcGl0YWwgY2l0eSIsMiwzLDUsIk5vIiwxMTQwLDM2MCwxMTYyLDExOTENCiI3MzYiLDczNiwiQ2FwaXRhbCBjaXR5IiwxLDEsMiwiTm8iLDE2NzgsNjI1LDE1NzQsMTQwOQ0KIjczNyIsNzM3LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMTA1NSw0ODIsMTA0MCwxMzM4DQoiNzM4Iiw3MzgsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIk5vIiwxNzE0LDY5MiwxNjY2LDE3NzkNCiI3MzkiLDczOSwiUmVnaW9uYWwiLDEsMiwzLCJObyIsMTAzNiwzMDIsOTk2LDk2Mg0KIjc0MCIsNzQwLCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTQxOSw1MjcsMTQyOSwxMjc2DQoiNzQxIiw3NDEsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwxMjM2LDUxMCwxMTU3LDEzNDkNCiI3NDIiLDc0MiwiUmVnaW9uYWwiLDIsMiw0LCJZZXMiLDc3MSwzMjYsNzQyLDg4Mw0KIjc0MyIsNzQzLCJSZWdpb25hbCIsMSwyLDMsIk5vIiw4MDQsMzI0LDc0OSw4NjcNCiI3NDQiLDc0NCwiUmVnaW9uYWwiLDQsMSw1LCJObyIsMTc1Miw2NTQsMTY5NywxOTM4DQoiNzQ1Iiw3NDUsIlJlZ2lvbmFsIiwxLDIsMywiTm8iLDExNjUsMjgzLDEwOTQsMTI3Ng0KIjc0NiIsNzQ2LCJDYXBpdGFsIGNpdHkiLDEsMyw0LCJObyIsMjY1NSw5MzIsMjQ1OSwyNDg2DQoiNzQ3Iiw3NDcsIlJlZ2lvbmFsIiwzLDIsNSwiWWVzIiwyNDQ1LDY5MSwyMzMwLDIyNDcNCiI3NDgiLDc0OCwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiWWVzIiwyNjQ3LDExMTQsMjYwMiwyOTY3DQoiNzQ5Iiw3NDksIlJlZ2lvbmFsIiwyLDMsNSwiWWVzIiwyMDA1LDU2NCwyMDAzLDIyMjANCiI3NTAiLDc1MCwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDEzNzUsNjQxLDEyOTEsMTE1OQ0KIjc1MSIsNzUxLCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJZZXMiLDE4ODIsNzUwLDE4OTksMTc4OA0KIjc1MiIsNzUyLCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTU2Nyw2NTgsMTQ0NiwxNDYxDQoiNzUzIiw3NTMsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIk5vIiwxNzUzLDcwOCwxNjMyLDE2MjANCiI3NTQiLDc1NCwiQ2FwaXRhbCBjaXR5IiwxLDAsMSwiTm8iLDIwOTEsNzQyLDIwODcsMjM0Ng0KIjc1NSIsNzU1LCJSZWdpb25hbCIsMywzLDYsIk5vIiwyODQwLDg1NiwyNzA4LDI4OTkNCiI3NTYiLDc1NiwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDE2NDAsNzU0LDE2NjksMTUwNQ0KIjc1NyIsNzU3LCJDYXBpdGFsIGNpdHkiLDMsMSw0LCJZZXMiLDIwMzUsNzg3LDE5NTEsMTg4MQ0KIjc1OCIsNzU4LCJSZWdpb25hbCIsMSwyLDMsIk5vIiwxMzMyLDQyOCwxMjk2LDEwODMNCiI3NTkiLDc1OSwiUmVnaW9uYWwiLDIsMCwyLCJObyIsODYzLDM2Myw4MDAsNzAzDQoiNzYwIiw3NjAsIlJlZ2lvbmFsIiwyLDEsMywiWWVzIiw5NDUsMzE0LDkxMSw5OTcNCiI3NjEiLDc2MSwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDEzNzMsNTE1LDEzODcsMTI1Mw0KIjc2MiIsNzYyLCJDYXBpdGFsIGNpdHkiLDMsMCwzLCJObyIsMjAyMyw2MTAsMTk3NSwxOTU1DQoiNzYzIiw3NjMsIlJlZ2lvbmFsIiwyLDEsMywiWWVzIiwxMTQ1LDM3NywxMTI3LDgyOQ0KIjc2NCIsNzY0LCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsMjg1NCw5NzcsMjg4NywzMDUyDQoiNzY1Iiw3NjUsIlJlZ2lvbmFsIiwyLDIsNCwiTm8iLDc4OCwxOTUsNzkyLDg3OA0KIjc2NiIsNzY2LCJSZWdpb25hbCIsMiw0LDYsIlllcyIsMjE2MCw2ODksMjExNSwyMzQzDQoiNzY3Iiw3NjcsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIlllcyIsMTQ1MCw1ODksMTQwNiwxNTIwDQoiNzY4Iiw3NjgsIkNhcGl0YWwgY2l0eSIsMywyLDUsIk5vIiwxNjM3LDcwMCwxNTM0LDE1MDINCiI3NjkiLDc2OSwiQ2FwaXRhbCBjaXR5IiwxLDAsMSwiTm8iLDI0ODAsMTAwNiwyMjkwLDI1NzINCiI3NzAiLDc3MCwiQ2FwaXRhbCBjaXR5IiwyLDQsNiwiTm8iLDQ1MDEsMTU4OCw0NDM2LDQ1MDUNCiI3NzEiLDc3MSwiUmVnaW9uYWwiLDQsMSw1LCJObyIsMTQyMiwzOTUsMTQzMCwxNjE0DQoiNzcyIiw3NzIsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIk5vIiwyNjE0LDkwMSwyNjIyLDI1MzgNCiI3NzMiLDc3MywiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDE4OTAsODQ2LDE3NDAsMTYyMg0KIjc3NCIsNzc0LCJDYXBpdGFsIGNpdHkiLDMsMSw0LCJObyIsMTU1MCw1NDQsMTQzNCwxMTU0DQoiNzc1Iiw3NzUsIlJlZ2lvbmFsIiwzLDQsNywiTm8iLDIwMTQsNzA1LDE5MTgsMjM5Mw0KIjc3NiIsNzc2LCJSZWdpb25hbCIsMiwzLDUsIlllcyIsMTI3MSwzMjQsMTIxMCwxMjk2DQoiNzc3Iiw3NzcsIkNhcGl0YWwgY2l0eSIsMSwxLDIsIk5vIiwxNjM3LDYxOSwxNjE2LDIwMzANCiI3NzgiLDc3OCwiQ2FwaXRhbCBjaXR5IiwxLDEsMiwiTm8iLDE2MTMsNTIxLDE2NDAsMTgxNg0KIjc3OSIsNzc5LCJDYXBpdGFsIGNpdHkiLDQsNCw4LCJObyIsMjM3Niw4NjcsMjMwMiwyMDIzDQoiNzgwIiw3ODAsIlJlZ2lvbmFsIiwyLDIsNCwiWWVzIiwyMDI5LDY5MSwxOTc1LDIwNTQNCiI3ODEiLDc4MSwiUmVnaW9uYWwiLDIsMSwzLCJObyIsMTQ5Niw1MTcsMTQ5NCwxNjI2DQoiNzgyIiw3ODIsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwyMjYyLDc1NiwyMTM5LDIzMzQNCiI3ODMiLDc4MywiQ2FwaXRhbCBjaXR5IiwyLDMsNSwiWWVzIiwxODM1LDcwNCwxODUzLDE4NDMNCiI3ODQiLDc4NCwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDEzNjEsNTQxLDEzNjAsMTE4Mg0KIjc4NSIsNzg1LCJDYXBpdGFsIGNpdHkiLDEsMSwyLCJObyIsMjEwMiw4NjAsMjA2MywyMDYzDQoiNzg2Iiw3ODYsIlJlZ2lvbmFsIiwxLDAsMSwiTm8iLDg1MCwzOTEsODIyLDgyNg0KIjc4NyIsNzg3LCJSZWdpb25hbCIsMywyLDUsIlllcyIsMTY2OSw3NTksMTYzMywxNjIyDQoiNzg4Iiw3ODgsIlJlZ2lvbmFsIiwyLDEsMywiWWVzIiw4OTgsMTcwLDgzNiwxMjk4DQoiNzg5Iiw3ODksIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwxMzk5LDQ4OCwxNDEwLDEzMjcNCiI3OTAiLDc5MCwiQ2FwaXRhbCBjaXR5IiwyLDMsNSwiTm8iLDg1MCw0MzQsNzkzLDkxMg0KIjc5MSIsNzkxLCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsMTg1Myw3NDIsMTc0MSwxODg1DQoiNzkyIiw3OTIsIkNhcGl0YWwgY2l0eSIsMiw0LDYsIk5vIiwxODA3LDY3NSwxODA5LDE5MTQNCiI3OTMiLDc5MywiQ2FwaXRhbCBjaXR5IiwyLDMsNSwiTm8iLDMwNTgsMTE0MiwzMDI3LDMyNTUNCiI3OTQiLDc5NCwiUmVnaW9uYWwiLDIsMSwzLCJObyIsMTA3NiwyODQsMTA0MywxNDM3DQoiNzk1Iiw3OTUsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwxNjMwLDU4NywxNjE1LDE5MTUNCiI3OTYiLDc5NiwiUmVnaW9uYWwiLDIsNCw2LCJZZXMiLDk3MSwyODgsOTc0LDk3Nw0KIjc5NyIsNzk3LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMjYxOCw5ODIsMjQ2MCwyNjkxDQoiNzk4Iiw3OTgsIkNhcGl0YWwgY2l0eSIsMSwxLDIsIlllcyIsMTIwMywzOTUsMTE3OSwxMjU0DQoiNzk5Iiw3OTksIlJlZ2lvbmFsIiwyLDIsNCwiTm8iLDIwOTUsNjY3LDE5NDYsMjAzMQ0KIjgwMCIsODAwLCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsNTUxNSwxOTQ5LDUzNTQsNTQ4Mg0KIjgwMSIsODAxLCJSZWdpb25hbCIsMiwxLDMsIlllcyIsMTg5OSw3MDIsMTg1OCwxOTQxDQoiODAyIiw4MDIsIkNhcGl0YWwgY2l0eSIsMiwyLDQsIk5vIiwzMzk4LDExMDUsMzI4NywzMDgwDQoiODAzIiw4MDMsIkNhcGl0YWwgY2l0eSIsMiw0LDYsIk5vIiwxMjEzLDQwNCwxMTgyLDExMDcNCiI4MDQiLDgwNCwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDE1MzcsNDAwLDE0NDUsMTM4Mg0KIjgwNSIsODA1LCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsMzQxNiwxMTcyLDMyNjIsMzU3OA0KIjgwNiIsODA2LCJDYXBpdGFsIGNpdHkiLDQsMSw1LCJObyIsMTQ3Miw2NTksMTQ2MiwxMzg2DQoiODA3Iiw4MDcsIkNhcGl0YWwgY2l0eSIsMywwLDMsIk5vIiwzMTg4LDExNzgsMzE5OCwzMjI5DQoiODA4Iiw4MDgsIlJlZ2lvbmFsIiwzLDAsMywiWWVzIiwxNTUxLDU0NywxNDc2LDE1MDgNCiI4MDkiLDgwOSwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDE1NjQsNjIxLDE1NTYsMTUxNQ0KIjgxMCIsODEwLCJDYXBpdGFsIGNpdHkiLDQsMiw2LCJZZXMiLDIyOTUsMTA1MCwyMTgxLDIwNDkNCiI4MTEiLDgxMSwiQ2FwaXRhbCBjaXR5IiwxLDIsMywiWWVzIiwxODgyLDYzNSwxODEzLDE5NDgNCiI4MTIiLDgxMiwiUmVnaW9uYWwiLDIsNCw2LCJObyIsMjA3NCw3MTEsMTk2NywyMjAwDQoiODEzIiw4MTMsIkNhcGl0YWwgY2l0eSIsMiwyLDQsIk5vIiwxMDU5LDQ3NiwxMDgwLDEwOTINCiI4MTQiLDgxNCwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDIwOTIsODA3LDIwMzQsMTg2OA0KIjgxNSIsODE1LCJDYXBpdGFsIGNpdHkiLDEsMiwzLCJZZXMiLDE0ODksNDc4LDE1MTMsMTQ0Nw0KIjgxNiIsODE2LCJSZWdpb25hbCIsMiwxLDMsIlllcyIsODcxLDI3NCw4MjUsOTIwDQoiODE3Iiw4MTcsIkNhcGl0YWwgY2l0eSIsMSwxLDIsIk5vIiw4OTMsMzQ2LDkwMyw4ODANCiI4MTgiLDgxOCwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDExNzYsNTgzLDExNzQsMTE1Nw0KIjgxOSIsODE5LCJSZWdpb25hbCIsMSwxLDIsIk5vIiwxMDU3LDIzMywxMDI5LDEwNzkNCiI4MjAiLDgyMCwiQ2FwaXRhbCBjaXR5IiwxLDAsMSwiTm8iLDIzMjMsODc3LDIzMTMsMjI3NA0KIjgyMSIsODIxLCJSZWdpb25hbCIsMiwzLDUsIk5vIiwyNDY1LDg5OSwyMzAxLDI2MDYNCiI4MjIiLDgyMiwiUmVnaW9uYWwiLDIsMiw0LCJZZXMiLDc5OSwzNjAsNzM3LDc0NA0KIjgyMyIsODIzLCJDYXBpdGFsIGNpdHkiLDMsMCwzLCJZZXMiLDE0MzEsODMzLDE0MzEsMTYwNQ0KIjgyNCIsODI0LCJSZWdpb25hbCIsMywyLDUsIk5vIiwxNjMxLDU0NiwxNTc1LDE3NTANCiI4MjUiLDgyNSwiUmVnaW9uYWwiLDIsMCwyLCJObyIsMTE3NCw0OTMsMTE3MCwxMjAxDQoiODI2Iiw4MjYsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIlllcyIsOTMzLDMxNyw5MzYsMTEyOQ0KIjgyNyIsODI3LCJDYXBpdGFsIGNpdHkiLDIsMyw1LCJObyIsMTQ3Niw1ODQsMTQ0MywxNTk5DQoiODI4Iiw4MjgsIlJlZ2lvbmFsIiwyLDQsNiwiTm8iLDEzNzAsNTY3LDEzMDUsMTQwNw0KIjgyOSIsODI5LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJZZXMiLDE4NTcsNjI1LDE3NjgsMTc2Mw0KIjgzMCIsODMwLCJDYXBpdGFsIGNpdHkiLDEsMiwzLCJObyIsMTc0MCw2NDcsMTY5NywxODA3DQoiODMxIiw4MzEsIkNhcGl0YWwgY2l0eSIsMywwLDMsIk5vIiwyNDA2LDgwMSwyMzM5LDIzNzINCiI4MzIiLDgzMiwiUmVnaW9uYWwiLDQsMSw1LCJZZXMiLDE1MTUsNTk0LDE1MjgsMTU4OQ0KIjgzMyIsODMzLCJSZWdpb25hbCIsMiwxLDMsIlllcyIsMTA0MSwzNTQsMTAwOSw4MzANCiI4MzQiLDgzNCwiUmVnaW9uYWwiLDIsMSwzLCJZZXMiLDkwOCwyODgsODc3LDc5Mw0KIjgzNSIsODM1LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJZZXMiLDE1NTYsNTIzLDE0NTEsMTI5OA0KIjgzNiIsODM2LCJSZWdpb25hbCIsMiwwLDIsIlllcyIsMTI3MSw1NzMsMTIyNiwxMzkxDQoiODM3Iiw4MzcsIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDk5MywyNTgsOTY4LDEyMzUNCiI4MzgiLDgzOCwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDE3ODMsODYwLDE3NjMsMTU3Nw0KIjgzOSIsODM5LCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJZZXMiLDE4MjMsNTk1LDE3ODcsMTcxMg0KIjg0MCIsODQwLCJDYXBpdGFsIGNpdHkiLDEsMSwyLCJObyIsMjIxMCw4OTAsMjA4NiwyMDc5DQoiODQxIiw4NDEsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIk5vIiwxOTM2LDcyNSwxODYwLDE4MjkNCiI4NDIiLDg0MiwiQ2FwaXRhbCBjaXR5Iiw0LDQsOCwiTm8iLDIwODMsODQwLDE5MjYsMTY2NQ0KIjg0MyIsODQzLCJSZWdpb25hbCIsMywxLDQsIk5vIiwxMTg4LDQwNSwxMTYwLDE0MDANCiI4NDQiLDg0NCwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDE0NjUsNTc5LDEzODAsMTUzNw0KIjg0NSIsODQ1LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTUzOCw2NTMsMTQ1MiwxNTYzDQoiODQ2Iiw4NDYsIlJlZ2lvbmFsIiwyLDIsNCwiTm8iLDE3MjEsNDk2LDE2ODksMTcxMA0KIjg0NyIsODQ3LCJDYXBpdGFsIGNpdHkiLDEsMiwzLCJObyIsMTMxMSw1OTQsMTIxMywxMTM4DQoiODQ4Iiw4NDgsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwyODMyLDk3NywyNzI3LDI3ODYNCiI4NDkiLDg0OSwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDI1MTIsOTk4LDIzNTgsMjQ5OQ0KIjg1MCIsODUwLCJSZWdpb25hbCIsMiwxLDMsIk5vIiw5ODYsMzk2LDk5Nyw2NzANCiI4NTEiLDg1MSwiQ2FwaXRhbCBjaXR5IiwzLDMsNiwiTm8iLDE3MjQsNjAzLDE3MDksMTcwNA0KIjg1MiIsODUyLCJSZWdpb25hbCIsNCwxLDUsIk5vIiwxNzQwLDUxNCwxNzQzLDE1NDgNCiI4NTMiLDg1MywiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiWWVzIiwyMjM5LDY4NCwyMDk4LDIzODQNCiI4NTQiLDg1NCwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiTm8iLDkwOCw0OTIsODg4LDk2Mg0KIjg1NSIsODU1LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMTg5Niw4MzAsMTc5NywyMTgwDQoiODU2Iiw4NTYsIkNhcGl0YWwgY2l0eSIsNCwxLDUsIlllcyIsMTUwMCw2MjMsMTQ5MiwxMzU1DQoiODU3Iiw4NTcsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIk5vIiwxOTkyLDY3NSwxOTYzLDIwNDANCiI4NTgiLDg1OCwiUmVnaW9uYWwiLDQsMSw1LCJObyIsMTI2NywxODUsMTI3NywxMzgyDQoiODU5Iiw4NTksIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwxMDI1LDM3Myw5NzEsOTQyDQoiODYwIiw4NjAsIlJlZ2lvbmFsIiwxLDAsMSwiTm8iLDE2NjksNDkwLDE1NjksMTU0MA0KIjg2MSIsODYxLCJDYXBpdGFsIGNpdHkiLDMsMSw0LCJObyIsMTU5MSw0NTgsMTQ2NSwxNzI4DQoiODYyIiw4NjIsIkNhcGl0YWwgY2l0eSIsNCwwLDQsIk5vIiwyMDQzLDc0OSwyMDAyLDE5NzkNCiI4NjMiLDg2MywiUmVnaW9uYWwiLDEsMCwxLCJObyIsMjU2MCw4MjMsMjU0MCwyNzAzDQoiODY0Iiw4NjQsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIlllcyIsMTQ1Nyw2NTAsMTM5MSwxMzY3DQoiODY1Iiw4NjUsIkNhcGl0YWwgY2l0eSIsNCwyLDYsIk5vIiwyNzc4LDk1MywyNTU5LDI1OTQNCiI4NjYiLDg2NiwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiWWVzIiw3MjYsMzc5LDcxNSw3MTMNCiI4NjciLDg2NywiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDIwOTksNzY2LDIwNTcsMTkyOA0KIjg2OCIsODY4LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMjQwMyw4NzksMjM1NywyNTY2DQoiODY5Iiw4NjksIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDc4OSwxOTksNzgyLDU5Mg0KIjg3MCIsODcwLCJSZWdpb25hbCIsMSwwLDEsIk5vIiw4NTEsMjMyLDg0MCw2OTANCiI4NzEiLDg3MSwiQ2FwaXRhbCBjaXR5IiwxLDIsMywiTm8iLDEyNDAsNTMxLDExNTUsMTQxMg0KIjg3MiIsODcyLCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJZZXMiLDE4MTEsNjE5LDE3NzQsMTg4Mw0KIjg3MyIsODczLCJDYXBpdGFsIGNpdHkiLDMsMiw1LCJObyIsOTYwLDQ5NCw5NjIsOTYxDQoiODc0Iiw4NzQsIkNhcGl0YWwgY2l0eSIsMywxLDQsIk5vIiwxMTY0LDYwNiwxMTU2LDEwMTINCiI4NzUiLDg3NSwiQ2FwaXRhbCBjaXR5IiwzLDAsMywiTm8iLDE3MjEsNzAzLDE2ODIsMTUwOQ0KIjg3NiIsODc2LCJSZWdpb25hbCIsMiwyLDQsIk5vIiwxOTMzLDU4MCwxOTY1LDE5NDgNCiI4NzciLDg3NywiUmVnaW9uYWwiLDIsMiw0LCJZZXMiLDE4NjgsNTkzLDE3OTAsMTgwMQ0KIjg3OCIsODc4LCJDYXBpdGFsIGNpdHkiLDIsNCw2LCJObyIsMjY4Miw5NzcsMjU3MywyNzAxDQoiODc5Iiw4NzksIlJlZ2lvbmFsIiwzLDAsMywiTm8iLDUzOCwyOTksNTEwLDg3MA0KIjg4MCIsODgwLCJSZWdpb25hbCIsMiwyLDQsIk5vIiw5NzcsMzc3LDkzMiw3ODINCiI4ODEiLDg4MSwiQ2FwaXRhbCBjaXR5IiwxLDIsMywiTm8iLDgxNiwzOTcsNzcxLDczNA0KIjg4MiIsODgyLCJSZWdpb25hbCIsMywzLDYsIk5vIiwyMTE4LDY4NiwyMTQ3LDE5NjINCiI4ODMiLDg4MywiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDk3NSw0OTUsOTc5LDk3NA0KIjg4NCIsODg0LCJSZWdpb25hbCIsMiwyLDQsIk5vIiwxMTQyLDM5MSwxMTM0LDEzMzgNCiI4ODUiLDg4NSwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDE4ODAsNzIxLDE4MTksMTk2NQ0KIjg4NiIsODg2LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTI4OCw1NTEsMTIyMiwxMTg1DQoiODg3Iiw4ODcsIlJlZ2lvbmFsIiwzLDAsMywiTm8iLDE5NDksNjYyLDE4MzMsMTc5OA0KIjg4OCIsODg4LCJSZWdpb25hbCIsNCwyLDYsIk5vIiwxOTM5LDU0NCwxODYyLDIwODENCiI4ODkiLDg4OSwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDg3NCwzNTQsODIxLDExODENCiI4OTAiLDg5MCwiUmVnaW9uYWwiLDIsMCwyLCJObyIsMTA0OSwzNTUsMTAyNCwxMTczDQoiODkxIiw4OTEsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIlllcyIsOTI1LDM0OCw5MzQsMTE3NA0KIjg5MiIsODkyLCJSZWdpb25hbCIsMiwyLDQsIk5vIiwxODcyLDU0NSwxODI2LDE4MTINCiI4OTMiLDg5MywiQ2FwaXRhbCBjaXR5IiwxLDEsMiwiTm8iLDI1OTEsODY4LDI1OTgsMjQ5OQ0KIjg5NCIsODk0LCJDYXBpdGFsIGNpdHkiLDMsMSw0LCJObyIsMTI1Nyw0NDIsMTI1OCwxMzcyDQoiODk1Iiw4OTUsIkNhcGl0YWwgY2l0eSIsMiwzLDUsIk5vIiwxODYyLDc4NSwxODQwLDE3NDANCiI4OTYiLDg5NiwiUmVnaW9uYWwiLDQsMSw1LCJObyIsMTM4MCw1MDAsMTI5NCwxMTA3DQoiODk3Iiw4OTcsIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDE2NDIsNTEzLDE1MzEsMTQxMg0KIjg5OCIsODk4LCJSZWdpb25hbCIsMSwwLDEsIk5vIiw4MjIsMzE2LDc3NiwxMTY1DQoiODk5Iiw4OTksIkNhcGl0YWwgY2l0eSIsMiwzLDUsIk5vIiwyMDI2LDY4NSwxODY4LDIxODUNCiI5MDAiLDkwMCwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDE1NDksNjI1LDE0OTYsMTMwOA0KIjkwMSIsOTAxLCJSZWdpb25hbCIsMSwxLDIsIlllcyIsOTYyLDM3OCw5ODEsMTE3OQ0KIjkwMiIsOTAyLCJSZWdpb25hbCIsMywwLDMsIk5vIiwyNTIzLDcyMSwyMzc4LDIzNzINCiI5MDMiLDkwMywiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDE4ODUsNjY5LDE3NDksMTg4Mw0KIjkwNCIsOTA0LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTMzMSw1ODcsMTMzMywxNDQwDQoiOTA1Iiw5MDUsIkNhcGl0YWwgY2l0eSIsMywyLDUsIk5vIiw5OTUsNDUxLDk3MSw5ODcNCiI5MDYiLDkwNiwiUmVnaW9uYWwiLDIsMSwzLCJObyIsNzA2LDI1Nyw3MDgsOTM2DQoiOTA3Iiw5MDcsIlJlZ2lvbmFsIiwxLDIsMywiTm8iLDY4OCwzMjgsNjQwLDU3Nw0KIjkwOCIsOTA4LCJDYXBpdGFsIGNpdHkiLDMsMiw1LCJObyIsMjc2NywxMDk4LDI4MDEsMzEwNQ0KIjkwOSIsOTA5LCJDYXBpdGFsIGNpdHkiLDMsMiw1LCJObyIsMTYzOSw1OTgsMTU3OCwxNTM5DQoiOTEwIiw5MTAsIlJlZ2lvbmFsIiwxLDAsMSwiTm8iLDExNTYsMjEyLDExMjcsMTMyMA0KIjkxMSIsOTExLCJSZWdpb25hbCIsMSw0LDUsIk5vIiwxNzQ3LDU2NCwxNjYwLDE3MzUNCiI5MTIiLDkxMiwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDEzNzIsNTk1LDEzMzgsMTE3Ng0KIjkxMyIsOTEzLCJSZWdpb25hbCIsMSwxLDIsIk5vIiw2ODAsMjQxLDYzNyw2MjcNCiI5MTQiLDkxNCwiUmVnaW9uYWwiLDIsMSwzLCJObyIsMTEzNSwzNjEsMTA0NiwxMTkxDQoiOTE1Iiw5MTUsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxODM1LDcxOCwxNzkzLDE4NzYNCiI5MTYiLDkxNiwiQ2FwaXRhbCBjaXR5IiwxLDIsMywiTm8iLDE1MDQsNzI2LDE0ODgsMTgzNQ0KIjkxNyIsOTE3LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTAzNyw1NTQsMTAwNiw5MjINCiI5MTgiLDkxOCwiQ2FwaXRhbCBjaXR5IiwzLDIsNSwiTm8iLDE3MzMsNTE5LDE2OTcsMTU1OQ0KIjkxOSIsOTE5LCJSZWdpb25hbCIsMiwyLDQsIlllcyIsMTMxNSw0MTcsMTIyOCwxMTM0DQoiOTIwIiw5MjAsIkNhcGl0YWwgY2l0eSIsMiwyLDQsIk5vIiwxNTI1LDYzNiwxNDU5LDE1NzENCiI5MjEiLDkyMSwiQ2FwaXRhbCBjaXR5IiwyLDEsMywiWWVzIiwxNjkzLDU0NSwxNjg0LDE4MjINCiI5MjIiLDkyMiwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDEyMjAsNjA5LDExOTMsMTQ4NA0KIjkyMyIsOTIzLCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJZZXMiLDI0NDUsODk4LDIzNjksMjE0Mg0KIjkyNCIsOTI0LCJSZWdpb25hbCIsMiwwLDIsIk5vIiwxNzg4LDcwNiwxNzkwLDE3ODgNCiI5MjUiLDkyNSwiQ2FwaXRhbCBjaXR5IiwzLDAsMywiTm8iLDIwMzAsODU3LDIwMjEsMTkzNw0KIjkyNiIsOTI2LCJDYXBpdGFsIGNpdHkiLDQsMCw0LCJObyIsMTc4NSw1ODksMTcxMCwxODY1DQoiOTI3Iiw5MjcsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwzMzE0LDEyNTcsMzE2MywzMzUzDQoiOTI4Iiw5MjgsIkNhcGl0YWwgY2l0eSIsMywxLDQsIk5vIiwyMjIyLDkwNiwyMTkxLDIwODQNCiI5MjkiLDkyOSwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDIxMDUsNjUwLDE5NzcsMjQxOA0KIjkzMCIsOTMwLCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTUzMyw2NzYsMTUwNywxMjgzDQoiOTMxIiw5MzEsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIk5vIiwxOTM3LDY4NywxOTYyLDIxMDgNCiI5MzIiLDkzMiwiQ2FwaXRhbCBjaXR5IiwxLDEsMiwiTm8iLDg5NCwzMjMsODQ1LDEwNTINCiI5MzMiLDkzMywiUmVnaW9uYWwiLDEsMiwzLCJZZXMiLDk5MCwyODYsOTUyLDEwNjcNCiI5MzQiLDkzNCwiQ2FwaXRhbCBjaXR5IiwzLDEsNCwiTm8iLDE4NDksNjMwLDE4NTMsMTgzOQ0KIjkzNSIsOTM1LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMTgxMiw1NjQsMTY3NywxNzU5DQoiOTM2Iiw5MzYsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIlllcyIsOTg0LDM2OSw5NTIsNzE1DQoiOTM3Iiw5MzcsIkNhcGl0YWwgY2l0eSIsMSw0LDUsIk5vIiwxNzE1LDc2MiwxNjQxLDIwMjANCiI5MzgiLDkzOCwiQ2FwaXRhbCBjaXR5IiwzLDAsMywiTm8iLDIxOTIsNjc5LDIxMjYsMjMwNQ0KIjkzOSIsOTM5LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMTM2OSw0NTEsMTM5NiwxNjU5DQoiOTQwIiw5NDAsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxNDA3LDU2OCwxMzU0LDE0OTgNCiI5NDEiLDk0MSwiUmVnaW9uYWwiLDEsMCwxLCJObyIsMTM1NCwzOTksMTM2MSwxNDczDQoiOTQyIiw5NDIsIkNhcGl0YWwgY2l0eSIsMywwLDMsIk5vIiwxMzQ1LDU1NCwxMjkyLDExNDYNCiI5NDMiLDk0MywiUmVnaW9uYWwiLDMsMCwzLCJObyIsMTM0OCw0MDYsMTI4MywxNDI5DQoiOTQ0Iiw5NDQsIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDE4MjAsNjAxLDE3NTAsMTY5Mg0KIjk0NSIsOTQ1LCJSZWdpb25hbCIsMywwLDMsIlllcyIsMjQzMCw4ODIsMjI2OCwyMjE2DQoiOTQ2Iiw5NDYsIkNhcGl0YWwgY2l0eSIsMSwyLDMsIk5vIiwxNDU5LDUyMywxMzgwLDE0MTANCiI5NDciLDk0NywiUmVnaW9uYWwiLDIsNCw2LCJObyIsNDk5LDI3OCw0NjEsMzQ3DQoiOTQ4Iiw5NDgsIlJlZ2lvbmFsIiwyLDQsNiwiTm8iLDE0NjYsMzY0LDE0MjcsMTY0Mw0KIjk0OSIsOTQ5LCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsMTU0MSw2MzYsMTQxOCwxMzYwDQoiOTUwIiw5NTAsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxNTQxLDUyMywxNTI1LDE3MzANCiI5NTEiLDk1MSwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiWWVzIiwxMDQ0LDM3Nyw5OTcsMTA2Mw0KIjk1MiIsOTUyLCJSZWdpb25hbCIsMiwzLDUsIk5vIiwxNDkzLDQ3MCwxNDQzLDEzOTgNCiI5NTMiLDk1MywiQ2FwaXRhbCBjaXR5IiwyLDQsNiwiTm8iLDIzODQsOTkyLDIzNTksMjQyNQ0KIjk1NCIsOTU0LCJDYXBpdGFsIGNpdHkiLDMsMSw0LCJZZXMiLDE2NDgsNjA0LDE1OTYsMTQyMQ0KIjk1NSIsOTU1LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTM0Myw1NjIsMTI5NiwxMzI0DQoiOTU2Iiw5NTYsIkNhcGl0YWwgY2l0eSIsMSwyLDMsIk5vIiwxNTI2LDQ3MCwxNTI3LDEyNDgNCiI5NTciLDk1NywiUmVnaW9uYWwiLDIsMSwzLCJZZXMiLDExNDksMjg5LDEwNzcsMTQzMA0KIjk1OCIsOTU4LCJDYXBpdGFsIGNpdHkiLDIsMiw0LCJObyIsMzIxNSwxMjQ3LDI5OTgsMzAyNQ0KIjk1OSIsOTU5LCJDYXBpdGFsIGNpdHkiLDQsMiw2LCJObyIsMTQ2OSw1MzAsMTQ1MSwxNjMwDQoiOTYwIiw5NjAsIlJlZ2lvbmFsIiwyLDAsMiwiWWVzIiwxNDY2LDQ1MywxNDM4LDEzMzQNCiI5NjEiLDk2MSwiQ2FwaXRhbCBjaXR5IiwxLDAsMSwiTm8iLDE4NDEsNzA0LDE2OTksMTY4Mw0KIjk2MiIsOTYyLCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsMTI3OSw1MTcsMTE4NywxMjU4DQoiOTYzIiw5NjMsIlJlZ2lvbmFsIiwzLDEsNCwiTm8iLDE0MTMsNTE2LDEzODEsMTU1MA0KIjk2NCIsOTY0LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJObyIsMTU1Niw1NjgsMTQzOSwxNDA2DQoiOTY1Iiw5NjUsIkNhcGl0YWwgY2l0eSIsMSwyLDMsIk5vIiwxNTI0LDU1OSwxNDYzLDE2ODYNCiI5NjYiLDk2NiwiUmVnaW9uYWwiLDIsMCwyLCJZZXMiLDE1OTIsNTkxLDE1ODIsMTczMQ0KIjk2NyIsOTY3LCJDYXBpdGFsIGNpdHkiLDIsMSwzLCJZZXMiLDY2NywyODQsNjMzLDcwNQ0KIjk2OCIsOTY4LCJDYXBpdGFsIGNpdHkiLDMsMCwzLCJObyIsMTA2NCw1MzMsOTg4LDEwNzkNCiI5NjkiLDk2OSwiUmVnaW9uYWwiLDMsMiw1LCJObyIsMjg2OSw5NzMsMjgwMSwyNzI2DQoiOTcwIiw5NzAsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxNDU4LDQ0NiwxNDQxLDE0MjUNCiI5NzEiLDk3MSwiUmVnaW9uYWwiLDEsMCwxLCJObyIsMTEwMywzNjYsMTAyMiw5MTANCiI5NzIiLDk3MiwiUmVnaW9uYWwiLDIsMSwzLCJObyIsMTY5Nyw1NTAsMTY0OCwxNjk3DQoiOTczIiw5NzMsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIlllcyIsOTIwLDUwNCw4NjYsMTEwOQ0KIjk3NCIsOTc0LCJDYXBpdGFsIGNpdHkiLDIsNCw2LCJObyIsMTQ2Nyw1NDQsMTQ5MSwxNjAwDQoiOTc1Iiw5NzUsIlJlZ2lvbmFsIiwxLDIsMywiTm8iLDE4MDksMzUxLDE4MTEsMTQ4OQ0KIjk3NiIsOTc2LCJSZWdpb25hbCIsNCwxLDUsIk5vIiwxNjI3LDUxNCwxNTE0LDE0MDgNCiI5NzciLDk3NywiUmVnaW9uYWwiLDIsMSwzLCJObyIsOTU5LDQyNSw5NjUsMTAzMw0KIjk3OCIsOTc4LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJObyIsMTMwNSw2NjAsMTIyMiwxNDY4DQoiOTc5Iiw5NzksIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwxNDMwLDQ3OSwxNDQ2LDE3MTgNCiI5ODAiLDk4MCwiQ2FwaXRhbCBjaXR5IiwzLDEsNCwiTm8iLDEyMzUsNTg0LDEyMzEsMTA0MA0KIjk4MSIsOTgxLCJSZWdpb25hbCIsMiwwLDIsIlllcyIsMTA3Niw0ODYsMTAwMCw5NDcNCiI5ODIiLDk4MiwiUmVnaW9uYWwiLDIsMiw0LCJObyIsMTE5MSwzODksMTE5MCwxMTU4DQoiOTgzIiw5ODMsIkNhcGl0YWwgY2l0eSIsMiwxLDMsIlllcyIsMTE3Miw0MTgsMTA5OSwxMjQxDQoiOTg0Iiw5ODQsIlJlZ2lvbmFsIiwyLDAsMiwiTm8iLDE3MDQsNjEyLDE3MDQsMTMyNw0KIjk4NSIsOTg1LCJDYXBpdGFsIGNpdHkiLDIsMCwyLCJZZXMiLDE0MjEsNTcwLDEzOTUsMTUxNQ0KIjk4NiIsOTg2LCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsMTc1Niw3MTQsMTc1NSwxOTUwDQoiOTg3Iiw5ODcsIkNhcGl0YWwgY2l0eSIsMiwwLDIsIk5vIiwyNTU0LDkzOSwyNTY3LDI0MzMNCiI5ODgiLDk4OCwiQ2FwaXRhbCBjaXR5IiwxLDAsMSwiTm8iLDE1MzgsNTYyLDE1NDksMTU1OQ0KIjk4OSIsOTg5LCJSZWdpb25hbCIsMiwwLDIsIlllcyIsODEyLDE4MCw3NjIsNzA2DQoiOTkwIiw5OTAsIkNhcGl0YWwgY2l0eSIsMywxLDQsIk5vIiwxMDAxLDQ3Miw5NDksMTA1OQ0KIjk5MSIsOTkxLCJDYXBpdGFsIGNpdHkiLDEsMCwxLCJObyIsMTc3Niw2MTgsMTgwNCwxNzAwDQoiOTkyIiw5OTIsIkNhcGl0YWwgY2l0eSIsMSwwLDEsIk5vIiwyNjc0LDExMDIsMjQ5NCwyNjkwDQoiOTkzIiw5OTMsIkNhcGl0YWwgY2l0eSIsMywwLDMsIk5vIiwyNzc5LDExNDgsMjc3NiwyNjUzDQoiOTk0Iiw5OTQsIkNhcGl0YWwgY2l0eSIsMiwzLDUsIk5vIiw0NDgxLDE3MDEsNDQxNSw0NDA5DQoiOTk1Iiw5OTUsIkNhcGl0YWwgY2l0eSIsMSwyLDMsIk5vIiwxOTE4LDczNCwxODY3LDE3NzANCiI5OTYiLDk5NiwiQ2FwaXRhbCBjaXR5IiwyLDAsMiwiTm8iLDExMzYsNTM2LDExMzAsMTIzNw0KIjk5NyIsOTk3LCJDYXBpdGFsIGNpdHkiLDIsMyw1LCJObyIsMTAyOCw0ODUsOTYwLDExODMNCiI5OTgiLDk5OCwiQ2FwaXRhbCBjaXR5IiwyLDIsNCwiTm8iLDE2NjQsNTU4LDE2NjAsMTYyOA0KIjk5OSIsOTk5LCJDYXBpdGFsIGNpdHkiLDIsMyw1LCJObyIsMTQ1NSw2MzMsMTM0NCwxNjY1DQoiMTAwMCIsMTAwMCwiQ2FwaXRhbCBjaXR5IiwxLDMsNCwiWWVzIiwxMzkzLDU3NSwxMjkzLDEzMTYNCg==');
+        if (!response.ok) throw new Error('Network response failed');
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = 'households.csv';
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.dispatchEvent(new MouseEvent('click'));
+        document.body.removeChild(a);
+        setTimeout(() => {
+          window.URL.revokeObjectURL(blobUrl);
+        }, 100);
+        return false;
+      } catch (error) {
+        console.error('Download failed:', error);
+        alert('Download failed. Please try again.');
+      }
+    }
+    downloadFile(event);
+  "><i class="fa fa-save"></i> households</button>
+</div>
+</div>
+</center>
+<p><br></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the <code>households</code> dataset to estimate the mean weekly household income.</p>
+<p>Calculate:</p>
+<ol type="1">
+<li>the sample mean;</li>
+<li>the sample standard deviation;</li>
+<li>the standard error;</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>income_summary <span class="ot">&lt;-</span> households <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> ____,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_income =</span> ____,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_income =</span> ____,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">se_income =</span> ____</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>income_summary <span class="sc">|&gt;</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_currency</span>(</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">c</span>(____, ____, ____),</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">currency =</span> <span class="st">"____"</span>,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">decimals =</span> ____</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click for solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>income_summary <span class="ot">&lt;-</span> households <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_income =</span> <span class="fu">mean</span>(weekly_income),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_income =</span> <span class="fu">sd</span>(weekly_income),</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">se_income =</span> sd_income <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>income_summary <span class="sc">|&gt;</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_currency</span>(</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">c</span>(mean_income, sd_income, se_income),</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">currency =</span> <span class="st">"AUD"</span>,</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">decimals =</span> <span class="dv">0</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="lxgpzekyeq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#lxgpzekyeq table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#lxgpzekyeq thead, #lxgpzekyeq tbody, #lxgpzekyeq tfoot, #lxgpzekyeq tr, #lxgpzekyeq td, #lxgpzekyeq th {
+  border-style: none;
+}
+
+#lxgpzekyeq p {
+  margin: 0;
+  padding: 0;
+}
+
+#lxgpzekyeq .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#lxgpzekyeq .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#lxgpzekyeq .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#lxgpzekyeq .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#lxgpzekyeq .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#lxgpzekyeq .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lxgpzekyeq .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#lxgpzekyeq .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#lxgpzekyeq .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#lxgpzekyeq .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#lxgpzekyeq .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#lxgpzekyeq .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#lxgpzekyeq .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#lxgpzekyeq .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#lxgpzekyeq .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#lxgpzekyeq .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#lxgpzekyeq .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#lxgpzekyeq .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#lxgpzekyeq .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lxgpzekyeq .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#lxgpzekyeq .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#lxgpzekyeq .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#lxgpzekyeq .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lxgpzekyeq .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#lxgpzekyeq .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#lxgpzekyeq .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lxgpzekyeq .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lxgpzekyeq .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#lxgpzekyeq .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lxgpzekyeq .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#lxgpzekyeq .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lxgpzekyeq .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#lxgpzekyeq .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lxgpzekyeq .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#lxgpzekyeq .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lxgpzekyeq .gt_left {
+  text-align: left;
+}
+
+#lxgpzekyeq .gt_center {
+  text-align: center;
+}
+
+#lxgpzekyeq .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#lxgpzekyeq .gt_font_normal {
+  font-weight: normal;
+}
+
+#lxgpzekyeq .gt_font_bold {
+  font-weight: bold;
+}
+
+#lxgpzekyeq .gt_font_italic {
+  font-style: italic;
+}
+
+#lxgpzekyeq .gt_super {
+  font-size: 65%;
+}
+
+#lxgpzekyeq .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#lxgpzekyeq .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#lxgpzekyeq .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#lxgpzekyeq .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#lxgpzekyeq .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#lxgpzekyeq .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#lxgpzekyeq .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#lxgpzekyeq .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#lxgpzekyeq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="n" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">n</th>
+<th id="mean_income" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">mean_income</th>
+<th id="sd_income" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">sd_income</th>
+<th id="se_income" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">se_income</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right" headers="n">1000</td>
+<td class="gt_row gt_right" headers="mean_income">$1,634</td>
+<td class="gt_row gt_right" headers="sd_income">$628</td>
+<td class="gt_row gt_right" headers="se_income">$20</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question 9
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Calculate a 95% confidence interval using the <code>t.test()</code> function</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(____, </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">conf.level =</span> ____)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click for solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(households<span class="sc">$</span>weekly_income, </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  households$weekly_income
+t = 82.299, df = 999, p-value &lt; 2.2e-16
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 1594.721 1672.629
+sample estimates:
+mean of x 
+ 1633.675 </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question 10
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Estimate the proportion of households with weekly income below $1,000.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>households <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> ____,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">below_1000 =</span> ____,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">prop_below_1000 =</span> ____</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_percent</span>(</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> ____,</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">decimals =</span> ____</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click for solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>households <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">below_1000 =</span> <span class="fu">sum</span>(weekly_income <span class="sc">&lt;</span> <span class="dv">1000</span>),</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">prop_below_1000 =</span> <span class="fu">mean</span>(weekly_income <span class="sc">&lt;</span> <span class="dv">1000</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_percent</span>(</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> prop_below_1000,</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">decimals =</span> <span class="dv">1</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="jnnrpmmgnn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#jnnrpmmgnn table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#jnnrpmmgnn thead, #jnnrpmmgnn tbody, #jnnrpmmgnn tfoot, #jnnrpmmgnn tr, #jnnrpmmgnn td, #jnnrpmmgnn th {
+  border-style: none;
+}
+
+#jnnrpmmgnn p {
+  margin: 0;
+  padding: 0;
+}
+
+#jnnrpmmgnn .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#jnnrpmmgnn .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#jnnrpmmgnn .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#jnnrpmmgnn .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#jnnrpmmgnn .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#jnnrpmmgnn .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#jnnrpmmgnn .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#jnnrpmmgnn .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#jnnrpmmgnn .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#jnnrpmmgnn .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#jnnrpmmgnn .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#jnnrpmmgnn .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#jnnrpmmgnn .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#jnnrpmmgnn .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#jnnrpmmgnn .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#jnnrpmmgnn .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#jnnrpmmgnn .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#jnnrpmmgnn .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#jnnrpmmgnn .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#jnnrpmmgnn .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#jnnrpmmgnn .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#jnnrpmmgnn .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#jnnrpmmgnn .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#jnnrpmmgnn .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#jnnrpmmgnn .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#jnnrpmmgnn .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#jnnrpmmgnn .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#jnnrpmmgnn .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#jnnrpmmgnn .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#jnnrpmmgnn .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#jnnrpmmgnn .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#jnnrpmmgnn .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#jnnrpmmgnn .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#jnnrpmmgnn .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#jnnrpmmgnn .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#jnnrpmmgnn .gt_left {
+  text-align: left;
+}
+
+#jnnrpmmgnn .gt_center {
+  text-align: center;
+}
+
+#jnnrpmmgnn .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#jnnrpmmgnn .gt_font_normal {
+  font-weight: normal;
+}
+
+#jnnrpmmgnn .gt_font_bold {
+  font-weight: bold;
+}
+
+#jnnrpmmgnn .gt_font_italic {
+  font-style: italic;
+}
+
+#jnnrpmmgnn .gt_super {
+  font-size: 65%;
+}
+
+#jnnrpmmgnn .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#jnnrpmmgnn .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#jnnrpmmgnn .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#jnnrpmmgnn .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#jnnrpmmgnn .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#jnnrpmmgnn .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#jnnrpmmgnn .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#jnnrpmmgnn .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#jnnrpmmgnn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="n" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">n</th>
+<th id="below_1000" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">below_1000</th>
+<th id="prop_below_1000" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">prop_below_1000</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right" headers="n">1000</td>
+<td class="gt_row gt_right" headers="below_1000">140</td>
+<td class="gt_row gt_right" headers="prop_below_1000">14.0%</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question 11
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compare mean weekly income between capital city households and regional households.</p>
+<ol type="1">
+<li>Calculate the mean income in each group.</li>
+<li>Use <code>t.test()</code> to construct a 95% confidence interval for the difference in means.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mean for each group</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>households <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(____) <span class="sc">|&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_income =</span> ____</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Difference and 95% CI in sample means</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  ____ <span class="sc">~</span> ____,</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ____,</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">conf.level =</span> ____</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click for solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>households <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_income =</span> <span class="fu">mean</span>(weekly_income)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  region       mean_income
+  &lt;chr&gt;              &lt;dbl&gt;
+1 Capital city       1734.
+2 Regional           1472.</code></pre>
+</div>
+</div>
+<p>Now use Welch’s two-sample t interval:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  weekly_income <span class="sc">~</span> region,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> households,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">conf.level =</span> <span class="fl">0.95</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  weekly_income by region
+t = 6.7798, df = 897.16, p-value = 2.18e-11
+alternative hypothesis: true difference in means between group Capital city and group Regional is not equal to 0
+95 percent confidence interval:
+ 186.3746 338.2399
+sample estimates:
+mean in group Capital city     mean in group Regional 
+                  1734.401                   1472.094 </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question 12
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Is the regional comparison an independent-samples problem or a paired-samples problem? Explain.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Click for solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This is an independent-samples problem.</p>
+<p>A capital city household is not naturally matched to a particular regional household. The two groups are separate.</p>
+<p>The parameter is:</p>
+<p><span class="math display">\[
+\mu_{\text{capital}} - \mu_{\text{regional}}
+\]</span></p>
+<p>The point estimate is:</p>
+<p><span class="math display">\[
+\bar{x}_{\text{capital}} - \bar{x}_{\text{regional}}
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="homework" class="level2">
+<h2 class="anchored" data-anchor-id="homework">Homework</h2>
+<p>Now compare <code>income_2025</code> and <code>income_2026</code> for the same households. Create a Quarto report that addresses the following questions:</p>
+<ol type="1">
+<li>Explain why this is a <strong>paired</strong> comparison (and not independent).</li>
+<li>Calculate the change in income for each household (use income_2026 - income_2025)</li>
+<li>Estimate the mean change.</li>
+<li>Use <code>t.test()</code> to construct a 95% confidence interval for the mean change.</li>
+<li>Create one visualisation that helps explain one of your estimates from Part 2.</li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  update_total_correct();
+}
+
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./week04.html" class="pagination-link" aria-label="Week 4">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Week 4</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./week06.html" class="pagination-link" aria-label="Week 6">
+        <span class="nav-page-text"><span class="chapter-title">Week 6</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
