@@ -2,82 +2,687 @@
 title: "week07"
 ---
 
-<style>
-.distractor-box {
-  height: 650px;
-  overflow: hidden;
-  border-radius: 8px;
-  border: 2px solid #22c55e;
-  background: #0f172a;
-  color: #22c55e;
-  font-family: system-ui, sans-serif;
-  font-weight: 700;
-  padding: 12px;
-}
+```{r, include=FALSE}
+library(tidyverse)
+library(gt)
+library(scales)
+colour_match <- read.csv("data/colour_match.csv")
+```
 
-.scrolling-distractions {
-  animation: scroll-up 18s linear infinite;
-}
 
-.scrolling-distractions p {
-  font-size: 20px;
-  margin: 0 0 26px 0;
-  padding: 12px;
-  border-radius: 8px;
-  background: rgba(34, 197, 94, 0.12);
-}
+## Introduction
 
-@keyframes scroll-up {
-  from {
-    transform: translateY(650px);
-  }
-  to {
-    transform: translateY(-100%);
-  }
-}
-</style>
+This week we will begin by playing a colour-matching game.
 
-:::: {.columns}
+-   A target colour appears on the left side of the screen.
+-   Several coloured squares appear on the right side of the screen.
+-   Your job is to click the square that best matches the target colour.
+-   After you click an answer, the game automatically moves to the next round.
+-   The objective is to score as many points as you can before the game ends.
 
-::: {.column width="65%"}
-<iframe 
-  src="https://kolor.moro.es/" 
-  width="100%" 
-  height="650" 
-  style="border: none; border-radius: 8px;"
-  loading="lazy">
-</iframe>
+There are two experimental conditions:
+
+-   **Control**: the answer squares are all shown at the same size.
+-   **Distraction**: the answer squares are shown in different sizes. Some are large, some are medium, and some are small.
+
+The colour-matching task is the same in both conditions. The only difference is how the answer options are displayed. In the **Distraction** condition, the different square sizes may pull your attention away from the colour match.
+
+Your tutor will assign you to either the **Control** group or the **Distraction** group. Play the game once. Record your final score and your group.
+
+```{=html}
+<iframe
+  src="interactive/color.html"
+  width="100%"
+  height="760"
+  style="border: none;"
+></iframe>
+```
+
+Suppose this experiment was completed with a larger sample. Download the data below and move it into your working directory.
+
+<center>
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(downloadthis)
+
+download_file(
+  path = "data/colour_match.csv",
+  button_label = "colour_match",
+  button_type = 'success'
+)
+```
+</center> <br> 
+
+## Tasks
+
+### Part 1: Permutation tests
+
+In the previous tutorial, we used a t-test to compare two groups. This week, we will start with a simulation-based method called a **permutation test**. A permutation test asks:
+
+> If the experimental condition had no effect, how unusual would our observed difference be?
+
+If the **Control** and **Distraction** labels do not matter, then we should be able to shuffle the group labels and get results that look similar to the original data. If the observed difference is much larger than the differences we get after shuffling, then the data provide evidence against the idea that the group labels do not matter.
+
+For this experiment, we will use the difference in sample means:
+
+$$
+\bar{x}_{Control} - \bar{x}_{Distraction}
+$$
+
+A positive value means the control group scored higher on average.
+
+:::: callout-note
+#### Question 1
+
+Calculate the observed difference in mean scores between the control and distraction groups.
+
+```{r, eval=FALSE}
+mean_control <- colour_match |>
+  filter(group == ___) |>
+  pull(___) |>
+  mean()
+
+mean_distraction <- colour_match |>
+  filter(group == ___) |>
+  pull(___) |>
+  mean()
+
+observed_diff <- ___ - ___
+
+observed_diff
+```
+
+::: {.callout-important collapse="true"}
+
+#### Click for solution
+```{r}
+mean_control <- colour_match |>
+  filter(group == "Control") |>
+  pull(score) |>
+  mean()
+
+mean_distraction <- colour_match |>
+  filter(group == "Distraction") |>
+  pull(score) |>
+  mean()
+
+observed_diff <- mean_control - mean_distraction
+
+observed_diff
+```
+
 :::
-
-::: {.column width="35%"}
-<div class="distractor-box">
-  <div class="scrolling-distractions">
-    <p>New message: Are you free tonight?</p>
-    <p>Your phone buzzed.</p>
-    <p>Someone tagged you in a photo.</p>
-    <p>Assignment due soon.</p>
-    <p>Battery low: 3% remaining.</p>
-    <p>Breaking news alert.</p>
-    <p>Group chat: 17 new messages.</p>
-    <p>New email from your lecturer.</p>
-    <p>Calendar reminder: meeting in 5 minutes.</p>
-    <p>Your food delivery is nearby.</p>
-    <p>Someone is calling you.</p>
-    <p>Storage almost full.</p>
-    <p>Wi-Fi disconnected.</p>
-    <p>Friend request received.</p>
-    <p>Update available.</p>
-  </div>
-</div>
-:::
-
 ::::
 
+:::: callout-note
+
+#### Question 2
+
+Before running a full permutation test, create one shuffled version of the dataset.
+
+The idea is to keep the scores fixed, but randomly shuffle the group labels.
+
+```{r, eval=FALSE}
+one_shuffle <- colour_match |>
+  mutate(
+    shuffled_group = sample(___)
+  )
+
+one_shuffle
+```
+
+::: {.callout-important collapse="true"}
+
+#### Click for solution
+
+```{r}
+one_shuffle <- colour_match |>
+  mutate(
+    shuffled_group = sample(group)
+  )
+
+one_shuffle
+```
+
+:::
+::::
+
+:::: callout-note
+
+#### Question 3
+
+Using the shuffled dataset from Question 2, calculate the difference in mean scores between the shuffled groups.
+
+```{r, eval=FALSE}
+one_shuffle_diff <- one_shuffle |>
+  group_by(___) |>
+  summarise(
+    mean_score = mean(___)
+  )
+
+shuffled_diff <- one_shuffle_diff |>
+  summarise(
+    diff = mean_score[shuffled_group == ___] -
+      mean_score[shuffled_group == ___]
+  ) |>
+  pull(diff)
+
+shuffled_diff
+```
+
+::: {.callout-important collapse="true"}
+
+#### Click for solution
+
+```{r}
+one_shuffle_diff <- one_shuffle |>
+  group_by(shuffled_group) |>
+  summarise(
+    mean_score = mean(score),
+    .groups = "drop"
+  )
+
+one_shuffle_diff
+
+shuffled_diff <- one_shuffle_diff |>
+  summarise(
+    diff = mean_score[shuffled_group == "Control"] -
+      mean_score[shuffled_group == "Distraction"]
+  ) |>
+  pull(diff)
+
+shuffled_diff
+```
+
+:::
+::::
+
+:::: callout-note
+
+#### Question 4
+
+Now repeat the shuffling process 1000 times. Each time:
+
+1. shuffle the group labels;
+2. calculate the difference in mean scores;
+3. store the result.
+
+```{r, eval=FALSE}
+set.seed(2420)
+
+permutation_results <- tibble(
+  replicate = 1:1000
+) |>
+  mutate(
+    shuffled_diff = map_dbl(replicate, function(i) {
+      shuffled_data <- colour_match |>
+        mutate(
+          shuffled_group = sample(___)
+        )
+
+      shuffled_summary <- shuffled_data |>
+        group_by(___) |>
+        summarise(
+          mean_score = mean(___),
+          .groups = "drop"
+        )
+
+      shuffled_summary |>
+        summarise(
+          diff = mean_score[shuffled_group == ___] -
+            mean_score[shuffled_group == ___]
+        ) |>
+        pull(diff)
+    })
+  )
+
+permutation_results
+```
+
+::: {.callout-important collapse="true"}
+
+#### Click for solution
+
+```{r}
+set.seed(2420)
+
+permutation_results <- tibble(
+  replicate = 1:1000
+) |>
+  mutate(
+    shuffled_diff = map_dbl(replicate, function(i) {
+      shuffled_data <- colour_match |>
+        mutate(
+          shuffled_group = sample(group)
+        )
+
+      shuffled_summary <- shuffled_data |>
+        group_by(shuffled_group) |>
+        summarise(
+          mean_score = mean(score),
+          .groups = "drop"
+        )
+
+      shuffled_summary |>
+        summarise(
+          diff = mean_score[shuffled_group == "Control"] -
+            mean_score[shuffled_group == "Distraction"]
+        ) |>
+        pull(diff)
+    })
+  )
+
+permutation_results
+```
+
+This gives us a permutation distribution. The permutation distribution shows the kinds of differences we could get if the group labels were randomly shuffled. In other words, it shows what differences are plausible if the experimental condition had no effect.
+:::
+::::
+
+:::: callout-note
+
+#### Question 5
+
+Visualise the permutation distribution and add a vertical line for the observed difference.
+
+```{r, eval=FALSE}
+ggplot(permutation_results, aes(x = ___)) +
+  geom_histogram(bins = 30, boundary = 0) +
+  geom_vline(
+    xintercept = ___,
+    linewidth = 1,
+    linetype = "dashed"
+  ) +
+  labs(
+    x = "Difference in means after shuffling",
+    y = "Number of permutations",
+    title = "Permutation distribution",
+    subtitle = "Dashed line shows the observed difference"
+  ) +
+  theme_minimal()
+```
+
+::: {.callout-important collapse="true"}
+
+#### Click for solution
+```{r}
+ggplot(permutation_results, aes(x = shuffled_diff)) +
+  geom_histogram(bins = 30, boundary = 0) +
+  geom_vline(
+    xintercept = observed_diff,
+    linewidth = 1,
+    linetype = "dashed"
+  ) +
+  labs(
+    x = "Difference in means after shuffling",
+    y = "Number of permutations",
+    title = "Permutation distribution",
+    subtitle = "Dashed line shows the observed difference"
+  ) +
+  theme_minimal()
+```
+
+The permutation distribution should be centred near 0. This makes sense because shuffling the labels creates a world where the two groups should not differ systematically. If the dashed line is far in the right tail, then the observed difference is large compared with what we would expect from random label assignment.
+:::
+::::
+
+:::: callout-note
+
+#### Question 6
+
+Calculate the one-sided permutation p-value.
+
+Because our alternative hypothesis is that the control group scores higher than the distraction group, we count how often the shuffled differences are at least as large as the observed difference.
+
+```{r, eval=FALSE}
+perm_p_value <- permutation_results |>
+  summarise(
+    p_value = mean(___ >= ___)
+  ) |>
+  pull(p_value)
+
+perm_p_value
+```
+
+::: {.callout-important collapse="true"}
+
+#### Click for solution
+
+```{r}
+perm_p_value <- permutation_results |>
+  summarise(
+    p_value = mean(shuffled_diff >= observed_diff)
+  ) |>
+  pull(p_value)
+
+perm_p_value
+```
+
+The permutation p-value estimates:
+
+If the group labels did not matter, how often would we see a difference at least as large as the observed difference? For this dataset, the observed difference is very large, so the permutation p-value will usually be close to 0. A value of 0 does not mean the true probability is exactly zero. It means that none of the 1000 shuffled datasets produced a difference as large as the observed one. If we used more permutations, we could estimate a smaller p-value more carefully.
+:::
+::::
+
+## Part 2: Bootstrap
+
+A permutation test helps us ask whether the observed difference would be surprising under a no-effect explanation.
+
+A bootstrap asks a different question:
+
+> How much uncertainty is there in our estimate?
+
+For this experiment, our estimate is the difference in mean scores (control - distraction). The bootstrap works by resampling from the observed data with replacement. This means some students may appear more than once in a bootstrap sample, while others may not appear at all. For comparing two groups, we resample within each group. This keeps the group sizes the same and preserves the idea that the control and distraction groups are separate samples.
+
+:::: callout-note
+
+#### Question 8
+
+Create one bootstrap sample from the control group and one bootstrap sample from the distraction group.
+
+```{r, eval=FALSE}
+control_scores <- colour_match |>
+  filter(group == ___) |>
+  pull(___)
+
+distraction_scores <- colour_match |>
+  filter(group == ___) |>
+  pull(___)
+
+control_boot <- sample(
+  x = ___,
+  size = length(___),
+  replace = ___
+)
+
+distraction_boot <- sample(
+  x = ___,
+  size = length(___),
+  replace = ___
+)
+
+control_boot
+distraction_boot
+```
+
+::: {.callout-important collapse="true"}
+
+#### Click for solution
+
+```{r}
+control_scores <- colour_match |>
+  filter(group == "Control") |>
+  pull(score)
+
+distraction_scores <- colour_match |>
+  filter(group == "Distraction") |>
+  pull(score)
+
+control_boot <- sample(
+  x = control_scores,
+  size = length(control_scores),
+  replace = TRUE
+)
+
+distraction_boot <- sample(
+  x = distraction_scores,
+  size = length(distraction_scores),
+  replace = TRUE
+)
+
+control_boot
+distraction_boot
+```
+
+This creates one bootstrap sample for each group. Because we used `replace = TRUE`, the same score can appear multiple times in a bootstrap sample. This is how the bootstrap mimics the idea of taking new samples from a population.
+:::
+::::
+
+:::: callout-note
+
+#### Question 9
+
+Calculate the difference in means for the one bootstrap sample from Question 8.
+
+```{r, eval=FALSE}
+one_boot_diff <- mean(___) - mean(___)
+
+one_boot_diff
+```
+
+::: {.callout-important collapse="true"}
+
+#### Click for solution
+
+```{r}
+one_boot_diff <- mean(control_boot) - mean(distraction_boot)
+
+one_boot_diff
+```
+
+This is one bootstrap estimate of the difference in mean scores. It will usually be close to the observed difference, but not exactly the same. That variation is what the bootstrap is trying to measure.
+:::
+::::
+
+:::: callout-note
+
+#### Question 10
+
+Repeat the bootstrap process 1000 times.
+
+Each time:
+
+1. resample control scores with replacement;
+2. resample distraction scores with replacement;
+3. calculate the difference in means.
+
+```{r, eval=FALSE}
+set.seed(5242)
+
+bootstrap_results <- tibble(
+  replicate = 1:1000
+) |>
+  mutate(
+    boot_diff = map_dbl(replicate, function(i) {
+      control_boot <- sample(
+        x = ___,
+        size = length(___),
+        replace = ___
+      )
+
+      distraction_boot <- sample(
+        x = ___,
+        size = length(___),
+        replace = ___
+      )
+
+      mean(___) - mean(___)
+    })
+  )
+
+bootstrap_results
+```
+
+::: {.callout-important collapse="true"}
+
+#### Click for solution
+
+```{r}
+set.seed(5242)
+
+bootstrap_results <- tibble(
+  replicate = 1:1000
+) |>
+  mutate(
+    boot_diff = map_dbl(replicate, function(i) {
+      control_boot <- sample(
+        x = control_scores,
+        size = length(control_scores),
+        replace = TRUE
+      )
+
+      distraction_boot <- sample(
+        x = distraction_scores,
+        size = length(distraction_scores),
+        replace = TRUE
+      )
+
+      mean(control_boot) - mean(distraction_boot)
+    })
+  )
+
+bootstrap_results
+```
+
+This gives us a bootstrap distribution of the estimated difference in means. Unlike the permutation distribution, the bootstrap distribution should be centred near the observed difference. That is because the bootstrap is not simulating a world where there is no effect. It is simulating repeated samples from something like the population that produced our data.
+:::
+::::
+
+:::: callout-note
+
+#### Question 11
+
+Visualise the bootstrap distribution and add a vertical line for the observed difference.
+
+```{r, eval=FALSE}
+ggplot(bootstrap_results, aes(x = ___)) +
+  geom_histogram(bins = 30, boundary = 0) +
+  geom_vline(
+    xintercept = ___,
+    linewidth = 1,
+    linetype = "dashed"
+  ) +
+  labs(
+    x = "Bootstrap difference in means",
+    y = "Number of bootstrap samples",
+    title = "Bootstrap distribution",
+    subtitle = "Dashed line shows the observed difference"
+  ) +
+  theme_minimal()
+```
+
+::: {.callout-important collapse="true"}
+
+#### Click for solution
+
+```{r}
+ggplot(bootstrap_results, aes(x = boot_diff)) +
+  geom_histogram(bins = 30, boundary = 0) +
+  geom_vline(
+    xintercept = observed_diff,
+    linewidth = 1,
+    linetype = "dashed"
+  ) +
+  labs(
+    x = "Bootstrap difference in means",
+    y = "Number of bootstrap samples",
+    title = "Bootstrap distribution",
+    subtitle = "Dashed line shows the observed difference"
+  ) +
+  theme_minimal()
+```
 
 
+:::
+::::
 
+:::: callout-note
 
+#### Question 12
 
+Calculate a 95% bootstrap confidence interval using the percentile method.
+
+```{r, eval=FALSE}
+bootstrap_ci <- bootstrap_results |>
+  summarise(
+    lower = quantile(___, probs = ___),
+    upper = quantile(___, probs = ___)
+  )
+
+bootstrap_ci
+```
+
+::: {.callout-important collapse="true"}
+
+#### Click for solution
+
+```{r}
+bootstrap_ci <- bootstrap_results |>
+  summarise(
+    lower = quantile(boot_diff, probs = 0.025),
+    upper = quantile(boot_diff, probs = 0.975)
+  )
+
+bootstrap_ci
+```
+
+:::
+::::
+
+:::: callout-note
+
+#### Question 13
+
+Add the bootstrap confidence interval to the bootstrap plot.
+
+```{r, eval=FALSE}
+ggplot(bootstrap_results, aes(x = ___)) +
+  geom_histogram(bins = 30, boundary = 0) +
+  geom_vline(
+    xintercept = ___,
+    linewidth = 1,
+    linetype = "dashed"
+  ) +
+  geom_vline(
+    xintercept = c(bootstrap_ci$___, bootstrap_ci$___),
+    linewidth = 1
+  ) +
+  labs(
+    x = "Bootstrap difference in means",
+    y = "Number of bootstrap samples",
+    title = "Bootstrap confidence interval",
+    subtitle = "Solid lines show the 95% bootstrap interval"
+  ) +
+  theme_minimal()
+```
+
+::: {.callout-important collapse="true"}
+
+#### Click for solution
+
+```{r}
+ggplot(bootstrap_results, aes(x = boot_diff)) +
+  geom_histogram(bins = 30, boundary = 0) +
+  geom_vline(
+    xintercept = observed_diff,
+    linewidth = 1,
+    linetype = "dashed"
+  ) +
+  geom_vline(
+    xintercept = c(bootstrap_ci$lower, bootstrap_ci$upper),
+    linewidth = 1
+  ) +
+  labs(
+    x = "Bootstrap difference in means",
+    y = "Number of bootstrap samples",
+    title = "Bootstrap confidence interval",
+    subtitle = "Solid lines show the 95% bootstrap interval"
+  ) +
+  theme_minimal()
+```
+
+The dashed line shows the observed estimate. The solid lines show the lower and upper endpoints of the 95% bootstrap confidence interval.
+:::
+::::
+
+## Homework
+
+Prepare a Quarto document that compares the two methods (permutation tests and bootstrap). In you report bes ure to answer the following:
+
+1. Which method was used to calculate a p-value?
+2. Which method was used to calculate a confidence interval?
+3. Which distribution was centred near 0?
+4. Which distribution was centred near the observed difference?
+5. Do the two methods tell a similar story for this dataset?
 
 
 
