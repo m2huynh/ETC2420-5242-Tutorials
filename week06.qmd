@@ -898,11 +898,7 @@ For this homework, we will think about a different experimental design. Instead 
 
 This is called a **within-subjects design** or a **paired design**, because each student contributes a pair of scores. The advantage of this design is that each student acts as their own comparison. Some students may naturally be better at the game than others. A paired design helps account for this because we compare each student’s distraction score to their own control score.
 
-### Simulating paired data
-
-Run the code below to simulate data for 40 students.
-
-Each student has their own baseline ability. Then we simulate their score in the control condition and their score in the distraction condition. In this simulation, the distraction condition reduces the expected score by about 4 points. However, individual scores still vary because students have different abilities and because there is random variation from one attempt to another.
+Run the code below to simulate data for 40 students. Each student has their own baseline ability. Then we simulate their score in the control condition and their score in the distraction condition. In this simulation, the distraction condition reduces the expected score by about 4 points. However, individual scores still vary because students have different abilities and because there is random variation from one attempt to another.
 
 ```{r}
 set.seed(2420)

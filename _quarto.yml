@@ -34,7 +34,6 @@ format:
         - darkly
         #- custom.scss
     number-sections: false
-  pdf: default
 
 editor: visual
 

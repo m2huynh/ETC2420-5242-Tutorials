@@ -1,5 +1,6 @@
 ---
 title: "Week 2"
+format: html
 ---
 
 ```{r}
@@ -35,7 +36,7 @@ The data from Arbuthnot’s study is contained in the file `arbuthnot.csv`. It c
 ```{r, echo=FALSE}
 library(downloadthis)
 download_file(
-  path = "Data/arbuthnot.csv",
+  path = "data/arbuthnot.csv",
   button_label = "arbuthnot",
   button_type = 'success'
 )
