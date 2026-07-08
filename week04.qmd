@@ -1,5 +1,6 @@
 ---
 title: "Week 4"
+subtitle: "Measurement and Error"
 ---
 
 ```{r}
@@ -11,7 +12,10 @@ library(tidyverse)
 
 ## Introduction
 
-Imagine four university friends are taking the unit: **Statistical Thinking**. Throughout the semester, they have usually done quite well. Their final exam is scheduled for Monday morning. However, the day before the exam, they party too hard, sleep in, and miss the exam.
+Imagine four university friends are taking the unit: **Statistical Thinking**. Throughout the semester, they have usually done quite well. Their final exam is scheduled for Monday morning. However, the day before the exam, they partied too hard, sleept in, and miss the exam.
+
+<center>![In a world where 4 Minhs exist](images/week04/party.png){width="75%"}</center>
+
 
 They decide to write to their professor and ask for a chance to sit a make-up exam. Their email says:
 

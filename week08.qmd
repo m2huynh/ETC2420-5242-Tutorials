@@ -1,0 +1,36 @@
+---
+title: "Week 8"
+Subtitle: "Bayesian Statistics"
+---
+
+## Introduction
+
+This week we will begin with a short courtroom activity. Suppose
+
+> Minh is on trial after a laptop goes missing from a university study room. You are the judge. Your task is not to decide immediately whether Minh is guilty or innocent. Instead, you will begin with an initial belief and update that belief as new evidence is presented.
+
+<center>![](images/week08/laptop.png){width="75%"}</center><br>
+
+The prosecution will present evidence that points toward guilt. The defence will respond with evidence or arguments that may weaken the prosecution’s case. After each piece of evidence, you will rate how strongly it points toward guilt on a scale from 0 to 10.
+
+The app will use your rating to update a probability distribution for Minh’s guilt. After each round, the posterior distribution becomes the prior distribution for the next round. This is the main idea of Bayesian inference:
+
+$$
+\text{posterior}
+\propto
+\text{prior}
+\times
+\text{likelihood}
+$$
+
+By the end of the activity, you will see how a sequence of evidence can gradually shift our uncertainty.
+
+```{=html}
+<iframe
+  src="interactive/Bayes.html"
+  width="100%"
+  height="700"
+  style="border: none;"
+></iframe>
+```
+

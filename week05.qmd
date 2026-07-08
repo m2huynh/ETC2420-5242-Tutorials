@@ -1,5 +1,6 @@
 ---
 title: "Week 5"
+subtitle: "Estimation"
 format: html
 ---
 
@@ -14,9 +15,9 @@ households <- read.csv("data/households.csv")
 
 This week we will begin by taking a sample of households from a fictitious town to estimate `weekly_income`.
 
-1. Begin by allocating `points` to create your field surveyor. You only have 10 points to allocate, so think carefully about the kind of surveyor you want to build. Some choices may help you reach more households, while others may help you collect cleaner information. 
-2. Once you have allocated your points, click the **Build surveyor** button.
-3. On the next screen, click the **Take sample** button. This will provide you with a random household from this town. You will also get an *estimate* for the mean income. How good this estimate is will depend on how you created your surveyor. 
+1.  Begin by allocating `points` to create your field surveyor. You only have 10 points to allocate, so think carefully about the kind of surveyor you want to build. Some choices may help you reach more households, while others may help you collect cleaner information.
+2.  Once you have allocated your points, click the **Build surveyor** button.
+3.  On the next screen, click the **Take sample** button. This will provide you with a random household from this town. You will also get an *estimate* for the mean income. How good this estimate is will depend on how you created your surveyor.
 
 ```{=html}
 <iframe 
@@ -39,8 +40,7 @@ Create a Quarto document in your Project folder and save it in your `week 5` fol
 my_sample <- c()
 ```
 
-
-:::: {.callout-note}
+:::: callout-note
 #### Question 1
 
 How many households are in your sample?
@@ -64,7 +64,7 @@ If your sample size is small, your estimate will usually be more wobbly. If your
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 2
 
 Calculate the sample mean, sample median, and sample standard deviation of weekly household income.
@@ -107,18 +107,17 @@ tibble(
     decimals = 0
   )
 ```
-
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 3
 
 Suppose the target parameter is the true mean weekly income of all households in the town.
 
-1. What is the parameter?
-2. What is the statistic?
-3. What is your point estimate?
+1.  What is the parameter?
+2.  What is the statistic?
+3.  What is your point estimate?
 
 ::: {.callout-important collapse="true"}
 #### Click for solution
@@ -140,11 +139,10 @@ Your point estimate is:
 ```{r, eval=FALSE}
 mean(my_sample)
 ```
-
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 4
 
 Calculate the standard error of the sample mean.
@@ -171,11 +169,10 @@ se <- s / sqrt(n)
 
 se
 ```
-
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 5
 
 Construct a *rough* interval estimate using:
@@ -210,11 +207,10 @@ rough_upper <- xbar + 2 * se
 
 c(rough_lower, rough_upper)
 ```
-
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 6
 
 Construct a formal 95% confidence interval for the population mean weekly income using `t.test()`.
@@ -238,19 +234,18 @@ To extract the confidence interval directly:
 ci <- t.test(my_sample, conf.level = 0.95)$conf.int
 ci
 ```
-
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 7
 
 Compare your result with another student.
 
-1. Did you get the same sample size?
-2. Did you get the same point estimate?
-3. Did you get the same confidence interval?
-4. Why or why not?
+1.  Did you get the same sample size?
+2.  Did you get the same point estimate?
+3.  Did you get the same confidence interval?
+4.  Why or why not?
 
 ::: {.callout-important collapse="true"}
 #### Click for sample answer
@@ -264,6 +259,7 @@ Different students will usually get different samples. Because the sample is dif
 In the first part of the tutorial, you only had one small sample. In this part, we will work with a larger dataset of 1,000 households.
 
 <center>
+
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 library(downloadthis)
 download_file(
@@ -272,18 +268,21 @@ download_file(
   button_type = 'success'
 )
 ```
-</center><br>
 
-:::: {.callout-note}
+</center>
+
+<br>
+
+:::: callout-note
 #### Question 8
 
 Use the `households` dataset to estimate the mean weekly household income.
 
 Calculate:
 
-1. the sample mean;
-2. the sample standard deviation;
-3. the standard error;
+1.  the sample mean;
+2.  the sample standard deviation;
+3.  the standard error;
 
 ```{r, eval=FALSE}
 income_summary <- households |>
@@ -323,11 +322,10 @@ income_summary |>
     decimals = 0
   )
 ```
-
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 9
 
 Calculate a 95% confidence interval using the `t.test()` function
@@ -344,14 +342,13 @@ t.test(____,
 t.test(households$weekly_income, 
        conf.level = 0.95)
 ```
-
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 10
 
-Estimate the proportion of households with weekly income below $1,000.
+Estimate the proportion of households with weekly income below \$1,000.
 
 ```{r, eval=FALSE}
 households |>
@@ -383,17 +380,16 @@ households |>
     decimals = 1
   )
 ```
-
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 11
 
 Compare mean weekly income between capital city households and regional households.
 
-1. Calculate the mean income in each group.
-2. Use `t.test()` to construct a 95% confidence interval for the difference in means.
+1.  Calculate the mean income in each group.
+2.  Use `t.test()` to construct a 95% confidence interval for the difference in means.
 
 ```{r, eval=FALSE}
 # Mean for each group
@@ -432,11 +428,10 @@ t.test(
   conf.level = 0.95
 )
 ```
-
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 12
 
 Is the regional comparison an independent-samples problem or a paired-samples problem? Explain.
@@ -466,10 +461,8 @@ $$
 
 Now compare `income_2025` and `income_2026` for the same households. Create a Quarto report that addresses the following questions:
 
-1. Explain why this is a **paired** comparison (and not independent).
-2. Calculate the change in income for each household (use income_2026 - income_2025)
-3. Estimate the mean change.
-4. Use `t.test()` to construct a 95% confidence interval for the mean change.
-5. Create one visualisation that helps explain one of your estimates from Part 2.
-
-
+1.  Explain why this is a **paired** comparison (and not independent).
+2.  Calculate the change in income for each household (use income_2026 - income_2025)
+3.  Estimate the mean change.
+4.  Use `t.test()` to construct a 95% confidence interval for the mean change.
+5.  Create one visualisation that helps explain one of your estimates from Part 2.

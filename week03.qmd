@@ -1,5 +1,6 @@
 ---
 title: "Week 3"
+subtitle: "Probability"
 ---
 
 ```{r}

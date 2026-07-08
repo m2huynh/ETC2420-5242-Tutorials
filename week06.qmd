@@ -1,5 +1,6 @@
 ---
 title: "Week 6"
+subtitle: "Hypothesis Testing"
 format: html
 ---
 
@@ -14,10 +15,10 @@ class_results <- read.csv("data/stacks.csv")
 
 This week we will begin by playing a tower-stacking game.
 
-- A block moves from side to side. 
-- Your job is to click, tap, or press the space bar to place the moving block on top of the previous block. 
-- The closer you are to the block below, the longer your tower can grow.
-- The objective is to grow the tower is all as you can
+-   A block moves from side to side.
+-   Your job is to click, tap, or press the space bar to place the moving block on top of the previous block.
+-   The closer you are to the block below, the longer your tower can grow.
+-   The objective is to grow the tower is all as you can
 
 There are two experimental conditions:
 
@@ -25,7 +26,6 @@ There are two experimental conditions:
 -   **Distraction**: the game displays a distracting message after each successful stack.
 
 Your tutor will assign you to either the **Control** group or the **Distraction** group. Play the game once. Record your final score and your group.
-
 
 ```{=html}
 <iframe
@@ -39,6 +39,7 @@ Your tutor will assign you to either the **Control** group or the **Distraction*
 Suppose this experiment was completed with a larger sample. Download the data below and move it into your working directory.
 
 <center>
+
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 library(downloadthis)
 download_file(
@@ -47,7 +48,10 @@ download_file(
   button_type = 'success'
 )
 ```
-</center><br>
+
+</center>
+
+<br>
 
 ## Tasks
 
@@ -188,7 +192,6 @@ The standard deviation is also larger in the distraction group, which means scor
 :::
 ::::
 
-
 :::: callout-note
 #### Question 5
 
@@ -226,7 +229,6 @@ The plot should show that the control group generally scored higher than the dis
 However, there is still variation within each group. Some students in the distraction group scored highly, and some students in the control group scored lower than average. This is why we need statistical inference rather than simply comparing two averages by eye.
 :::
 ::::
-
 
 ### Part 3: Manual hypothesis test
 
@@ -267,7 +269,6 @@ $$
 $$
 
 If the control mean is much higher than the distraction mean, this statistic will be positive.
-
 
 :::: callout-note
 #### Question 6
@@ -348,7 +349,6 @@ $$
 $$
 :::
 ::::
-
 
 :::: callout-note
 #### Question 7
@@ -455,7 +455,6 @@ The standard error is about 0.71 points. This tells us how much the difference i
 :::
 ::::
 
-
 :::: callout-note
 #### Question 8
 
@@ -499,7 +498,6 @@ This means the observed difference in sample means is about 8 standard errors ab
 That is a very large positive test statistic. It suggests that the difference between the two groups is large relative to the amount of sampling variation we would expect.
 :::
 ::::
-
 
 :::: callout-note
 #### Question 9
@@ -587,7 +585,6 @@ Because the p-value is extremely small, the data are not very compatible with th
 :::
 ::::
 
-
 :::: callout-note
 #### Question 10
 
@@ -597,7 +594,7 @@ Use your p-value from Question 9.
 
 Fill in the blanks in the conclusion below.
 
-> The p-value is approximately ___. Since this is ___ than 0.05, we ___ the null hypothesis. The data provide ___ that the control group has a higher mean score than the distraction group. The estimated difference is ___ points.
+> The p-value is approximately ***. Since this is*** than 0.05, we \_\_\_ the null hypothesis. The data provide \_\_\_ that the control group has a higher mean score than the distraction group. The estimated difference is \_\_\_ points.
 
 ::: {.callout-important collapse="true"}
 #### Click for sample answer
@@ -612,7 +609,6 @@ This conclusion should still be interpreted in context. The test provides eviden
 :::
 ::::
 
-
 ### Part 4: Using `t.test()` in R
 
 The manual calculations above help us understand what the test is doing. In practice, we usually use `t.test()`.
@@ -620,7 +616,6 @@ The manual calculations above help us understand what the test is doing. In prac
 For this experiment, the groups are independent. A student in the control group is not paired with a particular student in the distraction group. So we use a two-sample t-test.
 
 The default two-sample t-test in R is Welch's t-test, which allows the two groups to have different variances.
-
 
 :::: callout-note
 #### Question 11
@@ -669,7 +664,6 @@ $$
 The output should give a t-statistic of about 8.01 and an extremely small p-value. This matches the manual calculation.
 :::
 ::::
-
 
 :::: callout-note
 #### Question 12
@@ -727,7 +721,6 @@ The interval also gives a sense of size. Based on this sample, the control condi
 :::
 ::::
 
-
 :::: callout-note
 #### Question 13
 
@@ -735,11 +728,11 @@ Write a short report of the result.
 
 Your report should include:
 
-1. the research question;
-2. the estimated difference in means;
-3. the confidence interval;
-4. the p-value;
-5. a careful conclusion.
+1.  the research question;
+2.  the estimated difference in means;
+3.  the confidence interval;
+4.  the p-value;
+5.  a careful conclusion.
 
 Use the code below to collect the numbers you need.
 
@@ -820,11 +813,9 @@ A careful conclusion avoids saying that the test proves distraction always reduc
 :::
 ::::
 
-
 ### Part 5: Thinking critically about the experiment
 
 Hypothesis testing is not only about calculation. The quality of the conclusion depends on the design of the study and the way the data were collected.
-
 
 :::: callout-note
 #### Question 14
@@ -840,7 +831,6 @@ Assigning students to groups before playing helps make the groups more comparabl
 :::
 ::::
 
-
 :::: callout-note
 #### Question 15
 
@@ -855,16 +845,15 @@ It would not prove that distraction has no effect.
 
 There are several possible explanations for a non-significant result:
 
-- distraction may genuinely have little or no effect;
-- the class sample may be too small;
-- scores may be highly variable;
-- the game may not measure the kind of performance affected by distraction;
-- some students in the distraction group may ignore the messages.
+-   distraction may genuinely have little or no effect;
+-   the class sample may be too small;
+-   scores may be highly variable;
+-   the game may not measure the kind of performance affected by distraction;
+-   some students in the distraction group may ignore the messages.
 
 This is why we should report the estimated difference and confidence interval, not only the p-value.
 :::
 ::::
-
 
 :::: callout-note
 #### Question 16
@@ -886,15 +875,14 @@ A better conclusion is:
 :::
 ::::
 
-
 ## Homework
 
 In the tutorial, we compared two independent groups: one group played the standard tower stacking game, and another group played the game with distractions.
 
 For this homework, we will think about a different experimental design. Instead of assigning each student to only one condition, suppose every student plays the game twice:
 
-1. once in the control condition;
-2. once in the distraction condition.
+1.  once in the control condition;
+2.  once in the distraction condition.
 
 This is called a **within-subjects design** or a **paired design**, because each student contributes a pair of scores. The advantage of this design is that each student acts as their own comparison. Some students may naturally be better at the game than others. A paired design helps account for this because we compare each student’s distraction score to their own control score.
 
@@ -917,23 +905,12 @@ Your task is to run an analysis of the data and produce a short Quarto report. T
 
 Your report should include the following:
 
-1. A brief introduction explaining the research question.
-2. A short explanation of why this is a paired design.
-3. A table showing the mean and standard deviation of the control scores and distraction scores.
-4. A new variable containing the paired differences.
-5. A visualisation of the paired differences.
-6. The null and alternative hypotheses for the paired t-test (assume a one-sided test).
-7. A paired t-test using t.test().
-8. A confidence interval for the mean paired difference.
-9. A short written conclusion.
-
-
-
-
-
-
-
-
-
-
-
+1.  A brief introduction explaining the research question.
+2.  A short explanation of why this is a paired design.
+3.  A table showing the mean and standard deviation of the control scores and distraction scores.
+4.  A new variable containing the paired differences.
+5.  A visualisation of the paired differences.
+6.  The null and alternative hypotheses for the paired t-test (assume a one-sided test).
+7.  A paired t-test using t.test().
+8.  A confidence interval for the mean paired difference.
+9.  A short written conclusion.

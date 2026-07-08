@@ -1,5 +1,6 @@
 ---
-title: "week07"
+title: "Week 7"
+subtitle: "Permutation Tests & Bootstrap"
 ---
 
 ```{r, include=FALSE}
@@ -8,7 +9,6 @@ library(gt)
 library(scales)
 colour_match <- read.csv("data/colour_match.csv")
 ```
-
 
 ## Introduction
 
@@ -41,6 +41,7 @@ Your tutor will assign you to either the **Control** group or the **Distraction*
 Suppose this experiment was completed with a larger sample. Download the data below and move it into your working directory.
 
 <center>
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(downloadthis)
 
@@ -50,7 +51,10 @@ download_file(
   button_type = 'success'
 )
 ```
-</center> <br> 
+
+</center>
+
+<br>
 
 ## Tasks
 
@@ -92,8 +96,8 @@ observed_diff
 ```
 
 ::: {.callout-important collapse="true"}
-
 #### Click for solution
+
 ```{r}
 mean_control <- colour_match |>
   filter(group == "Control") |>
@@ -109,12 +113,10 @@ observed_diff <- mean_control - mean_distraction
 
 observed_diff
 ```
-
 :::
 ::::
 
 :::: callout-note
-
 #### Question 2
 
 Before running a full permutation test, create one shuffled version of the dataset.
@@ -131,7 +133,6 @@ one_shuffle
 ```
 
 ::: {.callout-important collapse="true"}
-
 #### Click for solution
 
 ```{r}
@@ -142,12 +143,10 @@ one_shuffle <- colour_match |>
 
 one_shuffle
 ```
-
 :::
 ::::
 
 :::: callout-note
-
 #### Question 3
 
 Using the shuffled dataset from Question 2, calculate the difference in mean scores between the shuffled groups.
@@ -170,7 +169,6 @@ shuffled_diff
 ```
 
 ::: {.callout-important collapse="true"}
-
 #### Click for solution
 
 ```{r}
@@ -192,19 +190,17 @@ shuffled_diff <- one_shuffle_diff |>
 
 shuffled_diff
 ```
-
 :::
 ::::
 
 :::: callout-note
-
 #### Question 4
 
 Now repeat the shuffling process 1000 times. Each time:
 
-1. shuffle the group labels;
-2. calculate the difference in mean scores;
-3. store the result.
+1.  shuffle the group labels;
+2.  calculate the difference in mean scores;
+3.  store the result.
 
 ```{r, eval=FALSE}
 set.seed(2420)
@@ -239,7 +235,6 @@ permutation_results
 ```
 
 ::: {.callout-important collapse="true"}
-
 #### Click for solution
 
 ```{r}
@@ -279,7 +274,6 @@ This gives us a permutation distribution. The permutation distribution shows the
 ::::
 
 :::: callout-note
-
 #### Question 5
 
 Visualise the permutation distribution and add a vertical line for the observed difference.
@@ -302,8 +296,8 @@ ggplot(permutation_results, aes(x = ___)) +
 ```
 
 ::: {.callout-important collapse="true"}
-
 #### Click for solution
+
 ```{r}
 ggplot(permutation_results, aes(x = shuffled_diff)) +
   geom_histogram(bins = 30, boundary = 0) +
@@ -326,7 +320,6 @@ The permutation distribution should be centred near 0. This makes sense because 
 ::::
 
 :::: callout-note
-
 #### Question 6
 
 Calculate the one-sided permutation p-value.
@@ -344,7 +337,6 @@ perm_p_value
 ```
 
 ::: {.callout-important collapse="true"}
-
 #### Click for solution
 
 ```{r}
@@ -363,7 +355,7 @@ If the group labels did not matter, how often would we see a difference at least
 :::
 ::::
 
-## Part 2: Bootstrap
+### Part 2: Bootstrap
 
 A permutation test helps us ask whether the observed difference would be surprising under a no-effect explanation.
 
@@ -374,7 +366,6 @@ A bootstrap asks a different question:
 For this experiment, our estimate is the difference in mean scores (control - distraction). The bootstrap works by resampling from the observed data with replacement. This means some students may appear more than once in a bootstrap sample, while others may not appear at all. For comparing two groups, we resample within each group. This keeps the group sizes the same and preserves the idea that the control and distraction groups are separate samples.
 
 :::: callout-note
-
 #### Question 8
 
 Create one bootstrap sample from the control group and one bootstrap sample from the distraction group.
@@ -405,7 +396,6 @@ distraction_boot
 ```
 
 ::: {.callout-important collapse="true"}
-
 #### Click for solution
 
 ```{r}
@@ -438,7 +428,6 @@ This creates one bootstrap sample for each group. Because we used `replace = TRU
 ::::
 
 :::: callout-note
-
 #### Question 9
 
 Calculate the difference in means for the one bootstrap sample from Question 8.
@@ -450,7 +439,6 @@ one_boot_diff
 ```
 
 ::: {.callout-important collapse="true"}
-
 #### Click for solution
 
 ```{r}
@@ -464,16 +452,15 @@ This is one bootstrap estimate of the difference in mean scores. It will usually
 ::::
 
 :::: callout-note
-
 #### Question 10
 
 Repeat the bootstrap process 1000 times.
 
 Each time:
 
-1. resample control scores with replacement;
-2. resample distraction scores with replacement;
-3. calculate the difference in means.
+1.  resample control scores with replacement;
+2.  resample distraction scores with replacement;
+3.  calculate the difference in means.
 
 ```{r, eval=FALSE}
 set.seed(5242)
@@ -503,7 +490,6 @@ bootstrap_results
 ```
 
 ::: {.callout-important collapse="true"}
-
 #### Click for solution
 
 ```{r}
@@ -538,7 +524,6 @@ This gives us a bootstrap distribution of the estimated difference in means. Unl
 ::::
 
 :::: callout-note
-
 #### Question 11
 
 Visualise the bootstrap distribution and add a vertical line for the observed difference.
@@ -561,7 +546,6 @@ ggplot(bootstrap_results, aes(x = ___)) +
 ```
 
 ::: {.callout-important collapse="true"}
-
 #### Click for solution
 
 ```{r}
@@ -580,13 +564,10 @@ ggplot(bootstrap_results, aes(x = boot_diff)) +
   ) +
   theme_minimal()
 ```
-
-
 :::
 ::::
 
 :::: callout-note
-
 #### Question 12
 
 Calculate a 95% bootstrap confidence interval using the percentile method.
@@ -602,7 +583,6 @@ bootstrap_ci
 ```
 
 ::: {.callout-important collapse="true"}
-
 #### Click for solution
 
 ```{r}
@@ -614,12 +594,10 @@ bootstrap_ci <- bootstrap_results |>
 
 bootstrap_ci
 ```
-
 :::
 ::::
 
 :::: callout-note
-
 #### Question 13
 
 Add the bootstrap confidence interval to the bootstrap plot.
@@ -646,7 +624,6 @@ ggplot(bootstrap_results, aes(x = ___)) +
 ```
 
 ::: {.callout-important collapse="true"}
-
 #### Click for solution
 
 ```{r}
@@ -676,19 +653,10 @@ The dashed line shows the observed estimate. The solid lines show the lower and 
 
 ## Homework
 
-Prepare a Quarto document that compares the two methods (permutation tests and bootstrap). In you report bes ure to answer the following:
+Prepare a Quarto document that compares the two methods (permutation tests and bootstrap). In you report be sure to answer the following:
 
-1. Which method was used to calculate a p-value?
-2. Which method was used to calculate a confidence interval?
-3. Which distribution was centred near 0?
-4. Which distribution was centred near the observed difference?
-5. Do the two methods tell a similar story for this dataset?
-
-
-
-
-
-
-
-
-
+1.  Which method was used to calculate a p-value?
+2.  Which method was used to calculate a confidence interval?
+3.  Which distribution was centred near 0?
+4.  Which distribution was centred near the observed difference?
+5.  Do the two methods tell a similar story for this dataset?

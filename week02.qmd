@@ -1,6 +1,7 @@
 ---
 title: "Week 2"
 format: html
+subtitle: "Statistical Thinking"
 ---
 
 ```{r}
@@ -44,18 +45,6 @@ download_file(
 </center><br>
 
 Download and transfer the file `arbuthnot.csv` to your Project folder > week 2 > data
-
-In your Quarto file, create a new code chunk and add the following code:
-
-```{r}
-#| label: load-packages
-#| eval: true
-#| echo: true
-#| message: false
-
-library(tidyverse)
-arbuthnot <- read_csv("data/arbuthnot.csv")
-```
 
 ## Tasks
 
