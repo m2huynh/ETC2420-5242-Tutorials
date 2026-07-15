@@ -1,36 +1,573 @@
 ---
 title: "Week 8"
-Subtitle: "Bayesian Statistics"
+format: html
 ---
 
-## Introduction
-
-This week we will begin with a short courtroom activity. Suppose
-
-> Minh is on trial after a laptop goes missing from a university study room. You are the judge. Your task is not to decide immediately whether Minh is guilty or innocent. Instead, you will begin with an initial belief and update that belief as new evidence is presented.
-
-<center>![](images/week08/laptop.png){width="75%"}</center><br>
-
-The prosecution will present evidence that points toward guilt. The defence will respond with evidence or arguments that may weaken the prosecution’s case. After each piece of evidence, you will rate how strongly it points toward guilt on a scale from 0 to 10.
-
-The app will use your rating to update a probability distribution for Minh’s guilt. After each round, the posterior distribution becomes the prior distribution for the next round. This is the main idea of Bayesian inference:
-
-$$
-\text{posterior}
-\propto
-\text{prior}
-\times
-\text{likelihood}
-$$
-
-By the end of the activity, you will see how a sequence of evidence can gradually shift our uncertainty.
-
-```{=html}
-<iframe
-  src="interactive/Bayes.html"
-  width="100%"
-  height="700"
-  style="border: none;"
-></iframe>
+```{r}
+#| include: false
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, warning = FALSE, message = FALSE)
+library(tinytex)
+library(tidyverse)
 ```
 
+# Introduction
+
+In this tutorial we will investigate **likelihood** using a simulated FIFA World Cup. The interactive simulator is available below. Your tutor will explain to you how to use it.
+
+```{=html}
+<div class="app-frame-container" id="cafe-app-container">
+
+  <div class="app-frame-toolbar">
+    <button type="button" onclick="minimiseCafeApp()" title="Minimise">−</button>
+    <button type="button" onclick="maximiseCafeApp()" title="Maximise">□</button>
+    <button type="button" onclick="fullscreenCafeApp()" title="Fullscreen">⛶</button>
+  </div>
+
+  <iframe
+    id="cafe-app-frame"
+    src="interactive/fifa.html"
+    width="100%"
+    height="620"
+    style="border: none;"
+    allowfullscreen>
+  </iframe>
+
+</div>
+
+<style>
+.app-frame-container {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+}
+
+.app-frame-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 6px;
+  background: #f3f4f6;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.app-frame-toolbar button {
+  border: 1px solid #9ca3af;
+  border-radius: 6px;
+  padding: 5px 10px;
+  background: white;
+  cursor: pointer;
+}
+
+.app-frame-container.maximised iframe {
+  height: 90vh;
+}
+
+.app-frame-container.minimised iframe {
+  display: none;
+}
+
+.app-frame-container:fullscreen {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  border: none;
+  border-radius: 0;
+}
+
+.app-frame-container:fullscreen iframe {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+}
+</style>
+
+<script>
+function minimiseCafeApp() {
+  const container = document.getElementById("cafe-app-container");
+
+  container.classList.toggle("minimised");
+  container.classList.remove("maximised");
+}
+
+function maximiseCafeApp() {
+  const container = document.getElementById("cafe-app-container");
+
+  container.classList.toggle("maximised");
+  container.classList.remove("minimised");
+}
+
+function fullscreenCafeApp() {
+  const container = document.getElementById("cafe-app-container");
+
+  container.classList.remove("minimised");
+
+  if (!document.fullscreenElement) {
+    container.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+}
+</script>
+```
+
+The simulator assigns every team a **strength** between 0 and 100. Stronger teams are more likely to win matches. This is based upon a few different sources (such as SOFAScore, FOTMOB, etc.). Rather than predicting the tournament from the strengths, we will use the observed tournament results to determine **which strength value is most supported by the data**.
+
+For simplicity (see Homework for more sophisticated models), we will assume that the probability Team 1 wins is
+
+$$ P(\text{Team 1 wins})=\frac{\text{Strength}_1}{\text{Strength}_1+\text{Strength}_2} $$
+
+## Tasks
+
+### Part 1: Writing the likelihood function
+
+:::: callout-note
+#### Question 1
+
+Write a function called `calculate_loglikelihood()`.
+
+The function should have three inputs:
+
+-   `team_name`: the name of the team being evaluated;
+-   `strength`: a proposed strength for that team;
+-   `data`: the match dataset, with `matches` as the default.
+
+Within the function:
+
+1.  Keep only matches involving the selected team.
+2.  Calculate the probability that the selected team wins.
+3.  Use the probability of the outcome that was actually observed.
+4.  Calculate the sum of the log probabilities.
+
+Complete the code below.
+
+```{r}
+calculate_loglikelihood <- function(team_name,
+                                    strength,
+                                    data = matches) {
+
+  data |>
+    filter(team == ___) |>
+    mutate(
+      p_team_wins =
+        ___ / (___ + opponent_strength),
+
+      observed_probability =
+        if_else(
+          winner == ___,
+          ___,
+          ___
+        )
+    ) |>
+    summarise(
+      log_likelihood =
+        sum(log(___))
+    ) |>
+    pull(___)
+}
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+calculate_loglikelihood <- function(team_name,
+                                    strength,
+                                    data = matches) {
+
+  data |>
+    filter(team == team_name) |>
+    mutate(
+      p_team_wins =
+        strength / (strength + opponent_strength),
+
+      observed_probability =
+        if_else(
+          winner == team_name,
+          p_team_wins,
+          1 - p_team_wins
+        )
+    ) |>
+    summarise(
+      log_likelihood =
+        sum(log(observed_probability))
+    ) |>
+    pull(log_likelihood)
+}
+```
+
+The function returns the log-likelihood of the observed results for a proposed team strength.
+:::
+::::
+
+### Part 2: Comparing proposed strengths
+
+:::: callout-note
+#### Question 2
+
+Use `calculate_loglikelihood()` to calculate Australia's log-likelihood when its proposed strength is:
+
+-   40
+-   70
+-   90
+
+```{r}
+calculate_loglikelihood(
+  team_name = ___,
+  strength = ___
+)
+
+calculate_loglikelihood(
+  team_name = ___,
+  strength = ___
+)
+
+calculate_loglikelihood(
+  team_name = ___,
+  strength = ___
+)
+```
+
+Which of the three proposed strengths is most strongly supported by Australia's observed results?
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+calculate_loglikelihood(
+  team_name = "Australia",
+  strength = 40
+)
+
+calculate_loglikelihood(
+  team_name = "Australia",
+  strength = 70
+)
+
+calculate_loglikelihood(
+  team_name = "Australia",
+  strength = 90
+)
+```
+
+The proposed strength with the **largest** log-likelihood is most strongly supported by the observed data. Because log-likelihood values are usually negative, the value closest to zero is the largest.
+:::
+::::
+
+:::: callout-note
+#### Question 3
+
+Create a dataframe called `Australia_likelihood` containing the log-likelihood for every candidate strength from 1 to 100.
+
+```{r}
+Australia_likelihood <-
+  candidate_strengths |>
+  mutate(
+    log_likelihood =
+      calculate_loglikelihood(
+        team_name = ___,
+        strength = ___
+      )
+  )
+
+Australia_likelihood
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+Australia_likelihood <-
+  candidate_strengths |>
+  mutate(
+    log_likelihood =
+      calculate_loglikelihood(
+        team_name = "Australia",
+        strength = strength
+      )
+  )
+
+Australia_likelihood
+```
+
+Each row now represents one proposed value of Australia's strength and the corresponding log-likelihood.
+:::
+::::
+
+### Part 3: Finding the maximum likelihood estimate
+
+:::: callout-note
+#### Question 4
+
+Display the five proposed strengths with the largest log-likelihood.
+
+```{r}
+Australia_likelihood |>
+  arrange(___(___)) |>
+  slice(___)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+Australia_likelihood |>
+  arrange(desc(log_likelihood)) |>
+  slice(1:5)
+```
+:::
+::::
+
+:::: callout-note
+#### Question 5
+
+Find the **maximum likelihood estimate** of Australia's strength using `filter()`.
+
+```{r}
+Australia_mle <-
+  Australia_likelihood |>
+  filter(
+    log_likelihood ==
+      ___(___)
+  )
+
+Australia_mle
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+Australia_mle <-
+  Australia_likelihood |>
+  filter(
+    log_likelihood ==
+      max(log_likelihood)
+  )
+
+Australia_mle
+```
+
+The maximum likelihood estimate is the proposed strength that produces the largest log-likelihood.
+:::
+::::
+
+### Part 4: Visualising the likelihood function
+
+:::: callout-note
+#### Question 6
+
+Create a line plot of Australia's log-likelihood function.
+
+```{r}
+Australia_likelihood |>
+  ggplot(
+    aes(
+      x = ___,
+      y = ___
+    )
+  ) +
+  geom___() +
+  labs(
+    x = "Proposed strength",
+    y = "Log-likelihood"
+  )
+```
+
+Describe the shape of the graph and identify approximately where it reaches its maximum.
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+Australia_likelihood |>
+  ggplot(
+    aes(
+      x = strength,
+      y = log_likelihood
+    )
+  ) +
+  geom_line() +
+  labs(
+    x = "Proposed strength",
+    y = "Log-likelihood"
+  )
+```
+
+The maximum of the curve corresponds to the maximum likelihood estimate.
+:::
+::::
+
+:::: callout-note
+#### Question 7
+
+Add a point showing the maximum likelihood estimate to the graph.
+
+```{r}
+Australia_likelihood |>
+  ggplot(
+    aes(
+      x = strength,
+      y = log_likelihood
+    )
+  ) +
+  geom_line() +
+  geom_point(
+    data = ___,
+    size = 3
+  ) +
+  labs(
+    x = "Proposed strength",
+    y = "Log-likelihood"
+  )
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+Australia_likelihood |>
+  ggplot(
+    aes(
+      x = strength,
+      y = log_likelihood
+    )
+  ) +
+  geom_line() +
+  geom_point(
+    data = Australia_mle,
+    size = 3
+  ) +
+  labs(
+    x = "Proposed strength",
+    y = "Log-likelihood"
+  )
+```
+:::
+::::
+
+### Part 5: Applying the function to another team
+
+:::: callout-note
+#### Question 8
+
+Use the same function to estimate England's strength.
+
+First, create a dataframe containing the log-likelihood for each candidate strength.
+
+```{r}
+england_likelihood <-
+  candidate_strengths |>
+  mutate(
+    log_likelihood =
+      calculate_loglikelihood(
+        team_name = ___,
+        strength = ___
+      )
+  )
+```
+
+Then find England's maximum likelihood estimate.
+
+```{r}
+england_mle <-
+  england_likelihood |>
+  filter(
+    log_likelihood ==
+      max(___)
+  )
+
+england_mle
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+england_likelihood <-
+  candidate_strengths |>
+  mutate(
+    log_likelihood =
+      calculate_loglikelihood(
+        team_name = "England",
+        strength = strength
+      )
+  )
+
+england_mle <-
+  england_likelihood |>
+  filter(
+    log_likelihood ==
+      max(log_likelihood)
+  )
+
+england_mle
+```
+
+The same function can be reused because the team name is supplied as an argument rather than written directly into the function.
+:::
+::::
+
+:::: callout-note
+#### Question 9
+
+In one or two sentences, explain what a maximum likelihood estimate represents in this example.
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+The maximum likelihood estimate is the proposed team strength that makes the observed sequence of wins and losses most likely under the assumed probability model.
+
+It is an estimate based on the observed data and may differ from the strength originally used by the simulator.
+:::
+::::
+
+## Homework
+
+### Question 1
+
+The tutorial used the following probability model:
+
+$$P(\text{Team A wins}) = \frac{\text{Strength}_A} {\text{Strength}\_A+\text{Strength}\_B}$$
+
+Develop a different method for converting two team strengths into a probability.
+
+Your method must:
+
+-   return a value between 0 and 1;
+-   give a probability of 0.5 when the two teams have equal strengths;
+-   give the stronger team a probability greater than 0.5.
+
+Write your method as an R function.
+
+### Question 2
+
+Modify `calculate_loglikelihood()` so that it uses your probability function from Question 1.
+
+Use the modified function to estimate Australia's strength.
+
+### Question 3
+
+Plot Australia's original and modified log-likelihood functions on the same graph.
+
+Compare:
+
+-   the location of the maximum;
+-   the shape of the curves;
+-   how strongly each model distinguishes between different strength values.
+
+### Question 4
+
+Add at least four additional matches for Australia to the `matches` dataframe.
+
+Recalculate and plot the log-likelihood function.
+
+Does the curve become more sharply peaked? Explain why adding observations may affect the amount of information available about the parameter.
+
+### Question 5
+
+The current function assumes that each match outcome is independent.
+
+Explain what this assumption means in the World Cup example. Identify one reason why match outcomes might not be completely independent in practice.

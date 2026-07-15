@@ -13,12 +13,17 @@ book:
     - index.qmd
     - start.qmd
     - week01.qmd
-    - week02.qmd
+    - week02b.qmd
     - week03.qmd
     - week04.qmd
     - week05.qmd
     - week06.qmd
     - week07.qmd
+    - week08.qmd
+    - week09.qmd
+    - week10.qmd
+    - week11.qmd
+    - week12.qmd
 
 format:
   html:

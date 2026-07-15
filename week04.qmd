@@ -14,8 +14,11 @@ library(tidyverse)
 
 Imagine four university friends are taking the unit: **Statistical Thinking**. Throughout the semester, they have usually done quite well. Their final exam is scheduled for Monday morning. However, the day before the exam, they partied too hard, sleept in, and miss the exam.
 
-<center>![In a world where 4 Minhs exist](images/week04/party.png){width="75%"}</center>
+<center>
 
+![In a world where 4 Minhs exist](images/week04/party.png){width="75%"}
+
+</center>
 
 They decide to write to their professor and ask for a chance to sit a make-up exam. Their email says:
 
@@ -23,8 +26,7 @@ They decide to write to their professor and ask for a chance to sit a make-up ex
 
 Assume you are the professor and your task is to rate this excuse. Use a scale from 1 (not believable at all) to 10 (completely believable). You only need to submit one response.
 
-::: {.callout-note}
-
+::: callout-note
 ```{=html}
 <iframe 
   src="https://docs.google.com/forms/d/e/1FAIpQLScteay5Ss7DnGUCp_MzshgelixLbNKTT_6agdAkWI2s1aTnCw/viewform?embedded=true"
@@ -36,34 +38,30 @@ Assume you are the professor and your task is to rate this excuse. Use a scale f
   Loading...
 </iframe>
 ```
-
 :::
 
-::: {.callout-note}
+::: callout-note
 #### Click to see how students are rating this excuse
-<center>
-[Results Link](https://docs.google.com/spreadsheets/d/e/2PACX-1vTzAYn2kTzTzKFBzL7YEnWD8fZwAjrtGzsFiTl2jV-7L3H7yXglfJmQ_6TCYMTLXTgG2RosbOIjP9sK/pubchart?oid=641081874&format=interactive)
-</center>
+
+<center>[Results Link](https://docs.google.com/spreadsheets/d/e/2PACX-1vTzAYn2kTzTzKFBzL7YEnWD8fZwAjrtGzsFiTl2jV-7L3H7yXglfJmQ_6TCYMTLXTgG2RosbOIjP9sK/pubchart?oid=641081874&format=interactive)</center>
 :::
 
 ::: {.callout-tip collapse="true"}
-
 ### Click to reveal the ending
 
 The professor accepted the students' excuse and allowed all four of them to sit a make-up exam.
 
 But there was a catch:
 
-- The professor placed each student in a different room.
-- Each student received a single exam paper.
-- On the front page were a few standard statistics questions worth 5 marks in total.
-- After completing those questions, the students reached a note telling them to turn over the page.
-- On the second page, there was only one question, and it was worth 95 marks:
+-   The professor placed each student in a different room.
+-   Each student received a single exam paper.
+-   On the front page were a few standard statistics questions worth 5 marks in total.
+-   After completing those questions, the students reached a note telling them to turn over the page.
+-   On the second page, there was only one question, and it was worth 95 marks:
 
 <center>*Which tyre was it?*</center>
 
 <br>
-
 :::
 
 ## What did we just measure?
@@ -72,10 +70,10 @@ At first, this activity looks like a simple rating task. Each person read the sa
 
 Everyone saw the same information, but not everyone gave the same rating.
 
-- Some people may have found the excuse believable.
-- Others may have been more suspicious.
-- Some may have focused on the punctured tyre.
-- Others may have focused on the fact that all four students missed the same exam.
+-   Some people may have found the excuse believable.
+-   Others may have been more suspicious.
+-   Some may have focused on the punctured tyre.
+-   Others may have focused on the fact that all four students missed the same exam.
 
 This means the rating is not simply a fact. It is a measurement produced by a judgement process.
 
@@ -101,15 +99,15 @@ Now that the class has rated the excuse, we can analyse the ratings as data.
 
 In this part of the tutorial, we will practise:
 
-1. entering rating data into R,
-2. plotting the distribution of ratings,
-3. calculating summary statistics,
-4. interpreting variation,
-5. connecting the results back to measurement error.
+1.  entering rating data into R,
+2.  plotting the distribution of ratings,
+3.  calculating summary statistics,
+4.  interpreting variation,
+5.  connecting the results back to measurement error.
 
 For now, we will use a small example dataset. Later, you can replace these values with the real class ratings.
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 1: Create the ratings data
 
 The following ratings were given by 15 students:
@@ -120,8 +118,8 @@ $$
 
 Create a tibble called `excuse_ratings` with two columns:
 
-- `student`, which numbers the students from 1 to 15,
-- `rating`, which stores each believability rating.
+-   `student`, which numbers the students from 1 to 15,
+-   `rating`, which stores each believability rating.
 
 Complete the code below.
 
@@ -150,7 +148,7 @@ The function `tibble()` creates a data frame. The column `student = 1:15` create
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 2: Plot the ratings
 
 A useful first step is to plot the distribution of ratings.
@@ -186,7 +184,7 @@ The function `geom_bar()` counts how many times each rating appears. The line `s
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 3: Summarise the ratings
 
 Now calculate some summary statistics.
@@ -222,16 +220,16 @@ excuse_ratings |>
 
 Here:
 
-- `n()` counts the number of students,
-- `mean()` calculates the average rating,
-- `median()` gives the middle rating,
-- `sd()` calculates the standard deviation,
-- `min()` gives the lowest rating,
-- `max()` gives the highest rating.
+-   `n()` counts the number of students,
+-   `mean()` calculates the average rating,
+-   `median()` gives the middle rating,
+-   `sd()` calculates the standard deviation,
+-   `min()` gives the lowest rating,
+-   `max()` gives the highest rating.
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 4: Add an error column
 
 Suppose we decide, for the sake of the tutorial, that the reference rating for the excuse is 6.
@@ -279,7 +277,7 @@ If `error` is negative, the student rated the excuse below the reference rating.
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 5: Plot the errors
 
 Now plot the errors instead of the ratings.
@@ -315,7 +313,7 @@ The dashed line marks zero error. Ratings to the left of zero are below the refe
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 6: Mean error and absolute error
 
 There are different ways to summarise error.
@@ -349,7 +347,7 @@ The function `abs()` returns the absolute value. This removes the negative signs
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 7: Simulate a more sceptical class
 
 Now imagine another class is more sceptical. Their ratings are:
@@ -383,7 +381,7 @@ sceptical_ratings
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 8: Compare two classes
 
 Combine the original class and the sceptical class into one dataset. Then calculate the mean and standard deviation for each class.
@@ -431,7 +429,7 @@ The function `group_by(class)` tells R to calculate the summaries separately for
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 9: Plot the two classes
 
 Now make a plot comparing the two classes.
@@ -469,35 +467,35 @@ The function `facet_wrap()` creates a separate panel for each class.
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 10: Interpret the measurement process
 
 Answer the following questions in words.
 
-1. Which class gave the excuse a higher average rating?
-2. Which class had more variation in ratings?
-3. What might cause one class to be more sceptical than another?
-4. What would count as random error in this rating process?
-5. What would count as systematic error?
-6. Would a rubric make the ratings more consistent?
-7. Could a rubric also introduce bias?
+1.  Which class gave the excuse a higher average rating?
+2.  Which class had more variation in ratings?
+3.  What might cause one class to be more sceptical than another?
+4.  What would count as random error in this rating process?
+5.  What would count as systematic error?
+6.  Would a rubric make the ratings more consistent?
+7.  Could a rubric also introduce bias?
 
 ::: {.callout-important collapse="true"}
 #### Click for discussion
 
 Possible answers:
 
-1. The original class should have the higher average rating.
-2. The class with the larger standard deviation has more variation.
-3. One class may be more sceptical because of prior experience, classroom culture, how the story was framed, or how seriously they view missing an exam.
-4. Random error could include students noticing different details, interpreting the scale differently, or being in different moods.
-5. Systematic error could include some students being consistently harsher, consistently more trusting, or consistently influenced by details such as rain, carpooling, or the fact that all four students missed the exam.
-6. A rubric might reduce variation by making the criteria clearer.
-7. A rubric could introduce bias if it rewards some features of the excuse and ignores others.
+1.  The original class should have the higher average rating.
+2.  The class with the larger standard deviation has more variation.
+3.  One class may be more sceptical because of prior experience, classroom culture, how the story was framed, or how seriously they view missing an exam.
+4.  Random error could include students noticing different details, interpreting the scale differently, or being in different moods.
+5.  Systematic error could include some students being consistently harsher, consistently more trusting, or consistently influenced by details such as rain, carpooling, or the fact that all four students missed the exam.
+6.  A rubric might reduce variation by making the criteria clearer.
+7.  A rubric could introduce bias if it rewards some features of the excuse and ignores others.
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 11: Drawing a normal curve for the ratings
 
 In the previous questions, we treated the class ratings as observed data. Now we will use the normal distribution as a simple model for how ratings might vary in a much larger group.
@@ -561,7 +559,7 @@ The dashed line marks the mean rating. The curve is highest near the mean becaus
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 12: Using `pnorm()` to calculate probabilities
 
 The function `pnorm()` calculates the probability of being less than or equal to a value.
@@ -625,7 +623,7 @@ Strictly, because the normal distribution is continuous, the second probability 
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 13: Using `qnorm()` to find cut-offs
 
 The function `qnorm()` works in the opposite direction to `pnorm()`.
@@ -640,8 +638,8 @@ it asks:
 
 Use `qnorm()` to find:
 
-1. the rating below which the lowest 25% of ratings fall,
-2. the rating above which the highest 10% of ratings fall.
+1.  the rating below which the lowest 25% of ratings fall,
+2.  the rating above which the highest 10% of ratings fall.
 
 Complete the code below.
 
@@ -686,7 +684,7 @@ The first value is the 25th percentile. The second value is the 90th percentile,
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 14: Using `rnorm()` to simulate ratings
 
 The function `rnorm()` generates random values from a normal distribution.
@@ -752,7 +750,7 @@ The simulated ratings will not all be whole numbers. They may also include value
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 15: Comparing two rating processes
 
 Now suppose two classes rate the same excuse.
@@ -828,7 +826,7 @@ The two curves have the same spread, but Class B is shifted to the right. This r
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 16: Same mean, different variation
 
 Now suppose two classes have the same average rating but different amounts of disagreement.
@@ -902,33 +900,33 @@ The two classes have the same centre, but different spreads. Class C has more ag
 :::
 ::::
 
-:::: {.callout-note}
+:::: callout-note
 #### Question 17: Interpret the normal models
 
 Answer the following questions in words.
 
-1. In the normal model $X \sim N(5.5, 1.8)$, what does 5.5 represent?
-2. What does 1.8 represent?
-3. What does `dnorm()` calculate?
-4. What does `pnorm()` calculate?
-5. What does `qnorm()` calculate?
-6. What does `rnorm()` do?
-7. Why might a normal model be imperfect for ratings from 1 to 10?
-8. What would a larger standard deviation mean in this context?
+1.  In the normal model $X \sim N(5.5, 1.8)$, what does 5.5 represent?
+2.  What does 1.8 represent?
+3.  What does `dnorm()` calculate?
+4.  What does `pnorm()` calculate?
+5.  What does `qnorm()` calculate?
+6.  What does `rnorm()` do?
+7.  Why might a normal model be imperfect for ratings from 1 to 10?
+8.  What would a larger standard deviation mean in this context?
 
 ::: {.callout-important collapse="true"}
 #### Click for discussion
 
 Possible answers:
 
-1. The value 5.5 represents the centre, or mean, of the rating process.
-2. The value 1.8 represents the standard deviation, or spread, of the ratings.
-3. `dnorm()` calculates the height of the normal curve at a given value.
-4. `pnorm()` calculates the probability of being below a given value.
-5. `qnorm()` calculates the value corresponding to a given cumulative probability.
-6. `rnorm()` generates random values from a normal distribution.
-7. A normal model is imperfect because ratings are bounded between 1 and 10, often whole numbers, and may be influenced by judgement, context, and class discussion.
-8. A larger standard deviation would mean more disagreement between students. Ratings would be more spread out.
+1.  The value 5.5 represents the centre, or mean, of the rating process.
+2.  The value 1.8 represents the standard deviation, or spread, of the ratings.
+3.  `dnorm()` calculates the height of the normal curve at a given value.
+4.  `pnorm()` calculates the probability of being below a given value.
+5.  `qnorm()` calculates the value corresponding to a given cumulative probability.
+6.  `rnorm()` generates random values from a normal distribution.
+7.  A normal model is imperfect because ratings are bounded between 1 and 10, often whole numbers, and may be influenced by judgement, context, and class discussion.
+8.  A larger standard deviation would mean more disagreement between students. Ratings would be more spread out.
 :::
 ::::
 
@@ -953,39 +951,40 @@ However, different classes may rate the same excuse differently depending on the
 You will compare three possible rating processes.
 
 | Rating process | Description |
-|---|---|
+|------------------------------------|------------------------------------|
 | Process A | A balanced class: ratings are centred around 5.5 with moderate variation. |
 | Process B | A sceptical class: ratings are shifted downward. |
 | Process C | A divided class: half the students are sceptical and half are trusting. |
 
 ### Instructions
 
-1. Create a tibble called `balanced_class` with 200 simulated ratings. Assume: $X_A \sim N(5.5, 1.5)$
-2. Now create a tibble called `sceptical_class` with 200 simulated ratings. Assume the class is more sceptical, so ratings are shifted downward: $X_B \sim N(4.2, 1.5)$
-3. Now create a more challenging model. Suppose the class is divided into two groups:
+1.  Create a tibble called `balanced_class` with 200 simulated ratings. Assume: $X_A \sim N(5.5, 1.5)$
 
-    - 100 sceptical students, with ratings centred around 3.5,
-    - 100 trusting students, with ratings centred around 7.0.
+2.  Now create a tibble called `sceptical_class` with 200 simulated ratings. Assume the class is more sceptical, so ratings are shifted downward: $X_B \sim N(4.2, 1.5)$
+
+3.  Now create a more challenging model. Suppose the class is divided into two groups:
+
+    -   100 sceptical students, with ratings centred around 3.5,
+    -   100 trusting students, with ratings centred around 7.0.
 
     This creates a **mixture distribution**. Create a tibble called `divided_class`.
 
-4. Combine the three simulated datasets into one tibble called `all_classes`.
+4.  Combine the three simulated datasets into one tibble called `all_classes`.
 
-5. Make a plot comparing the rating distributions for the three processes.
+5.  Make a plot comparing the rating distributions for the three processes.
 
-6. Now create a second plot using density curves.
+6.  Now create a second plot using density curves.
 
 ### Questions to answer
 
-1. Which rating process has the highest mean rating?
-2. Which rating process has the lowest mean rating?
-3. Which rating process has the largest standard deviation?
-4. Which process shows the strongest disagreement between students?
-5. Which process looks most like a bell curve?
-6. Which process does **not** look like a single bell curve?
-7. Why might the divided class be misleading if we only report the mean?
-8. What does this simulation show about subjective measurement?
-
+1.  Which rating process has the highest mean rating?
+2.  Which rating process has the lowest mean rating?
+3.  Which rating process has the largest standard deviation?
+4.  Which process shows the strongest disagreement between students?
+5.  Which process looks most like a bell curve?
+6.  Which process does **not** look like a single bell curve?
+7.  Why might the divided class be misleading if we only report the mean?
+8.  What does this simulation show about subjective measurement?
 
 ## Extension
 
@@ -993,15 +992,11 @@ Now create a fourth process of your own.
 
 You might choose one of the following:
 
-- a very generous class,
-- a very harsh class,
-- a class with very little variation,
-- a class with very high variation,
-- a class where most students are sceptical but a few are very trusting,
-- a class where ratings are almost evenly spread from 1 to 10.
+-   a very generous class,
+-   a very harsh class,
+-   a class with very little variation,
+-   a class with very high variation,
+-   a class where most students are sceptical but a few are very trusting,
+-   a class where ratings are almost evenly spread from 1 to 10.
 
 Create a tibble called `my_class`. Then combine it with the previous data and plot all four processes.
-
-
-
-

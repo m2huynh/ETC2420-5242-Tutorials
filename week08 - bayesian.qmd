@@ -1,0 +1,774 @@
+---
+title: "Week 8"
+Subtitle: "Bayesian Statistics"
+---
+
+## Introduction
+
+This week we will begin with a short courtroom activity. Suppose
+
+> Minh is on trial after a laptop goes missing from a university study room. You are the judge. Your task is not to decide immediately whether Minh is guilty or innocent. Instead, you will begin with an initial belief and update that belief as new evidence is presented.
+
+<center>![](images/week08/laptop.png){width="75%"}</center><br>
+
+The prosecution will present evidence that points toward guilt. The defence will respond with evidence or arguments that may weaken the prosecution’s case. After each piece of evidence, you will rate how strongly it points toward guilt on a scale from 0 to 10.
+
+The app will use your rating to update a probability distribution for Minh’s guilt. After each round, the posterior distribution becomes the prior distribution for the next round. This is the main idea of Bayesian inference:
+
+$$
+\text{posterior}
+\propto
+\text{prior}
+\times
+\text{likelihood}
+$$
+
+By the end of the activity, you will see how a sequence of evidence can gradually shift our uncertainty.
+
+```{=html}
+<iframe
+  src="interactive/Bayes.html"
+  width="100%"
+  height="700"
+  style="border: none;"
+></iframe>
+```
+
+## Tasks
+
+### Part 1: Recreating the trial data
+
+First, we will create a dataset that records the evidence presented in the trial. Each row represents one piece of evidence. The variable `score` records how strongly the evidence pointed toward guilt on a scale from 0 to 10.
+
+:::: callout-note
+#### Question 1
+
+Create a tibble called `trial_evidence` containing the eight pieces of evidence from the app. For now, use the example scores shown below. Later, you can replace these with your own scores from the app.
+
+```{r, eval=FALSE}
+trial_evidence <- tibble(
+  round = c(1, 1, 2, 2, 3, 3, 4, 4),
+  side = c(
+    "Prosecution", "Defence",
+    "Prosecution", "Defence",
+    "Prosecution", "Defence",
+    "Prosecution", "Defence"
+  ),
+  evidence = c(
+    "Witness identification",
+    "Poor lighting and crowded hallway",
+    "University account activity",
+    "Shared computer",
+    "Message about laptop",
+    "No comment",
+    "Fingerprints on laptop",
+    "Laptop accessible all semester"
+  ),
+  score = c(___, ___, ___, ___, ___, ___, ___, ___)
+)
+
+trial_evidence
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+trial_evidence <- tibble(
+  round = c(1, 1, 2, 2, 3, 3, 4, 4),
+  side = c(
+    "Prosecution", "Defence",
+    "Prosecution", "Defence",
+    "Prosecution", "Defence",
+    "Prosecution", "Defence"
+  ),
+  evidence = c(
+    "Witness identification",
+    "Poor lighting and crowded hallway",
+    "University account activity",
+    "Shared computer",
+    "Message about laptop",
+    "No comment",
+    "Fingerprints on laptop",
+    "Laptop accessible all semester"
+  ),
+  score = c(6, 4, 7, 4, 8, 5, 9, 6)
+)
+
+trial_evidence
+```
+
+The `score` variable is the evidence rating. A higher value means the evidence points more strongly toward guilt. A lower value means the evidence points more strongly toward innocence.
+:::
+::::
+
+:::: callout-note
+#### Question 2
+
+Add a variable called `stage` that combines the round number and the side presenting evidence.
+
+For example, the first row should be `"Round 1 - Prosecution"`.
+
+```{r, eval=FALSE}
+trial_evidence <- trial_evidence |>
+  mutate(
+    stage = paste0("Round ", ___, " - ", ___)
+  )
+
+trial_evidence
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+trial_evidence <- trial_evidence |>
+  mutate(
+    stage = paste0("Round ", round, " - ", side)
+  )
+
+trial_evidence
+```
+:::
+::::
+
+### Part 3: Beta-binomial updating
+
+The app begins with a uniform prior:
+
+$$
+\theta \sim \text{Beta}(1,1)
+$$
+
+This means:
+
+$$
+\alpha = 1
+$$
+
+and:
+
+$$
+\beta = 1
+$$
+
+Each evidence score is treated as if it came from 10 evidence units:
+
+$$
+n = 10
+$$
+
+If the evidence score is $x$, then the update is:
+
+$$
+\alpha_{\text{new}} = \alpha_{\text{old}} + x
+$$
+
+and:
+
+$$
+\beta_{\text{new}} = \beta_{\text{old}} + 10 - x
+$$
+
+:::: callout-note
+#### Question 3
+
+Suppose the first evidence score is 6 out of 10.
+
+Starting from:
+
+$$
+\theta \sim \text{Beta}(1,1)
+$$
+
+calculate the updated values of $\alpha$ and $\beta$.
+
+```{r, eval=FALSE}
+alpha_prior <- ___
+beta_prior <- ___
+
+x <- ___
+n <- ___
+
+alpha_post <- ___ + ___
+beta_post <- ___ + ___ - ___
+
+alpha_post
+beta_post
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+alpha_prior <- 1
+beta_prior <- 1
+
+x <- 6
+n <- 10
+
+alpha_post <- alpha_prior + x
+beta_post <- beta_prior + n - x
+
+alpha_post
+beta_post
+```
+
+After the first piece of evidence, the posterior is:
+
+$$
+\theta \mid X = 6
+\sim
+\text{Beta}(7,5)
+$$
+:::
+::::
+
+:::: callout-note
+#### Question 4
+
+Calculate the posterior mean after the first evidence score of 6.
+
+The mean of a beta distribution is:
+
+$$
+E(\theta)
+=
+\frac{\alpha}{\alpha + \beta}
+$$
+
+```{r, eval=FALSE}
+posterior_mean <- ___ / (___ + ___)
+
+posterior_mean
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+posterior_mean <- alpha_post / (alpha_post + beta_post)
+
+posterior_mean
+```
+
+The posterior mean is approximately 0.583. After this evidence, the average value of Minh's probability of guilt under the posterior distribution is about 0.58.
+:::
+::::
+
+:::: callout-note
+#### Question 5
+
+Write a function called `update_beta()` that takes the current values of `alpha` and `beta`, plus an evidence score `x`, and returns the updated beta parameters.
+
+```{r, eval=FALSE}
+update_beta <- function(alpha, beta, x, n = 10) {
+  tibble(
+    alpha = ___ + ___,
+    beta = ___ + ___ - ___,
+    mean = ___ / (___ + ___)
+  )
+}
+
+update_beta(alpha = 1, beta = 1, x = 6)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+update_beta <- function(alpha, beta, x, n = 10) {
+  new_alpha <- alpha + x
+  new_beta <- beta + n - x
+  
+  tibble(
+    alpha = new_alpha,
+    beta = new_beta,
+    mean = new_alpha / (new_alpha + new_beta)
+  )
+}
+
+update_beta(alpha = 1, beta = 1, x = 6)
+```
+:::
+::::
+
+### Part 4: Updating over the full trial
+
+Now we will update the beta distribution sequentially over all eight pieces of evidence.
+
+The important idea is:
+
+> The posterior from one round becomes the prior for the next round.
+
+:::: callout-note
+#### Question 6
+
+Use a loop to update the beta distribution after each piece of evidence.
+
+Start with:
+
+$$
+\alpha = 1
+$$
+
+and:
+
+$$
+\beta = 1
+$$
+
+Then update these values one row at a time using the evidence score.
+
+```{r, eval=FALSE}
+alpha_current <- ___
+beta_current <- ___
+
+updates <- list()
+
+for (i in 1:nrow(trial_evidence)) {
+  
+  x <- trial_evidence$___[i]
+  
+  alpha_current <- alpha_current + ___
+  beta_current <- beta_current + ___ - ___
+  
+  updates[[i]] <- tibble(
+    stage = trial_evidence$stage[i],
+    evidence = trial_evidence$evidence[i],
+    alpha = alpha_current,
+    beta = beta_current,
+    mean = alpha_current / (alpha_current + beta_current)
+  )
+}
+
+trial_updates <- bind_rows(updates)
+
+trial_updates
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+alpha_current <- 1
+beta_current <- 1
+
+updates <- list()
+
+for (i in 1:nrow(trial_evidence)) {
+  
+  x <- trial_evidence$score[i]
+  
+  alpha_current <- alpha_current + x
+  beta_current <- beta_current + 10 - x
+  
+  updates[[i]] <- tibble(
+    stage = trial_evidence$stage[i],
+    evidence = trial_evidence$evidence[i],
+    alpha = alpha_current,
+    beta = beta_current,
+    mean = alpha_current / (alpha_current + beta_current)
+  )
+}
+
+trial_updates <- bind_rows(updates)
+
+trial_updates
+```
+
+Each row gives the posterior distribution after that piece of evidence.
+:::
+::::
+
+:::: callout-note
+#### Question 7
+
+Add the initial prior to the update table.
+
+The initial prior is:
+
+$$
+\text{Beta}(1,1)
+$$
+
+with mean:
+
+$$
+\frac{1}{1+1} = 0.50
+$$
+
+```{r, eval=FALSE}
+initial_prior <- tibble(
+  stage = ___,
+  evidence = ___,
+  alpha = ___,
+  beta = ___,
+  mean = ___
+)
+
+trial_path <- bind_rows(
+  ___,
+  ___
+)
+
+trial_path
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+initial_prior <- tibble(
+  stage = "Initial prior",
+  evidence = "Before hearing evidence",
+  alpha = 1,
+  beta = 1,
+  mean = 0.5
+)
+
+trial_path <- bind_rows(
+  initial_prior,
+  trial_updates
+)
+
+trial_path
+```
+:::
+::::
+
+:::: callout-note
+#### Question 8
+
+Create a clean summary table showing the beta distribution and posterior mean after each stage.
+
+```{r, eval=FALSE}
+trial_path |>
+  mutate(
+    distribution = paste0("Beta(", ___, ", ", ___, ")")
+  ) |>
+  dplyr::select(
+    Stage = ___,
+    Evidence = ___,
+    Distribution = ___,
+    Mean = ___
+  )
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+trial_path |>
+  mutate(
+    distribution = paste0("Beta(", alpha, ", ", beta, ")")
+  ) |>
+  dplyr::select(
+    Stage = stage,
+    Evidence = evidence,
+    Distribution = distribution,
+    Mean = mean
+  )
+```
+
+The `Mean` column gives the posterior mean probability of guilt after each stage.
+:::
+::::
+
+### Part 5: Visualising prior and posterior distributions
+
+A beta distribution is a probability distribution over values between 0 and 1. In this activity, it represents uncertainty about Minh's probability of guilt.
+
+:::: callout-note
+#### Question 9
+
+Plot the initial prior distribution.
+
+```{r, eval=FALSE}
+prior_plot_data <- tibble(
+  theta = seq(0.001, 0.999, length.out = 1000),
+  density = dbeta(theta, shape1 = ___, shape2 = ___)
+)
+
+ggplot(prior_plot_data, aes(x = ___, y = ___)) +
+  geom_line(linewidth = 1) +
+  labs(
+    x = expression(theta),
+    y = "Density",
+    title = "Initial prior distribution"
+  ) +
+  theme_minimal()
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+prior_plot_data <- tibble(
+  theta = seq(0.001, 0.999, length.out = 1000),
+  density = dbeta(theta, shape1 = 1, shape2 = 1)
+)
+
+ggplot(prior_plot_data, aes(x = theta, y = density)) +
+  geom_line(linewidth = 1) +
+  labs(
+    x = expression(theta),
+    y = "Density",
+    title = "Initial prior distribution"
+  ) +
+  theme_minimal()
+```
+
+The initial prior is flat. Before hearing evidence, the model does not favour low or high values of $\theta$.
+:::
+::::
+
+:::: callout-note
+#### Question 10
+
+Plot the final posterior distribution.
+
+Use the final row of `trial_path` to get the final values of `alpha` and `beta`.
+
+```{r, eval=FALSE}
+final_posterior <- trial_path |>
+  slice_tail(n = ___)
+
+final_plot_data <- tibble(
+  theta = seq(0.001, 0.999, length.out = 1000),
+  density = dbeta(
+    theta,
+    shape1 = final_posterior$___,
+    shape2 = final_posterior$___
+  )
+)
+
+ggplot(final_plot_data, aes(x = ___, y = ___)) +
+  geom_area(alpha = 0.6) +
+  geom_line(linewidth = 1) +
+  geom_vline(
+    xintercept = final_posterior$mean,
+    linetype = "dashed"
+  ) +
+  labs(
+    x = expression(theta),
+    y = "Density",
+    title = "Final posterior distribution",
+    subtitle = "Dashed line shows the posterior mean"
+  ) +
+  theme_minimal()
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+final_posterior <- trial_path |>
+  slice_tail(n = 1)
+
+final_plot_data <- tibble(
+  theta = seq(0.001, 0.999, length.out = 1000),
+  density = dbeta(
+    theta,
+    shape1 = final_posterior$alpha,
+    shape2 = final_posterior$beta
+  )
+)
+
+ggplot(final_plot_data, aes(x = theta, y = density)) +
+  geom_area(alpha = 0.6) +
+  geom_line(linewidth = 1) +
+  geom_vline(
+    xintercept = final_posterior$mean,
+    linetype = "dashed"
+  ) +
+  labs(
+    x = expression(theta),
+    y = "Density",
+    title = "Final posterior distribution",
+    subtitle = "Dashed line shows the posterior mean"
+  ) +
+  theme_minimal()
+```
+
+The final posterior distribution summarises all the evidence ratings from the trial.
+:::
+::::
+
+:::: callout-note
+#### Question 11
+
+Create a plot showing how the posterior mean changes over the trial.
+
+```{r, eval=FALSE}
+trial_path |>
+  mutate(
+    stage = factor(stage, levels = ___)
+  ) |>
+  ggplot(aes(x = ___, y = ___, group = 1)) +
+  geom_line() +
+  geom_point(size = 2) +
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(
+    x = "Stage",
+    y = "Posterior mean",
+    title = "How belief changes across the trial"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+trial_path |>
+  mutate(
+    stage = factor(stage, levels = stage)
+  ) |>
+  ggplot(aes(x = stage, y = mean, group = 1)) +
+  geom_line() +
+  geom_point(size = 2) +
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(
+    x = "Stage",
+    y = "Posterior mean",
+    title = "How belief changes across the trial"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+```
+
+This plot shows the main Bayesian idea: beliefs update as evidence arrives.
+:::
+::::
+
+### Part 6: Posterior summaries
+
+The posterior distribution can be summarised in several ways. Common summaries include the posterior mean, a credible interval, and posterior probabilities.
+
+:::: callout-note
+#### Question 12
+
+Calculate a 95% credible interval for the final posterior distribution.
+
+```{r, eval=FALSE}
+final_ci <- tibble(
+  lower = qbeta(___, shape1 = final_posterior$___, shape2 = final_posterior$___),
+  upper = qbeta(___, shape1 = final_posterior$___, shape2 = final_posterior$___)
+)
+
+final_ci
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+final_ci <- tibble(
+  lower = qbeta(0.025, shape1 = final_posterior$alpha, shape2 = final_posterior$beta),
+  upper = qbeta(0.975, shape1 = final_posterior$alpha, shape2 = final_posterior$beta)
+)
+
+final_ci
+```
+
+This interval contains 95% of the posterior probability, under the model and your evidence ratings.
+:::
+::::
+
+:::: callout-note
+#### Question 13
+
+Calculate the posterior probability that Minh's probability of guilt is greater than 0.50.
+
+```{r, eval=FALSE}
+prob_above_half <- 1 - pbeta(
+  ___,
+  shape1 = final_posterior$___,
+  shape2 = final_posterior$___
+)
+
+prob_above_half
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+prob_above_half <- 1 - pbeta(
+  0.50,
+  shape1 = final_posterior$alpha,
+  shape2 = final_posterior$beta
+)
+
+prob_above_half
+```
+
+This asks:
+
+> After all the evidence, how much posterior probability lies above $\theta = 0.50$?
+:::
+::::
+
+:::: callout-note
+#### Question 14
+
+Calculate the posterior probability that Minh's probability of guilt is greater than 0.90.
+
+```{r, eval=FALSE}
+prob_above_90 <- ___ - pbeta(
+  ___,
+  shape1 = final_posterior$___,
+  shape2 = final_posterior$___
+)
+
+prob_above_90
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+prob_above_90 <- 1 - pbeta(
+  0.90,
+  shape1 = final_posterior$alpha,
+  shape2 = final_posterior$beta
+)
+
+prob_above_90
+```
+
+This is a stricter question. In a legal setting, we might not only ask whether guilt is more likely than not. We might ask whether the probability is very high.
+:::
+::::
+
+## Homework
+
+Prepare a short Quarto report based on **The Stolen Laptop** activity.
+
+Your report should include the following:
+
+1. Your evidence scores for all eight pieces of evidence.
+
+2. A table showing the beta distribution after each stage of the trial.
+
+3. A plot of the posterior mean across the trial.
+
+4. A plot of the final posterior distribution.
+
+5. A 95% credible interval for the final posterior distribution.
+
+6. The posterior probability that $\theta > 0.50$.
+
+7. The posterior probability that $\theta > 0.90$.
+
+8. A short paragraph explaining which piece of evidence changed your belief the most.
+
+9. A short paragraph explaining whether the final posterior distribution supports a strong conclusion, or whether there is still substantial uncertainty.
+
+10. A short reflection on the model. Do you think rating evidence on a 0 to 10 scale is a reasonable way to represent evidence? What are the limitations?

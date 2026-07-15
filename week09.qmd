@@ -1,0 +1,562 @@
+---
+title: "Week 9"
+Subtitle: "Bayesian Statistics"
+---
+
+
+```{r}
+#| include: false
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, warning = FALSE, message = FALSE)
+library(tinytex)
+library(tidyverse)
+```
+
+## Introduction
+
+Suppose a coffee company is testing a new drink. Before adding it to the menu, the company wants to know whether customers genuinely support the launch. Rather than asking for a single opinion, the company collects short customer comments from taste-testing sessions. Some comments clearly support launching the drink. Others are negative, uncertain, or only mildly positive.
+
+Your task is to act as the product team. Each day, you will read a small set of customer comments and decide which ones count as **genuine support** for launching the drink.
+
+For each day:
+
+* Tick the comments that you think count as genuine support.
+* The app will count how many comments you selected.
+* That count becomes the data for the Bayesian update.
+
+```{=html}
+<div class="app-frame-container" id="cafe-app-container">
+
+  <div class="app-frame-toolbar">
+    <button type="button" onclick="minimiseCafeApp()" title="Minimise">−</button>
+    <button type="button" onclick="maximiseCafeApp()" title="Maximise">□</button>
+    <button type="button" onclick="fullscreenCafeApp()" title="Fullscreen">⛶</button>
+  </div>
+
+  <iframe
+    id="cafe-app-frame"
+    src="interactive/Cafe.html"
+    width="100%"
+    height="620"
+    style="border: none;"
+    allowfullscreen>
+  </iframe>
+
+</div>
+
+<style>
+.app-frame-container {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+}
+
+.app-frame-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 6px;
+  background: #f3f4f6;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.app-frame-toolbar button {
+  border: 1px solid #9ca3af;
+  border-radius: 6px;
+  padding: 5px 10px;
+  background: white;
+  cursor: pointer;
+}
+
+.app-frame-container.maximised iframe {
+  height: 90vh;
+}
+
+.app-frame-container.minimised iframe {
+  display: none;
+}
+
+.app-frame-container:fullscreen {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  border: none;
+  border-radius: 0;
+}
+
+.app-frame-container:fullscreen iframe {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+}
+</style>
+
+<script>
+function minimiseCafeApp() {
+  const container = document.getElementById("cafe-app-container");
+
+  container.classList.toggle("minimised");
+  container.classList.remove("maximised");
+}
+
+function maximiseCafeApp() {
+  const container = document.getElementById("cafe-app-container");
+
+  container.classList.toggle("maximised");
+  container.classList.remove("minimised");
+}
+
+function fullscreenCafeApp() {
+  const container = document.getElementById("cafe-app-container");
+
+  container.classList.remove("minimised");
+
+  if (!document.fullscreenElement) {
+    container.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+}
+</script>
+```
+
+## Tasks
+
+### Part 1: Customer feedback and Bayesian updating
+
+In the app, you acted as the product team for a coffee company deciding whether to launch a new drink.
+
+Each day, you read six customer comments and selected the comments that counted as **genuine support** for launching the drink. The app recorded the number of selected comments as:
+
+$$
+x = \text{number of comments judged as genuine support}
+$$
+
+Each day had:
+
+$$
+n = 6
+$$
+
+We will use your copied data from the app to reproduce the Bayesian updating process in R.
+
+The unknown parameter is:
+
+$$
+\theta = \text{the proportion of customers who genuinely support launching the drink}
+$$
+
+We begin with a neutral prior:
+
+$$
+\theta \sim \text{Beta}(1,1)
+$$
+
+After observing \(x\) supportive comments out of \(n\), the posterior is:
+
+$$
+\theta \mid x
+\sim
+\text{Beta}(\alpha + x,\ \beta + n - x)
+$$
+
+The posterior from one day becomes the prior for the next day.
+
+```{r}
+library(tidyverse)
+library(gt)
+```
+
+:::: callout-note
+#### Question 1
+
+Paste the data copied from the app into your Quarto document.
+
+Your copied data should look something like this:
+
+```{r, eval=FALSE}
+my_data <- c(4, 3, 5, 2, 4, 5)
+```
+
+Each value is the number of customer comments you selected as genuine support on that day.
+
+```{r, eval=FALSE}
+my_data <- c(___, ___, ___, ___, ___, ___)
+
+my_data
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+Your values will be different from the example below, depending on how you classified the customer comments.
+
+```{r}
+my_data <- c(4, 3, 5, 2, 4, 5)
+
+my_data
+```
+
+There should be six numbers because the app runs for six days.
+:::
+::::
+
+:::: callout-note
+#### Question 2
+
+Create a tibble called `launch_data` with one row per day.
+
+The variable `x` should contain the values from `my_data`. The variable `n` should be 6 for every day.
+
+```{r, eval=FALSE}
+launch_data <- tibble(
+  day = ___,
+  x = ___,
+  n = ___
+)
+
+launch_data
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+launch_data <- tibble(
+  day = 1:6,
+  x = my_data,
+  n = 6
+)
+
+launch_data
+```
+
+The variable `x` records the number of comments judged as genuine support. The variable `n` records the number of comments shown each day.
+:::
+::::
+
+:::: callout-note
+#### Question 3
+
+Calculate the total number of supportive comments and the total number of comments reviewed.
+
+Then calculate the overall sample proportion.
+
+```{r, eval=FALSE}
+launch_summary <- launch_data |>
+  summarise(
+    total_support = sum(___),
+    total_comments = sum(___),
+    sample_proportion = ___ / ___
+  )
+
+launch_summary
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+launch_summary <- launch_data |>
+  summarise(
+    total_support = sum(x),
+    total_comments = sum(n),
+    sample_proportion = total_support / total_comments
+  )
+
+launch_summary
+```
+
+This is the raw proportion of comments you classified as genuine support across all six days.
+:::
+::::
+
+:::: callout-note
+#### Question 4
+
+Use a loop to update the beta distribution one day at a time.
+
+Start with:
+
+$$
+\alpha = 1
+$$
+
+and:
+
+$$
+\beta = 1
+$$
+
+For each day, update using:
+
+$$
+\alpha_{new} = \alpha_{old} + x
+$$
+
+and:
+
+$$
+\beta_{new} = \beta_{old} + n - x
+$$
+
+```{r, eval=FALSE}
+alpha_current <- ___
+beta_current <- ___
+
+updates <- list()
+
+for (i in 1:nrow(launch_data)) {
+  x_today <- launch_data$___[i]
+  n_today <- launch_data$___[i]
+  
+  alpha_current <- alpha_current + ___
+  beta_current <- beta_current + ___ - ___
+  
+  updates[[i]] <- tibble(
+    day = launch_data$day[i],
+    x = x_today,
+    n = n_today,
+    alpha = alpha_current,
+    beta = beta_current,
+    posterior_mean = alpha_current / (alpha_current + beta_current)
+  )
+}
+
+posterior_updates <- bind_rows(updates)
+
+posterior_updates
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+alpha_current <- 1
+beta_current <- 1
+
+updates <- list()
+
+for (i in 1:nrow(launch_data)) {
+  x_today <- launch_data$x[i]
+  n_today <- launch_data$n[i]
+  
+  alpha_current <- alpha_current + x_today
+  beta_current <- beta_current + n_today - x_today
+  
+  updates[[i]] <- tibble(
+    day = launch_data$day[i],
+    x = x_today,
+    n = n_today,
+    alpha = alpha_current,
+    beta = beta_current,
+    posterior_mean = alpha_current / (alpha_current + beta_current)
+  )
+}
+
+posterior_updates <- bind_rows(updates)
+
+posterior_updates
+```
+
+Each row gives the posterior distribution after that day of customer feedback.
+:::
+::::
+
+:::: callout-note
+#### Question 5
+
+Add the initial prior to the update table and create a clean summary table.
+
+The initial prior is:
+
+$$
+\text{Beta}(1,1)
+$$
+
+with mean:
+
+$$
+\frac{1}{1+1} = 0.50
+$$
+
+```{r, eval=FALSE}
+initial_prior <- tibble(
+  day = ___,
+  x = ___,
+  n = ___,
+  alpha = ___,
+  beta = ___,
+  posterior_mean = ___
+)
+
+posterior_path <- bind_rows(
+  ___,
+  ___
+) |>
+  mutate(
+    distribution = paste0("Beta(", ___, ", ", ___, ")")
+  )
+
+posterior_path |>
+  select(
+    Day = day,
+    Support = x,
+    Comments = n,
+    Distribution = distribution,
+    `Posterior mean` = posterior_mean
+  )
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+initial_prior <- tibble(
+  day = 0,
+  x = 0,
+  n = 0,
+  alpha = 1,
+  beta = 1,
+  posterior_mean = 0.5
+)
+
+posterior_path <- bind_rows(
+  initial_prior,
+  posterior_updates
+) |>
+  mutate(
+    distribution = paste0("Beta(", alpha, ", ", beta, ")")
+  )
+
+posterior_path |>
+  dplyr::select(
+    Day = day,
+    Support = x,
+    Comments = n,
+    Distribution = distribution,
+    `Posterior mean` = posterior_mean
+  ) |>
+  gt() |>
+  fmt_number(columns = `Posterior mean`, decimals = 3)
+```
+
+This table shows how the beta distribution changes as more customer feedback is included.
+:::
+::::
+
+:::: callout-note
+#### Question 6
+
+Plot the prior and posterior distributions across the six days.
+
+First, create a grid of possible values for \(\theta\). Then calculate the beta density for each distribution in `posterior_path`.
+
+```{r, eval=FALSE}
+plot_data <- posterior_path |>
+  mutate(
+    label = if_else(day == ___, "Initial prior", paste0("Day ", day))
+  ) |>
+  crossing(theta = seq(0.001, 0.999, length.out = 500)) |>
+  mutate(
+    density = dbeta(theta, shape1 = ___, shape2 = ___),
+    label = factor(label, levels = unique(label))
+  )
+
+ggplot(plot_data, aes(x = ___, y = ___)) +
+  geom_line(linewidth = 1) +
+  facet_wrap(~ label, ncol = 1, scales = "free_y") +
+  labs(
+    x = expression(theta),
+    y = "Density",
+    title = "Prior and posterior distributions",
+    subtitle = "Each panel shows belief after another day of feedback"
+  ) +
+  theme_minimal()
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+plot_data <- posterior_path |>
+  mutate(
+    label = if_else(day == 0, "Initial prior", paste0("Day ", day))
+  ) |>
+  tidyr::crossing(theta = seq(0.001, 0.999, length.out = 500)) |>
+  mutate(
+    density = dbeta(theta, shape1 = alpha, shape2 = beta),
+    label = factor(label, levels = unique(label))
+  )
+
+ggplot(plot_data, aes(x = theta, y = density)) +
+  geom_line(linewidth = 1) +
+  facet_wrap(~ label, ncol = 1, scales = "free_y") +
+  labs(
+    x = expression(theta),
+    y = "Density",
+    title = "Prior and posterior distributions",
+    subtitle = "Each panel shows belief after another day of feedback"
+  ) +
+  theme_minimal()
+```
+
+The posterior should usually become more concentrated as more comments are classified. This happens because the model has more information after each day.
+:::
+::::
+
+:::: callout-note
+#### Question 7
+
+Summarise the final posterior distribution.
+
+Calculate:
+
+1. the final posterior mean;
+2. a 95% credible interval;
+3. the posterior probability that more than half of customers genuinely support launching the drink.
+
+```{r, eval=FALSE}
+final_posterior <- posterior_path |>
+  slice_tail(n = ___)
+
+final_summary <- tibble(
+  final_distribution = paste0("Beta(", final_posterior$___, ", ", final_posterior$___, ")"),
+  posterior_mean = final_posterior$___,
+  lower_95 = qbeta(___, shape1 = final_posterior$___, shape2 = final_posterior$___),
+  upper_95 = qbeta(___, shape1 = final_posterior$___, shape2 = final_posterior$___),
+  prob_above_half = 1 - pbeta(___, shape1 = final_posterior$___, shape2 = final_posterior$___)
+)
+
+final_summary
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+final_posterior <- posterior_path |>
+  slice_tail(n = 1)
+
+final_summary <- tibble(
+  final_distribution = paste0("Beta(", final_posterior$alpha, ", ", final_posterior$beta, ")"),
+  posterior_mean = final_posterior$posterior_mean,
+  lower_95 = qbeta(0.025, shape1 = final_posterior$alpha, shape2 = final_posterior$beta),
+  upper_95 = qbeta(0.975, shape1 = final_posterior$alpha, shape2 = final_posterior$beta),
+  prob_above_half = 1 - pbeta(0.50, shape1 = final_posterior$alpha, shape2 = final_posterior$beta)
+)
+
+final_summary |>
+  gt() |>
+  fmt_number(columns = c(posterior_mean, lower_95, upper_95, prob_above_half), decimals = 3)
+```
+
+The value `prob_above_half` answers the question:
+
+> After six days of customer feedback, how likely is it that more than half of customers genuinely support launching the drink?
+
+A value close to 1 provides strong evidence in favour of launch support being above 50%. A value close to 0 suggests weak evidence that support is above 50%. A value near 0.5 means there is still substantial uncertainty.
+:::
+::::
