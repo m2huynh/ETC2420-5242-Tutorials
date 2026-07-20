@@ -12,15 +12,7 @@ library(tidyverse)
 
 ## Introduction
 
-Imagine four university friends are taking the unit: **Statistical Thinking**. Throughout the semester, they have usually done quite well. Their final exam is scheduled for Monday morning. However, the day before the exam, they partied too hard, sleept in, and miss the exam.
-
-<center>
-
-![In a world where 4 Minhs exist](images/week04/party.png){width="75%"}
-
-</center>
-
-They decide to write to their professor and ask for a chance to sit a make-up exam. Their email says:
+Imagine four university friends are taking the unit: **Statistical Thinking**. Throughout the semester, they have usually done quite well. Their final exam is scheduled for Monday morning. However, the day before the exam, they partied too hard, sleept in, and miss the exam. They decide to write to their professor and ask for a chance to sit a make-up exam. Their email says:
 
 > *This morning, on our way to campus, one of the car tyres was punctured. We had to pull over on the side of the road. Because it was raining, it was difficult to change the tyre. We were eventually able to change it, but this is why we were late to campus and missed the exam.*
 
