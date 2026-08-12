@@ -19,8 +19,8 @@ You will watch a brief animated scene only once. Your task is to pay attention t
 
 After the scene, you will answer each recall question and give a confidence rating. This gives us two kinds of data:
 
-- whether your answer was correct
-- how confident you were in that answer
+-   whether your answer was correct
+-   how confident you were in that answer
 
 This lets us ask better statistical questions. Instead of only asking:
 
@@ -51,24 +51,22 @@ we can ask:
 
 In the app, `my_answers` records whether each recall answer was correct.
 
-- `1` means your answer was correct
-- `0` means your answer was incorrect
+-   `1` means your answer was correct
+-   `0` means your answer was incorrect
 
 The vector `my_confidence` records how confident you were for each answer, on a 0 to 100 scale.
 
-:::: callout-note
+::: callout-note
 #### Question 1
 
-Click the **Copy data for RStudio** button on the app above and paste your results into your Quarto document. It should look something like: 
-
+Click the **Copy data for RStudio** button on the app above and paste your results into your Quarto document. It should look something like:
 
 ```{r, eval=FALSE}
 my_answers <- c(___, ___, ___, ___, ___, ___, ___, ___)
 my_confidence <- c(___, ___, ___, ___, ___, ___, ___, ___)
 
 ```
-
-::::
+:::
 
 :::: callout-note
 #### Question 2
@@ -139,8 +137,6 @@ recall_summary <- witness_data |>
 
 recall_summary
 ```
-
-
 :::
 ::::
 
@@ -189,9 +185,9 @@ Create a new variable called `confidence_group`.
 
 Use the following categories:
 
-- `Low` for confidence below 50
-- `Medium` for confidence from 50 to 79
-- `High` for confidence 80 or above
+-   `Low` for confidence below 50
+-   `Medium` for confidence from 50 to 79
+-   `High` for confidence 80 or above
 
 ```{r, eval=FALSE}
 witness_data <- witness_data |>
@@ -316,15 +312,16 @@ A bar at 100% means the answer was correct. A bar at 0% means the answer was inc
 
 ### Scenario: Dr.Arbuthnot’s baptism records
 
-John Arbuthnot was a Scottish physician. In 1710 he published a paper[^week02-1] that examined birth records in London for each of the 82 years from 1629 to 1710. Actually the data he used were counts of baptisms, by year and gender, but these are used as a proxy for the number of births.
+John Arbuthnot was a Scottish physician. In 1710 he published a paper[^week02b-1] that examined birth records in London for each of the 82 years from 1629 to 1710. Actually the data he used were counts of baptisms, by year and gender, but these are used as a proxy for the number of births.
 
-[^week02-1]: Arbuthnot, J. (1710). “An argument for divine providence, taken from the constant regularity observed in the births of both sexes,” \textit{Philosophical Transactions of the Royal Society}, Vol 27, pp 186–190.
+[^week02b-1]: Arbuthnot, J. (1710). “An argument for divine providence, taken from the constant regularity observed in the births of both sexes,” \textit{Philosophical Transactions of the Royal Society}, Vol 27, pp 186–190.
 
 ### Data
 
 The data from Arbuthnot’s study is contained in the file `arbuthnot.csv`. It consists of three columns, named `year`, `boys` and `girls`. The `boys` and `girls` columns show the number of each that were born in London for each year as specified in the `year` column.
 
 <center>
+
 ```{r, echo=FALSE}
 library(downloadthis)
 download_file(
@@ -333,25 +330,27 @@ download_file(
   button_type = 'success'
 )
 ```
-</center><br>
 
-Download and transfer the file `arbuthnot.csv` to your Project folder > week 2 > data
+</center>
+
+<br>
+
+Download and transfer the file `arbuthnot.csv` to your Project folder \> week 2 \> data
 
 ### Tasks
 
 1.  What line of R code would you use to extract the vector containing just the counts of girls baptised? Would it be a good idea to print it in an assignment?
 
-2. Using `ggplot()`, create a plot to visualise the number of girls baptised per year. Is there an apparent trend in the number of girls baptized over the years? How would you describe it? Are there any interesting features?
+2.  Using `ggplot()`, create a plot to visualise the number of girls baptised per year. Is there an apparent trend in the number of girls baptized over the years? How would you describe it? Are there any interesting features?
 
-3. Create three new columns in your data:
-    - `total`: the sum of boy baptisims and girl baptisms
-    - `ratio`: the number of girl baptisms divided by the number of boy baptisms
-    - `prop_girls`: the proportion of girl baptisms
+3.  Create three new columns in your data:
 
-4. Draw a line plot of the total number of baptisms per year. How often were there more boys born than girls?
+    -   `total`: the sum of boy baptisims and girl baptisms
+    -   `ratio`: the number of girl baptisms divided by the number of boy baptisms
+    -   `prop_girls`: the proportion of girl baptisms
+
+4.  Draw a line plot of the total number of baptisms per year. How often were there more boys born than girls?
 
 5.  Draw a plot of the proportion of boys born over time. What do you see? Discuss this plot. Can it be improved?
 
 6.  Use the internet or help in R to create a **TERRIBLE** graph, which has none of the good attributes from the previous question. Comment on what makes it terrible.
-
-
