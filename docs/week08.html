@@ -70,6 +70,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./week09.html" rel="next">
 <link href="./week07.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -113,35 +114,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="include/webex.css">
@@ -397,6 +369,11 @@ window.Quarto = {
   <a href="./week08.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Week 8</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./week09.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Week 9</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -407,25 +384,10 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
-  <ul class="collapse">
-  <li><a href="#tasks" id="toc-tasks" class="nav-link" data-scroll-target="#tasks">Tasks</a>
-  <ul class="collapse">
-  <li><a href="#part-1-writing-the-likelihood-function" id="toc-part-1-writing-the-likelihood-function" class="nav-link" data-scroll-target="#part-1-writing-the-likelihood-function">Part 1: Writing the likelihood function</a></li>
-  <li><a href="#part-2-comparing-proposed-strengths" id="toc-part-2-comparing-proposed-strengths" class="nav-link" data-scroll-target="#part-2-comparing-proposed-strengths">Part 2: Comparing proposed strengths</a></li>
-  <li><a href="#part-3-finding-the-maximum-likelihood-estimate" id="toc-part-3-finding-the-maximum-likelihood-estimate" class="nav-link" data-scroll-target="#part-3-finding-the-maximum-likelihood-estimate">Part 3: Finding the maximum likelihood estimate</a></li>
-  <li><a href="#part-4-visualising-the-likelihood-function" id="toc-part-4-visualising-the-likelihood-function" class="nav-link" data-scroll-target="#part-4-visualising-the-likelihood-function">Part 4: Visualising the likelihood function</a></li>
-  <li><a href="#part-5-applying-the-function-to-another-team" id="toc-part-5-applying-the-function-to-another-team" class="nav-link" data-scroll-target="#part-5-applying-the-function-to-another-team">Part 5: Applying the function to another team</a></li>
-  </ul></li>
-  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework">Homework</a>
-  <ul class="collapse">
-  <li><a href="#question-1-1" id="toc-question-1-1" class="nav-link" data-scroll-target="#question-1-1">Question 1</a></li>
-  <li><a href="#question-2-1" id="toc-question-2-1" class="nav-link" data-scroll-target="#question-2-1">Question 2</a></li>
-  <li><a href="#question-3-1" id="toc-question-3-1" class="nav-link" data-scroll-target="#question-3-1">Question 3</a></li>
-  <li><a href="#question-4-1" id="toc-question-4-1" class="nav-link" data-scroll-target="#question-4-1">Question 4</a></li>
-  <li><a href="#question-5-1" id="toc-question-5-1" class="nav-link" data-scroll-target="#question-5-1">Question 5</a></li>
-  </ul></li>
-  </ul></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#scenario" id="toc-scenario" class="nav-link" data-scroll-target="#scenario">Scenario</a></li>
+  <li><a href="#tasks" id="toc-tasks" class="nav-link" data-scroll-target="#tasks">Tasks</a></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework">Homework</a></li>
   </ul>
 </nav>
     </div>
@@ -452,155 +414,64 @@ window.Quarto = {
 </header>
 
 
+<p>In this tutorial we will begin by investigating <strong>likelihood</strong> and <strong>fitting models</strong> using the app below. Your tutor will explain to you how to use it.</p>
+<div style="width: 100%; height: 760px;">
+  <iframe src="interactive/model-speed-dating.html" title="MLE Matchmaker" style="width: 100%; height: 100%; border: none; border-radius: 12px;" loading="lazy" allowfullscreen="">
+  </iframe>
+</div>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>In this tutorial we will investigate <strong>likelihood</strong> using a simulated FIFA World Cup. The interactive simulator is available below. Your tutor will explain to you how to use it.</p>
-<div class="app-frame-container" id="cafe-app-container">
-
-  <div class="app-frame-toolbar">
-    <button type="button" onclick="minimiseCafeApp()" title="Minimise">−</button>
-    <button type="button" onclick="maximiseCafeApp()" title="Maximise">□</button>
-    <button type="button" onclick="fullscreenCafeApp()" title="Fullscreen">⛶</button>
-  </div>
-
-  <iframe id="cafe-app-frame" src="interactive/fifa.html" width="100%" height="620" style="border: none;" allowfullscreen="">
-  </iframe>
-
-</div>
-
-<style>
-.app-frame-container {
-  width: 100%;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  overflow: hidden;
-  background: white;
-}
-
-.app-frame-toolbar {
-  display: flex;
-  justify-content: flex-end;
-  gap: 6px;
-  padding: 6px;
-  background: #f3f4f6;
-  border-bottom: 1px solid #d1d5db;
-}
-
-.app-frame-toolbar button {
-  border: 1px solid #9ca3af;
-  border-radius: 6px;
-  padding: 5px 10px;
-  background: white;
-  cursor: pointer;
-}
-
-.app-frame-container.maximised iframe {
-  height: 90vh;
-}
-
-.app-frame-container.minimised iframe {
-  display: none;
-}
-
-.app-frame-container:fullscreen {
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  height: 100vh;
-  border: none;
-  border-radius: 0;
-}
-
-.app-frame-container:fullscreen iframe {
-  flex: 1;
-  width: 100%;
-  height: 100%;
-}
-</style>
-
-<script>
-function minimiseCafeApp() {
-  const container = document.getElementById("cafe-app-container");
-
-  container.classList.toggle("minimised");
-  container.classList.remove("maximised");
-}
-
-function maximiseCafeApp() {
-  const container = document.getElementById("cafe-app-container");
-
-  container.classList.toggle("maximised");
-  container.classList.remove("minimised");
-}
-
-function fullscreenCafeApp() {
-  const container = document.getElementById("cafe-app-container");
-
-  container.classList.remove("minimised");
-
-  if (!document.fullscreenElement) {
-    container.requestFullscreen();
-  } else {
-    document.exitFullscreen();
-  }
-}
-</script>
-<p>The simulator assigns every team a <strong>strength</strong> between 0 and 100. Stronger teams are more likely to win matches. This is based upon a few different sources (such as SOFAScore, FOTMOB, etc.). Rather than predicting the tournament from the strengths, we will use the observed tournament results to determine <strong>which strength value is most supported by the data</strong>.</p>
-<p>For simplicity (see Homework for more sophisticated models), we will assume that the probability Team 1 wins is</p>
-<p><span class="math display">\[ P(\text{Team 1 wins})=\frac{\text{Strength}_1}{\text{Strength}_1+\text{Strength}_2} \]</span></p>
-<section id="tasks" class="level2">
-<h2 class="anchored" data-anchor-id="tasks">Tasks</h2>
-<section id="part-1-writing-the-likelihood-function" class="level3">
-<h3 class="anchored" data-anchor-id="part-1-writing-the-likelihood-function">Part 1: Writing the likelihood function</h3>
+<p>In the opening activity, you selected probability distributions and adjusted their parameters until they appeared to fit the observed data. You were informally searching for the combination of model and parameter values that made the data most likely.</p>
+<p>In this tutorial, R will perform that search for us. We will use:</p>
+<ul>
+<li><code>MASS::fitdistr()</code> to obtain maximum likelihood estimates;</li>
+<li>the fitted log-likelihood to compare candidate models; and</li>
+<li>Q–Q plots to investigate how well each fitted distribution describes the data.</li>
+</ul>
+</section>
+<section id="scenario" class="level1">
+<h1>Scenario</h1>
+<p>A hospital is investigating patient activity in its emergency department. For each of 200 patients, two variables were recorded:</p>
+<ul>
+<li><code>waiting_time</code>: the number of minutes before the patient was seen;</li>
+<li><code>tests_ordered</code>: the number of diagnostic tests ordered for the patient.</li>
+</ul>
+<p>The hospital wants to identify probability models that adequately describe these variables. Appropriate models could later be used for simulation, planning and estimating the probability of unusually long waits or unusually large numbers of tests.</p>
+<p>Download the data below:</p>
+<center>
+</center>
+<p><br></p>
+</section>
+<section id="tasks" class="level1">
+<h1>Tasks</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Question 1
+<span class="screen-reader-only">Note</span>Question 1: EDA
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Write a function called <code>calculate_loglikelihood()</code>.</p>
-<p>The function should have three inputs:</p>
-<ul>
-<li><code>team_name</code>: the name of the team being evaluated;</li>
-<li><code>strength</code>: a proposed strength for that team;</li>
-<li><code>data</code>: the match dataset, with <code>matches</code> as the default.</li>
-</ul>
-<p>Within the function:</p>
+<p>Use <code>glimpse()</code> and <code>summary()</code> to inspect <code>emergency_data</code>. Then create:</p>
 <ol type="1">
-<li>Keep only matches involving the selected team.</li>
-<li>Calculate the probability that the selected team wins.</li>
-<li>Use the probability of the outcome that was actually observed.</li>
-<li>Calculate the sum of the log probabilities.</li>
+<li>a histogram of <code>waiting_time</code>; and</li>
+<li>a bar chart of <code>tests_ordered</code>.</li>
 </ol>
-<p>Complete the code below.</p>
+<p>What features of each variable will be important when choosing a probability model?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>calculate_loglikelihood <span class="ot">&lt;-</span> <span class="cf">function</span>(team_name,</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                                    strength,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">data =</span> matches) {</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(team <span class="sc">==</span> ___) <span class="sc">|&gt;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">p_team_wins =</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        ___ <span class="sc">/</span> (___ <span class="sc">+</span> opponent_strength),</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">observed_probability =</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">if_else</span>(</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>          winner <span class="sc">==</span> ___,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>          ___,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>          ___</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">log_likelihood =</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sum</span>(<span class="fu">log</span>(___))</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(___)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(___)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(___)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: adding after_stat() allows us to visualise the densities</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">x =</span> ___)) <span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density)), <span class="at">bins =</span> <span class="dv">25</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(___))) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
@@ -615,72 +486,46 @@ function fullscreenCafeApp() {
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>calculate_loglikelihood <span class="ot">&lt;-</span> <span class="cf">function</span>(team_name,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                                    strength,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">data =</span> matches) {</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(team <span class="sc">==</span> team_name) <span class="sc">|&gt;</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">p_team_wins =</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        strength <span class="sc">/</span> (strength <span class="sc">+</span> opponent_strength),</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">observed_probability =</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">if_else</span>(</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>          winner <span class="sc">==</span> team_name,</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>          p_team_wins,</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>          <span class="dv">1</span> <span class="sc">-</span> p_team_wins</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">log_likelihood =</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sum</span>(<span class="fu">log</span>(observed_probability))</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(log_likelihood)</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(emergency_data)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(emergency_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The function returns the log-likelihood of the observed results for a proposed team strength.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">x =</span> waiting_time)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(tests_ordered))) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><code>waiting_time</code> is positive, continuous and right-skewed. <code>tests_ordered</code> contains non-negative integer counts and is also right-skewed. These features help determine which distributions are plausible.</p>
 </div>
 </div>
 </div>
 </div>
 </div>
-</section>
-<section id="part-2-comparing-proposed-strengths" class="level3">
-<h3 class="anchored" data-anchor-id="part-2-comparing-proposed-strengths">Part 2: Comparing proposed strengths</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Question 2
+<span class="screen-reader-only">Note</span>Question 2: Fit models to waiting times
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Use <code>calculate_loglikelihood()</code> to calculate Australia’s log-likelihood when its proposed strength is:</p>
-<ul>
-<li>40</li>
-<li>70</li>
-<li>90</li>
-</ul>
+<p>Fit a normal distribution to <code>waiting_time</code> using <code>fitdistr()</code>. Save the result as <code>waiting_normal</code> and print it.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">calculate_loglikelihood</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">team_name =</span> ___,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">strength =</span> ___</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">calculate_loglikelihood</span>(</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">team_name =</span> ___,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">strength =</span> ___</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">calculate_loglikelihood</span>(</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">team_name =</span> ___,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">strength =</span> ___</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>waiting_normal <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  emergency_data<span class="sc">$</span>___,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">densfun =</span> <span class="st">"___"</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>waiting_normal</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Which of the three proposed strengths is most strongly supported by Australia’s observed results?</p>
+<p>Identify the maximum likelihood estimates of the mean and standard deviation.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -694,22 +539,15 @@ function fullscreenCafeApp() {
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">calculate_loglikelihood</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">team_name =</span> <span class="st">"Australia"</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">strength =</span> <span class="dv">40</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">calculate_loglikelihood</span>(</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">team_name =</span> <span class="st">"Australia"</span>,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">strength =</span> <span class="dv">70</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">calculate_loglikelihood</span>(</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">team_name =</span> <span class="st">"Australia"</span>,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">strength =</span> <span class="dv">90</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>waiting_normal <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  emergency_data<span class="sc">$</span>waiting_time,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">densfun =</span> <span class="st">"normal"</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>waiting_normal</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The proposed strength with the <strong>largest</strong> log-likelihood is most strongly supported by the observed data. Because log-likelihood values are usually negative, the value closest to zero is the largest.</p>
+<p>The values under <code>mean</code> and <code>sd</code> are the maximum likelihood estimates. They are the parameter values that maximise the normal model’s likelihood for the observed waiting times.</p>
 </div>
 </div>
 </div>
@@ -725,20 +563,29 @@ function fullscreenCafeApp() {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Create a dataframe called <code>Australia_likelihood</code> containing the log-likelihood for every candidate strength from 1 to 100.</p>
+<p>Fit exponential, gamma, Weibull and log-normal distributions to <code>waiting_time</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Australia_likelihood <span class="ot">&lt;-</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  candidate_strengths <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_likelihood =</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">calculate_loglikelihood</span>(</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">team_name =</span> ___,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">strength =</span> ___</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>Australia_likelihood</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>waiting_exponential <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  emergency_data<span class="sc">$</span>waiting_time,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">densfun =</span> <span class="st">"___"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>waiting_gamma <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  emergency_data<span class="sc">$</span>waiting_time,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">densfun =</span> <span class="st">"___"</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>waiting_weibull <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  emergency_data<span class="sc">$</span>waiting_time,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">densfun =</span> <span class="st">"___"</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>waiting_lognormal <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  emergency_data<span class="sc">$</span>waiting_time,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">densfun =</span> <span class="st">"___"</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>Print each fitted model and identify its maximum likelihood estimates.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -752,43 +599,71 @@ function fullscreenCafeApp() {
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Australia_likelihood <span class="ot">&lt;-</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  candidate_strengths <span class="sc">|&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_likelihood =</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">calculate_loglikelihood</span>(</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">team_name =</span> <span class="st">"Australia"</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">strength =</span> strength</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>Australia_likelihood</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>waiting_exponential <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  emergency_data<span class="sc">$</span>waiting_time,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">densfun =</span> <span class="st">"exponential"</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>waiting_gamma <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  emergency_data<span class="sc">$</span>waiting_time,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">densfun =</span> <span class="st">"gamma"</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>waiting_weibull <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  emergency_data<span class="sc">$</span>waiting_time,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">densfun =</span> <span class="st">"weibull"</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>waiting_lognormal <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  emergency_data<span class="sc">$</span>waiting_time,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">densfun =</span> <span class="st">"lognormal"</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>waiting_exponential</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>waiting_gamma</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>waiting_weibull</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>waiting_lognormal</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Each row now represents one proposed value of Australia’s strength and the corresponding log-likelihood.</p>
+<p><code>fitdistr()</code> automatically selects the parameter values that maximise the likelihood for each candidate distribution.</p>
 </div>
 </div>
 </div>
 </div>
 </div>
-</section>
-<section id="part-3-finding-the-maximum-likelihood-estimate" class="level3">
-<h3 class="anchored" data-anchor-id="part-3-finding-the-maximum-likelihood-estimate">Part 3: Finding the maximum likelihood estimate</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Question 4
+<span class="screen-reader-only">Note</span>Question 4: Compare fitted log-likelihoods
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Display the five proposed strengths with the largest log-likelihood.</p>
+<p>The fitted log-likelihood can be extracted using <code>$loglik</code>.</p>
+<p>Complete the code to create a comparison table.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Australia_likelihood <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">___</span>(___)) <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(___)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>waiting_comparison <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="fu">c</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Normal"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Exponential"</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Gamma"</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Weibull"</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Log-normal"</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">log_likelihood =</span> <span class="fu">c</span>(</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    waiting_normal<span class="sc">$</span>___,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    waiting_exponential<span class="sc">$</span>___,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    waiting_gamma<span class="sc">$</span>___,</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    waiting_weibull<span class="sc">$</span>___,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    waiting_lognormal<span class="sc">$</span>___</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(log_likelihood))</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>waiting_comparison</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>Which fitted model has the largest log-likelihood?</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -802,10 +677,28 @@ function fullscreenCafeApp() {
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Australia_likelihood <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(log_likelihood)) <span class="sc">|&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>waiting_comparison <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="fu">c</span>(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Normal"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Exponential"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Gamma"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Weibull"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Log-normal"</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">log_likelihood =</span> <span class="fu">c</span>(</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    waiting_normal<span class="sc">$</span>loglik,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    waiting_exponential<span class="sc">$</span>loglik,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    waiting_gamma<span class="sc">$</span>loglik,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    waiting_weibull<span class="sc">$</span>loglik,</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    waiting_lognormal<span class="sc">$</span>loglik</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(log_likelihood))</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>waiting_comparison</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>The model at the top of the table has the largest maximised log-likelihood. A larger value means that the fitted model assigns greater likelihood to the observed data.</p>
+<p>The log-likelihood should not be the only evidence used to assess a model. We will also inspect the fitted shape and Q–Q plots.</p>
 </div>
 </div>
 </div>
@@ -821,17 +714,78 @@ function fullscreenCafeApp() {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Find the <strong>maximum likelihood estimate</strong> of Australia’s strength using <code>filter()</code>.</p>
+<p><code>ggplot2</code> provides two functions for constructing Q–Q plots:</p>
+<ul>
+<li><code>stat_qq()</code> adds the observed points;</li>
+<li><code>stat_qq_line()</code> adds the reference line.</li>
+</ul>
+<p>For distributions other than the standard normal distribution, we provide:</p>
+<ul>
+<li>the relevant quantile function using <code>distribution</code>; and</li>
+<li>the fitted parameters using <code>dparams = as.list(fit$estimate)</code>.</li>
+</ul>
+<p>The required quantile functions are:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Distribution</th>
+<th>Quantile function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Normal</td>
+<td><code>qnorm</code></td>
+</tr>
+<tr class="even">
+<td>Exponential</td>
+<td><code>qexp</code></td>
+</tr>
+<tr class="odd">
+<td>Gamma</td>
+<td><code>qgamma</code></td>
+</tr>
+<tr class="even">
+<td>Weibull</td>
+<td><code>qweibull</code></td>
+</tr>
+<tr class="odd">
+<td>Log-normal</td>
+<td><code>qlnorm</code></td>
+</tr>
+<tr class="even">
+<td>Poisson</td>
+<td><code>qpois</code></td>
+</tr>
+<tr class="odd">
+<td>Negative binomial</td>
+<td><code>qnbinom</code></td>
+</tr>
+</tbody>
+</table>
+<p>Create Q–Q plots for the fitted normal and gamma models.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Australia_mle <span class="ot">&lt;-</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  Australia_likelihood <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    log_likelihood <span class="sc">==</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">___</span>(___)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>Australia_mle</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">sample =</span> waiting_time)) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> ___,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(___<span class="sc">$</span>estimate)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> ___,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(___<span class="sc">$</span>estimate)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">sample =</span> waiting_time)) <span class="sc">+</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> ___,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(___<span class="sc">$</span>estimate)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> ___,</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(___<span class="sc">$</span>estimate)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>Which model produces points that follow the reference line more closely?</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -845,24 +799,32 @@ function fullscreenCafeApp() {
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Australia_mle <span class="ot">&lt;-</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  Australia_likelihood <span class="sc">|&gt;</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    log_likelihood <span class="sc">==</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">max</span>(log_likelihood)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>Australia_mle</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">sample =</span> waiting_time)) <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qnorm,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(waiting_normal<span class="sc">$</span>estimate)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qnorm,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(waiting_normal<span class="sc">$</span>estimate)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">sample =</span> waiting_time)) <span class="sc">+</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qgamma,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(waiting_gamma<span class="sc">$</span>estimate)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qgamma,</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(waiting_gamma<span class="sc">$</span>estimate)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The maximum likelihood estimate is the proposed strength that produces the largest log-likelihood.</p>
+<p>The gamma Q–Q plot should follow the reference line more closely. Systematic curvature in the normal Q–Q plot indicates that the normal distribution does not adequately capture the right-skewed waiting times.</p>
 </div>
 </div>
 </div>
 </div>
 </div>
-</section>
-<section id="part-4-visualising-the-likelihood-function" class="level3">
-<h3 class="anchored" data-anchor-id="part-4-visualising-the-likelihood-function">Part 4: Visualising the likelihood function</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -873,22 +835,27 @@ function fullscreenCafeApp() {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Create a line plot of Australia’s log-likelihood function.</p>
+<p>Create Q–Q plots for the exponential, gamma, Weibull and log-normal models. Use <code>patchwork</code> to display them in a two-by-two arrangement.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Australia_likelihood <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> ___,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> ___</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom___</span>() <span class="sc">+</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Proposed strength"</span>,</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Log-likelihood"</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>qq_exponential <span class="ot">&lt;-</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">sample =</span> waiting_time)) <span class="sc">+</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> ___,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(___<span class="sc">$</span>estimate)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> ___,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(___<span class="sc">$</span>estimate)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Exponential"</span>)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Repeat for the gamma, Weibull and log-normal models.</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>qq_exponential <span class="sc">+</span> qq_gamma <span class="sc">+</span> qq_weibull <span class="sc">+</span> qq_lognormal</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Describe the shape of the graph and identify approximately where it reaches its maximum.</p>
+<p>Which model would you select for <code>waiting_time</code>? Refer to both the log-likelihood comparison and Q–Q plots.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -902,25 +869,68 @@ function fullscreenCafeApp() {
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Australia_likelihood <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> strength,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> log_likelihood</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Proposed strength"</span>,</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Log-likelihood"</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>qq_exponential <span class="ot">&lt;-</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">sample =</span> waiting_time)) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qexp,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(waiting_exponential<span class="sc">$</span>estimate)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qexp,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(waiting_exponential<span class="sc">$</span>estimate)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Exponential"</span>)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>qq_gamma <span class="ot">&lt;-</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">sample =</span> waiting_time)) <span class="sc">+</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qgamma,</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(waiting_gamma<span class="sc">$</span>estimate)</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qgamma,</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(waiting_gamma<span class="sc">$</span>estimate)</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Gamma"</span>)</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>qq_weibull <span class="ot">&lt;-</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">sample =</span> waiting_time)) <span class="sc">+</span></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qweibull,</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(waiting_weibull<span class="sc">$</span>estimate)</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qweibull,</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(waiting_weibull<span class="sc">$</span>estimate)</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Weibull"</span>)</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>qq_lognormal <span class="ot">&lt;-</span></span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">sample =</span> waiting_time)) <span class="sc">+</span></span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qlnorm,</span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(waiting_lognormal<span class="sc">$</span>estimate)</span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qlnorm,</span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(waiting_lognormal<span class="sc">$</span>estimate)</span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Log-normal"</span>)</span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a>qq_exponential <span class="sc">+</span> qq_gamma <span class="sc">+</span> qq_weibull <span class="sc">+</span> qq_lognormal</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The maximum of the curve corresponds to the maximum likelihood estimate.</p>
+<p>Gamma should provide a strong overall fit. It should have one of the largest log-likelihoods and a Q–Q plot that remains close to the reference line. Weibull may also appear plausible, so conclusions should be based on the observed evidence rather than requiring a perfectly unambiguous answer.</p>
 </div>
 </div>
 </div>
 </div>
 </div>
+</section>
+<section id="homework" class="level1">
+<h1>Homework</h1>
+<p>Repeat the above for the discrete variable <code>tests_ordered</code>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -931,25 +941,22 @@ function fullscreenCafeApp() {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Add a point showing the maximum likelihood estimate to the graph.</p>
+<p>Fit Poisson and negative binomial distributions to <code>tests_ordered</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Australia_likelihood <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> strength,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> log_likelihood</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> ___,</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Proposed strength"</span>,</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Log-likelihood"</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>tests_poisson <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  emergency_data<span class="sc">$</span>tests_ordered,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">densfun =</span> <span class="st">"___"</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>tests_negative_binomial <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  emergency_data<span class="sc">$</span>tests_ordered,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">densfun =</span> <span class="st">"___"</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>tests_poisson</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>tests_negative_binomial</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>Compare their fitted log-likelihoods. Which model is more strongly supported?</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -963,31 +970,34 @@ function fullscreenCafeApp() {
 <div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Australia_likelihood <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> strength,</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> log_likelihood</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> Australia_mle,</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Proposed strength"</span>,</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Log-likelihood"</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>tests_poisson <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  emergency_data<span class="sc">$</span>tests_ordered,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">densfun =</span> <span class="st">"Poisson"</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>tests_negative_binomial <span class="ot">&lt;-</span> <span class="fu">fitdistr</span>(</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  emergency_data<span class="sc">$</span>tests_ordered,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">densfun =</span> <span class="st">"negative binomial"</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>tests_poisson</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>tests_negative_binomial</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="fu">c</span>(<span class="st">"Poisson"</span>, <span class="st">"Negative binomial"</span>),</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">log_likelihood =</span> <span class="fu">c</span>(</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    tests_poisson<span class="sc">$</span>loglik,</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    tests_negative_binomial<span class="sc">$</span>loglik</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(log_likelihood))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The negative binomial model should have the larger log-likelihood because the simulated counts contain more variability than a Poisson model can accommodate.</p>
 </div>
 </div>
 </div>
 </div>
 </div>
-</div>
-</section>
-<section id="part-5-applying-the-function-to-another-team" class="level3">
-<h3 class="anchored" data-anchor-id="part-5-applying-the-function-to-another-team">Part 5: Applying the function to another team</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -998,30 +1008,35 @@ function fullscreenCafeApp() {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Use the same function to estimate England’s strength.</p>
-<p>First, create a dataframe containing the log-likelihood for each candidate strength.</p>
+<p>Create Q–Q plots for the Poisson and negative binomial models.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>england_likelihood <span class="ot">&lt;-</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  candidate_strengths <span class="sc">|&gt;</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_likelihood =</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">calculate_loglikelihood</span>(</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">team_name =</span> ___,</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">strength =</span> ___</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>qq_poisson <span class="ot">&lt;-</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">sample =</span> tests_ordered)) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> ___,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(___<span class="sc">$</span>estimate)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> ___,</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(___<span class="sc">$</span>estimate)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Poisson"</span>)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>qq_negative_binomial <span class="ot">&lt;-</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">sample =</span> tests_ordered)) <span class="sc">+</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> ___,</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(___<span class="sc">$</span>estimate)</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> ___,</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(___<span class="sc">$</span>estimate)</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Negative binomial"</span>)</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>qq_poisson <span class="sc">+</span> qq_negative_binomial</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Then find England’s maximum likelihood estimate.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>england_mle <span class="ot">&lt;-</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  england_likelihood <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    log_likelihood <span class="sc">==</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">max</span>(___)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>england_mle</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<p>Which model provides the better overall fit?</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1035,26 +1050,42 @@ function fullscreenCafeApp() {
 <div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>england_likelihood <span class="ot">&lt;-</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  candidate_strengths <span class="sc">|&gt;</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_likelihood =</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">calculate_loglikelihood</span>(</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">team_name =</span> <span class="st">"England"</span>,</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">strength =</span> strength</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>england_mle <span class="ot">&lt;-</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  england_likelihood <span class="sc">|&gt;</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    log_likelihood <span class="sc">==</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">max</span>(log_likelihood)</span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>england_mle</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>qq_poisson <span class="ot">&lt;-</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">sample =</span> tests_ordered)) <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qpois,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(tests_poisson<span class="sc">$</span>estimate)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qpois,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(tests_poisson<span class="sc">$</span>estimate)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Poisson"</span>,</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Theoretical quantiles"</span>,</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Observed quantiles"</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>qq_negative_binomial <span class="ot">&lt;-</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">sample =</span> tests_ordered)) <span class="sc">+</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qnbinom,</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(tests_negative_binomial<span class="sc">$</span>estimate)</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qnbinom,</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(tests_negative_binomial<span class="sc">$</span>estimate)</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Negative binomial"</span>,</span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Theoretical quantiles"</span>,</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Observed quantiles"</span></span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>qq_poisson <span class="sc">+</span> qq_negative_binomial</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The same function can be reused because the team name is supplied as an argument rather than written directly into the function.</p>
+<p>The negative binomial model should provide the better overall fit. Its log-likelihood is larger and its Q–Q plot should display less systematic departure.</p>
+<p>Because count data contain repeated integer values, their Q–Q plots will naturally appear stepped. Look for the overall pattern rather than expecting every point to lie perfectly on the line.</p>
 </div>
 </div>
 </div>
@@ -1070,7 +1101,12 @@ function fullscreenCafeApp() {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In one or two sentences, explain what a maximum likelihood estimate represents in this example.</p>
+<p>In two or three sentences, recommend:</p>
+<ol type="1">
+<li>a probability model for patient waiting times; and</li>
+<li>a probability model for the number of tests ordered.</li>
+</ol>
+<p>Support each recommendation using the fitted log-likelihood and Q–Q plot.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1083,59 +1119,15 @@ function fullscreenCafeApp() {
 </div>
 <div id="callout-17" class="callout-17-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The maximum likelihood estimate is the proposed team strength that makes the observed sequence of wins and losses most likely under the assumed probability model.</p>
-<p>It is an estimate based on the observed data and may differ from the strength originally used by the simulator.</p>
+<p>A gamma distribution is a suitable model for patient waiting times because it has a relatively large fitted log-likelihood and its Q–Q plot follows the reference line reasonably closely. A negative binomial distribution is suitable for the number of tests because it fits the overdispersed counts better than Poisson according to both its log-likelihood and Q–Q plot.</p>
+<p>These models are the strongest choices among those considered; the diagnostics do not prove that either is the true data-generating distribution.</p>
 </div>
 </div>
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="homework" class="level2">
-<h2 class="anchored" data-anchor-id="homework">Homework</h2>
-<section id="question-1-1" class="level3">
-<h3 class="anchored" data-anchor-id="question-1-1">Question 1</h3>
-<p>The tutorial used the following probability model:</p>
-<p><span class="math display">\[P(\text{Team A wins}) = \frac{\text{Strength}_A} {\text{Strength}\_A+\text{Strength}\_B}\]</span></p>
-<p>Develop a different method for converting two team strengths into a probability.</p>
-<p>Your method must:</p>
-<ul>
-<li>return a value between 0 and 1;</li>
-<li>give a probability of 0.5 when the two teams have equal strengths;</li>
-<li>give the stronger team a probability greater than 0.5.</li>
-</ul>
-<p>Write your method as an R function.</p>
-</section>
-<section id="question-2-1" class="level3">
-<h3 class="anchored" data-anchor-id="question-2-1">Question 2</h3>
-<p>Modify <code>calculate_loglikelihood()</code> so that it uses your probability function from Question 1.</p>
-<p>Use the modified function to estimate Australia’s strength.</p>
-</section>
-<section id="question-3-1" class="level3">
-<h3 class="anchored" data-anchor-id="question-3-1">Question 3</h3>
-<p>Plot Australia’s original and modified log-likelihood functions on the same graph.</p>
-<p>Compare:</p>
-<ul>
-<li>the location of the maximum;</li>
-<li>the shape of the curves;</li>
-<li>how strongly each model distinguishes between different strength values.</li>
-</ul>
-</section>
-<section id="question-4-1" class="level3">
-<h3 class="anchored" data-anchor-id="question-4-1">Question 4</h3>
-<p>Add at least four additional matches for Australia to the <code>matches</code> dataframe.</p>
-<p>Recalculate and plot the log-likelihood function.</p>
-<p>Does the curve become more sharply peaked? Explain why adding observations may affect the amount of information available about the parameter.</p>
-</section>
-<section id="question-5-1" class="level3">
-<h3 class="anchored" data-anchor-id="question-5-1">Question 5</h3>
-<p>The current function assumes that each match outcome is independent.</p>
-<p>Explain what this assumption means in the World Cup example. Identify one reason why match outcomes might not be completely independent in practice.</p>
 
 
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1765,6 +1757,9 @@ window.onload = function() {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./week09.html" class="pagination-link" aria-label="Week 9">
+        <span class="nav-page-text"><span class="chapter-title">Week 9</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

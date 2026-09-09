@@ -1,6 +1,9 @@
 ---
 title: "Week 8"
 format: html
+execute:
+  warning: false
+  message: false
 ---
 
 ```{r}
@@ -10,564 +13,602 @@ library(tinytex)
 library(tidyverse)
 ```
 
-# Introduction
-
-In this tutorial we will investigate **likelihood** using a simulated FIFA World Cup. The interactive simulator is available below. Your tutor will explain to you how to use it.
+In this tutorial we will begin by investigating **likelihood** and **fitting models** using the app below. Your tutor will explain to you how to use it.
 
 ```{=html}
-<div class="app-frame-container" id="cafe-app-container">
-
-  <div class="app-frame-toolbar">
-    <button type="button" onclick="minimiseCafeApp()" title="Minimise">−</button>
-    <button type="button" onclick="maximiseCafeApp()" title="Maximise">□</button>
-    <button type="button" onclick="fullscreenCafeApp()" title="Fullscreen">⛶</button>
-  </div>
-
+<div style="width: 100%; height: 760px;">
   <iframe
-    id="cafe-app-frame"
-    src="interactive/fifa.html"
-    width="100%"
-    height="620"
-    style="border: none;"
+    src="interactive/model-speed-dating.html"
+    title="MLE Matchmaker"
+    style="width: 100%; height: 100%; border: none; border-radius: 12px;"
+    loading="lazy"
     allowfullscreen>
   </iframe>
-
 </div>
-
-<style>
-.app-frame-container {
-  width: 100%;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  overflow: hidden;
-  background: white;
-}
-
-.app-frame-toolbar {
-  display: flex;
-  justify-content: flex-end;
-  gap: 6px;
-  padding: 6px;
-  background: #f3f4f6;
-  border-bottom: 1px solid #d1d5db;
-}
-
-.app-frame-toolbar button {
-  border: 1px solid #9ca3af;
-  border-radius: 6px;
-  padding: 5px 10px;
-  background: white;
-  cursor: pointer;
-}
-
-.app-frame-container.maximised iframe {
-  height: 90vh;
-}
-
-.app-frame-container.minimised iframe {
-  display: none;
-}
-
-.app-frame-container:fullscreen {
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  height: 100vh;
-  border: none;
-  border-radius: 0;
-}
-
-.app-frame-container:fullscreen iframe {
-  flex: 1;
-  width: 100%;
-  height: 100%;
-}
-</style>
-
-<script>
-function minimiseCafeApp() {
-  const container = document.getElementById("cafe-app-container");
-
-  container.classList.toggle("minimised");
-  container.classList.remove("maximised");
-}
-
-function maximiseCafeApp() {
-  const container = document.getElementById("cafe-app-container");
-
-  container.classList.toggle("maximised");
-  container.classList.remove("minimised");
-}
-
-function fullscreenCafeApp() {
-  const container = document.getElementById("cafe-app-container");
-
-  container.classList.remove("minimised");
-
-  if (!document.fullscreenElement) {
-    container.requestFullscreen();
-  } else {
-    document.exitFullscreen();
-  }
-}
-</script>
 ```
 
-The simulator assigns every team a **strength** between 0 and 100. Stronger teams are more likely to win matches. This is based upon a few different sources (such as SOFAScore, FOTMOB, etc.). Rather than predicting the tournament from the strengths, we will use the observed tournament results to determine **which strength value is most supported by the data**.
+# Introduction
 
-For simplicity (see Homework for more sophisticated models), we will assume that the probability Team 1 wins is
+In the opening activity, you selected probability distributions and adjusted their parameters until they appeared to fit the observed data. You were informally searching for the combination of model and parameter values that made the data most likely.
 
-$$ P(\text{Team 1 wins})=\frac{\text{Strength}_1}{\text{Strength}_1+\text{Strength}_2} $$
+In this tutorial, R will perform that search for us. We will use:
 
-## Tasks
+- `MASS::fitdistr()` to obtain maximum likelihood estimates;
+- the fitted log-likelihood to compare candidate models; and
+- Q–Q plots to investigate how well each fitted distribution describes the data.
 
-### Part 1: Writing the likelihood function
+# Scenario
+
+A hospital is investigating patient activity in its emergency department. For each of 200 patients, two variables were recorded:
+
+- `waiting_time`: the number of minutes before the patient was seen;
+- `tests_ordered`: the number of diagnostic tests ordered for the patient.
+
+The hospital wants to identify probability models that adequately describe these variables. Appropriate models could later be used for simulation, planning and estimating the probability of unusually long waits or unusually large numbers of tests.
+
+Download the data below:
+
+<center>
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(downloadthis)
+
+download_file(
+  path = "data/emergency.csv",
+  button_label = "emergency",
+  button_type = 'success'
+)
+```
+
+</center>
+
+<br>
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+emergency_data <- read.csv("data/emergency.csv")
+```
+
+
+# Tasks
 
 :::: callout-note
-#### Question 1
+## Question 1: EDA
 
-Write a function called `calculate_loglikelihood()`.
+Use `glimpse()` and `summary()` to inspect `emergency_data`. Then create:
 
-The function should have three inputs:
+1. a histogram of `waiting_time`; and
+2. a bar chart of `tests_ordered`.
 
--   `team_name`: the name of the team being evaluated;
--   `strength`: a proposed strength for that team;
--   `data`: the match dataset, with `matches` as the default.
+What features of each variable will be important when choosing a probability model?
 
-Within the function:
-
-1.  Keep only matches involving the selected team.
-2.  Calculate the probability that the selected team wins.
-3.  Use the probability of the outcome that was actually observed.
-4.  Calculate the sum of the log probabilities.
-
-Complete the code below.
-
-```{r}
-calculate_loglikelihood <- function(team_name,
-                                    strength,
-                                    data = matches) {
-
-  data |>
-    filter(team == ___) |>
-    mutate(
-      p_team_wins =
-        ___ / (___ + opponent_strength),
-
-      observed_probability =
-        if_else(
-          winner == ___,
-          ___,
-          ___
-        )
-    ) |>
-    summarise(
-      log_likelihood =
-        sum(log(___))
-    ) |>
-    pull(___)
-}
+```{r, eval=FALSE}
+glimpse(___)
+summary(___)
 ```
+
+```{r, eval=FALSE}
+# Note: adding after_stat() allows us to visualise the densities
+ggplot(emergency_data, aes(x = ___)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 25)
+```
+
+```{r, eval=FALSE}
+ggplot(emergency_data, aes(x = factor(___))) +
+  geom_bar()
+```
+
 
 ::: {.callout-important collapse="true"}
-#### Click for solution
+## Click for solution
 
 ```{r}
-calculate_loglikelihood <- function(team_name,
-                                    strength,
-                                    data = matches) {
-
-  data |>
-    filter(team == team_name) |>
-    mutate(
-      p_team_wins =
-        strength / (strength + opponent_strength),
-
-      observed_probability =
-        if_else(
-          winner == team_name,
-          p_team_wins,
-          1 - p_team_wins
-        )
-    ) |>
-    summarise(
-      log_likelihood =
-        sum(log(observed_probability))
-    ) |>
-    pull(log_likelihood)
-}
+glimpse(emergency_data)
+summary(emergency_data)
 ```
 
-The function returns the log-likelihood of the observed results for a proposed team strength.
-:::
-::::
-
-### Part 2: Comparing proposed strengths
-
-:::: callout-note
-#### Question 2
-
-Use `calculate_loglikelihood()` to calculate Australia's log-likelihood when its proposed strength is:
-
--   40
--   70
--   90
-
 ```{r}
-calculate_loglikelihood(
-  team_name = ___,
-  strength = ___
-)
-
-calculate_loglikelihood(
-  team_name = ___,
-  strength = ___
-)
-
-calculate_loglikelihood(
-  team_name = ___,
-  strength = ___
-)
-```
-
-Which of the three proposed strengths is most strongly supported by Australia's observed results?
-
-::: {.callout-important collapse="true"}
-#### Click for solution
-
-```{r}
-calculate_loglikelihood(
-  team_name = "Australia",
-  strength = 40
-)
-
-calculate_loglikelihood(
-  team_name = "Australia",
-  strength = 70
-)
-
-calculate_loglikelihood(
-  team_name = "Australia",
-  strength = 90
-)
-```
-
-The proposed strength with the **largest** log-likelihood is most strongly supported by the observed data. Because log-likelihood values are usually negative, the value closest to zero is the largest.
-:::
-::::
-
-:::: callout-note
-#### Question 3
-
-Create a dataframe called `Australia_likelihood` containing the log-likelihood for every candidate strength from 1 to 100.
-
-```{r}
-Australia_likelihood <-
-  candidate_strengths |>
-  mutate(
-    log_likelihood =
-      calculate_loglikelihood(
-        team_name = ___,
-        strength = ___
-      )
+ggplot(emergency_data, aes(x = waiting_time)) +
+  geom_histogram(
+    aes(y = after_stat(density))
   )
-
-Australia_likelihood
 ```
-
-::: {.callout-important collapse="true"}
-#### Click for solution
 
 ```{r}
-Australia_likelihood <-
-  candidate_strengths |>
-  mutate(
-    log_likelihood =
-      calculate_loglikelihood(
-        team_name = "Australia",
-        strength = strength
-      )
-  )
-
-Australia_likelihood
+ggplot(emergency_data, aes(x = factor(tests_ordered))) +
+  geom_bar()
 ```
 
-Each row now represents one proposed value of Australia's strength and the corresponding log-likelihood.
-:::
-::::
 
-### Part 3: Finding the maximum likelihood estimate
-
-:::: callout-note
-#### Question 4
-
-Display the five proposed strengths with the largest log-likelihood.
-
-```{r}
-Australia_likelihood |>
-  arrange(___(___)) |>
-  slice(___)
-```
-
-::: {.callout-important collapse="true"}
-#### Click for solution
-
-```{r}
-Australia_likelihood |>
-  arrange(desc(log_likelihood)) |>
-  slice(1:5)
-```
+`waiting_time` is positive, continuous and right-skewed. `tests_ordered` contains non-negative integer counts and is also right-skewed. These features help determine which distributions are plausible.
 :::
 ::::
 
 :::: callout-note
-#### Question 5
+## Question 2: Fit models to waiting times
 
-Find the **maximum likelihood estimate** of Australia's strength using `filter()`.
+Fit a normal distribution to `waiting_time` using `fitdistr()`. Save the result as `waiting_normal` and print it.
 
-```{r}
-Australia_mle <-
-  Australia_likelihood |>
-  filter(
-    log_likelihood ==
-      ___(___)
-  )
+```{r, eval=FALSE}
+library(MASS)
+waiting_normal <- fitdistr(
+  emergency_data$___,
+  densfun = "___"
+)
 
-Australia_mle
+waiting_normal
 ```
+
+Identify the maximum likelihood estimates of the mean and standard deviation.
 
 ::: {.callout-important collapse="true"}
-#### Click for solution
+## Click for solution
 
 ```{r}
-Australia_mle <-
-  Australia_likelihood |>
-  filter(
-    log_likelihood ==
-      max(log_likelihood)
-  )
+library(MASS)
+waiting_normal <- fitdistr(
+  emergency_data$waiting_time,
+  densfun = "normal"
+)
 
-Australia_mle
+waiting_normal
 ```
 
-The maximum likelihood estimate is the proposed strength that produces the largest log-likelihood.
+The values under `mean` and `sd` are the maximum likelihood estimates. They are the parameter values that maximise the normal model's likelihood for the observed waiting times.
 :::
 ::::
 
-### Part 4: Visualising the likelihood function
-
 :::: callout-note
-#### Question 6
+## Question 3
 
-Create a line plot of Australia's log-likelihood function.
+Fit exponential, gamma, Weibull and log-normal distributions to `waiting_time`.
+
+```{r, eval=FALSE}
+waiting_exponential <- fitdistr(
+  emergency_data$waiting_time,
+  densfun = "___"
+)
+
+waiting_gamma <- fitdistr(
+  emergency_data$waiting_time,
+  densfun = "___"
+)
+
+waiting_weibull <- fitdistr(
+  emergency_data$waiting_time,
+  densfun = "___"
+)
+
+waiting_lognormal <- fitdistr(
+  emergency_data$waiting_time,
+  densfun = "___"
+)
+```
+
+Print each fitted model and identify its maximum likelihood estimates.
+
+::: {.callout-important collapse="true"}
+## Click for solution
 
 ```{r}
-Australia_likelihood |>
-  ggplot(
-    aes(
-      x = ___,
-      y = ___
-    )
+waiting_exponential <- fitdistr(
+  emergency_data$waiting_time,
+  densfun = "exponential"
+)
+
+waiting_gamma <- fitdistr(
+  emergency_data$waiting_time,
+  densfun = "gamma"
+)
+
+waiting_weibull <- fitdistr(
+  emergency_data$waiting_time,
+  densfun = "weibull"
+)
+
+waiting_lognormal <- fitdistr(
+  emergency_data$waiting_time,
+  densfun = "lognormal"
+)
+
+waiting_exponential
+waiting_gamma
+waiting_weibull
+waiting_lognormal
+```
+
+`fitdistr()` automatically selects the parameter values that maximise the likelihood for each candidate distribution.
+:::
+::::
+
+:::: callout-note
+## Question 4: Compare fitted log-likelihoods
+
+The fitted log-likelihood can be extracted using `$loglik`.
+
+Complete the code to create a comparison table.
+
+```{r}
+waiting_comparison <- tibble(
+  model = c(
+    "Normal",
+    "Exponential",
+    "Gamma",
+    "Weibull",
+    "Log-normal"
+  ),
+  log_likelihood = c(
+    waiting_normal$___,
+    waiting_exponential$___,
+    waiting_gamma$___,
+    waiting_weibull$___,
+    waiting_lognormal$___
+  )
+) |>
+  arrange(desc(log_likelihood))
+
+waiting_comparison
+```
+
+Which fitted model has the largest log-likelihood?
+
+::: {.callout-important collapse="true"}
+## Click for solution
+
+```{r}
+waiting_comparison <- tibble(
+  model = c(
+    "Normal",
+    "Exponential",
+    "Gamma",
+    "Weibull",
+    "Log-normal"
+  ),
+  log_likelihood = c(
+    waiting_normal$loglik,
+    waiting_exponential$loglik,
+    waiting_gamma$loglik,
+    waiting_weibull$loglik,
+    waiting_lognormal$loglik
+  )
+) |>
+  arrange(desc(log_likelihood))
+
+waiting_comparison
+```
+
+The model at the top of the table has the largest maximised log-likelihood. A larger value means that the fitted model assigns greater likelihood to the observed data.
+
+The log-likelihood should not be the only evidence used to assess a model. We will also inspect the fitted shape and Q–Q plots.
+:::
+::::
+
+:::: callout-note
+## Question 5
+
+`ggplot2` provides two functions for constructing Q–Q plots:
+
+- `stat_qq()` adds the observed points;
+- `stat_qq_line()` adds the reference line.
+
+For distributions other than the standard normal distribution, we provide:
+
+- the relevant quantile function using `distribution`; and
+- the fitted parameters using `dparams = as.list(fit$estimate)`.
+
+The required quantile functions are:
+
+| Distribution | Quantile function |
+|---|---|
+| Normal | `qnorm` |
+| Exponential | `qexp` |
+| Gamma | `qgamma` |
+| Weibull | `qweibull` |
+| Log-normal | `qlnorm` |
+| Poisson | `qpois` |
+| Negative binomial | `qnbinom` |
+
+Create Q–Q plots for the fitted normal and gamma models.
+
+```{r, eval=FALSE}
+ggplot(emergency_data, aes(sample = waiting_time)) +
+  stat_qq(
+    distribution = ___,
+    dparams = as.list(___$estimate)
   ) +
-  geom___() +
+  stat_qq_line(
+    distribution = ___,
+    dparams = as.list(___$estimate)
+  )
+
+ggplot(emergency_data, aes(sample = waiting_time)) +
+  stat_qq(
+    distribution = ___,
+    dparams = as.list(___$estimate)
+  ) +
+  stat_qq_line(
+    distribution = ___,
+    dparams = as.list(___$estimate)
+  )
+```
+
+Which model produces points that follow the reference line more closely?
+
+::: {.callout-important collapse="true"}
+## Click for solution
+
+```{r}
+ggplot(emergency_data, aes(sample = waiting_time)) +
+  stat_qq(
+    distribution = qnorm,
+    dparams = as.list(waiting_normal$estimate)
+  ) +
+  stat_qq_line(
+    distribution = qnorm,
+    dparams = as.list(waiting_normal$estimate)
+  )
+
+ggplot(emergency_data, aes(sample = waiting_time)) +
+  stat_qq(
+    distribution = qgamma,
+    dparams = as.list(waiting_gamma$estimate)
+  ) +
+  stat_qq_line(
+    distribution = qgamma,
+    dparams = as.list(waiting_gamma$estimate)
+  )
+```
+
+The gamma Q–Q plot should follow the reference line more closely. Systematic curvature in the normal Q–Q plot indicates that the normal distribution does not adequately capture the right-skewed waiting times.
+:::
+::::
+
+:::: callout-note
+## Question 6
+
+Create Q–Q plots for the exponential, gamma, Weibull and log-normal models. Use `patchwork` to display them in a two-by-two arrangement.
+
+```{r}
+library(patchwork)
+
+qq_exponential <-
+  ggplot(emergency_data, aes(sample = waiting_time)) +
+  stat_qq(
+    distribution = ___,
+    dparams = as.list(___$estimate)
+  ) +
+  stat_qq_line(
+    distribution = ___,
+    dparams = as.list(___$estimate)
+  ) +
+  labs(title = "Exponential")
+
+# Repeat for the gamma, Weibull and log-normal models.
+
+qq_exponential + qq_gamma + qq_weibull + qq_lognormal
+```
+
+Which model would you select for `waiting_time`? Refer to both the log-likelihood comparison and Q–Q plots.
+
+::: {.callout-important collapse="true"}
+## Click for solution
+
+```{r}
+library(patchwork)
+
+qq_exponential <-
+  ggplot(emergency_data, aes(sample = waiting_time)) +
+  stat_qq(
+    distribution = qexp,
+    dparams = as.list(waiting_exponential$estimate)
+  ) +
+  stat_qq_line(
+    distribution = qexp,
+    dparams = as.list(waiting_exponential$estimate)
+  ) +
+  labs(title = "Exponential")
+
+qq_gamma <-
+  ggplot(emergency_data, aes(sample = waiting_time)) +
+  stat_qq(
+    distribution = qgamma,
+    dparams = as.list(waiting_gamma$estimate)
+  ) +
+  stat_qq_line(
+    distribution = qgamma,
+    dparams = as.list(waiting_gamma$estimate)
+  ) +
+  labs(title = "Gamma")
+
+qq_weibull <-
+  ggplot(emergency_data, aes(sample = waiting_time)) +
+  stat_qq(
+    distribution = qweibull,
+    dparams = as.list(waiting_weibull$estimate)
+  ) +
+  stat_qq_line(
+    distribution = qweibull,
+    dparams = as.list(waiting_weibull$estimate)
+  ) +
+  labs(title = "Weibull")
+
+qq_lognormal <-
+  ggplot(emergency_data, aes(sample = waiting_time)) +
+  stat_qq(
+    distribution = qlnorm,
+    dparams = as.list(waiting_lognormal$estimate)
+  ) +
+  stat_qq_line(
+    distribution = qlnorm,
+    dparams = as.list(waiting_lognormal$estimate)
+  ) +
+  labs(title = "Log-normal")
+
+qq_exponential + qq_gamma + qq_weibull + qq_lognormal
+```
+
+Gamma should provide a strong overall fit. It should have one of the largest log-likelihoods and a Q–Q plot that remains close to the reference line. Weibull may also appear plausible, so conclusions should be based on the observed evidence rather than requiring a perfectly unambiguous answer.
+:::
+::::
+
+# Homework
+
+Repeat the above for the discrete variable `tests_ordered`.
+
+:::: callout-note
+## Question 7
+
+Fit Poisson and negative binomial distributions to `tests_ordered`.
+
+```{r}
+tests_poisson <- fitdistr(
+  emergency_data$tests_ordered,
+  densfun = "___"
+)
+
+tests_negative_binomial <- fitdistr(
+  emergency_data$tests_ordered,
+  densfun = "___"
+)
+
+tests_poisson
+tests_negative_binomial
+```
+
+Compare their fitted log-likelihoods. Which model is more strongly supported?
+
+::: {.callout-important collapse="true"}
+## Click for solution
+
+```{r}
+tests_poisson <- fitdistr(
+  emergency_data$tests_ordered,
+  densfun = "Poisson"
+)
+
+tests_negative_binomial <- fitdistr(
+  emergency_data$tests_ordered,
+  densfun = "negative binomial"
+)
+
+tests_poisson
+tests_negative_binomial
+
+tibble(
+  model = c("Poisson", "Negative binomial"),
+  log_likelihood = c(
+    tests_poisson$loglik,
+    tests_negative_binomial$loglik
+  )
+) |>
+  arrange(desc(log_likelihood))
+```
+
+The negative binomial model should have the larger log-likelihood because the simulated counts contain more variability than a Poisson model can accommodate.
+:::
+::::
+
+:::: callout-note
+## Question 8
+
+Create Q–Q plots for the Poisson and negative binomial models.
+
+```{r}
+qq_poisson <-
+  ggplot(emergency_data, aes(sample = tests_ordered)) +
+  stat_qq(
+    distribution = ___,
+    dparams = as.list(___$estimate)
+  ) +
+  stat_qq_line(
+    distribution = ___,
+    dparams = as.list(___$estimate)
+  ) +
+  labs(title = "Poisson")
+
+qq_negative_binomial <-
+  ggplot(emergency_data, aes(sample = tests_ordered)) +
+  stat_qq(
+    distribution = ___,
+    dparams = as.list(___$estimate)
+  ) +
+  stat_qq_line(
+    distribution = ___,
+    dparams = as.list(___$estimate)
+  ) +
+  labs(title = "Negative binomial")
+
+qq_poisson + qq_negative_binomial
+```
+
+Which model provides the better overall fit?
+
+::: {.callout-important collapse="true"}
+## Click for solution
+
+```{r}
+qq_poisson <-
+  ggplot(emergency_data, aes(sample = tests_ordered)) +
+  stat_qq(
+    distribution = qpois,
+    dparams = as.list(tests_poisson$estimate)
+  ) +
+  stat_qq_line(
+    distribution = qpois,
+    dparams = as.list(tests_poisson$estimate)
+  ) +
   labs(
-    x = "Proposed strength",
-    y = "Log-likelihood"
+    title = "Poisson",
+    x = "Theoretical quantiles",
+    y = "Observed quantiles"
   )
-```
 
-Describe the shape of the graph and identify approximately where it reaches its maximum.
-
-::: {.callout-important collapse="true"}
-#### Click for solution
-
-```{r}
-Australia_likelihood |>
-  ggplot(
-    aes(
-      x = strength,
-      y = log_likelihood
-    )
+qq_negative_binomial <-
+  ggplot(emergency_data, aes(sample = tests_ordered)) +
+  stat_qq(
+    distribution = qnbinom,
+    dparams = as.list(tests_negative_binomial$estimate)
   ) +
-  geom_line() +
+  stat_qq_line(
+    distribution = qnbinom,
+    dparams = as.list(tests_negative_binomial$estimate)
+  ) +
   labs(
-    x = "Proposed strength",
-    y = "Log-likelihood"
+    title = "Negative binomial",
+    x = "Theoretical quantiles",
+    y = "Observed quantiles"
   )
+
+qq_poisson + qq_negative_binomial
 ```
 
-The maximum of the curve corresponds to the maximum likelihood estimate.
+The negative binomial model should provide the better overall fit. Its log-likelihood is larger and its Q–Q plot should display less systematic departure.
+
+Because count data contain repeated integer values, their Q–Q plots will naturally appear stepped. Look for the overall pattern rather than expecting every point to lie perfectly on the line.
 :::
 ::::
 
 :::: callout-note
-#### Question 7
+## Question 9
 
-Add a point showing the maximum likelihood estimate to the graph.
+In two or three sentences, recommend:
 
-```{r}
-Australia_likelihood |>
-  ggplot(
-    aes(
-      x = strength,
-      y = log_likelihood
-    )
-  ) +
-  geom_line() +
-  geom_point(
-    data = ___,
-    size = 3
-  ) +
-  labs(
-    x = "Proposed strength",
-    y = "Log-likelihood"
-  )
-```
+1. a probability model for patient waiting times; and
+2. a probability model for the number of tests ordered.
+
+Support each recommendation using the fitted log-likelihood and Q–Q plot.
 
 ::: {.callout-important collapse="true"}
-#### Click for solution
+## Click for solution
 
-```{r}
-Australia_likelihood |>
-  ggplot(
-    aes(
-      x = strength,
-      y = log_likelihood
-    )
-  ) +
-  geom_line() +
-  geom_point(
-    data = Australia_mle,
-    size = 3
-  ) +
-  labs(
-    x = "Proposed strength",
-    y = "Log-likelihood"
-  )
-```
+A gamma distribution is a suitable model for patient waiting times because it has a relatively large fitted log-likelihood and its Q–Q plot follows the reference line reasonably closely. A negative binomial distribution is suitable for the number of tests because it fits the overdispersed counts better than Poisson according to both its log-likelihood and Q–Q plot.
+
+These models are the strongest choices among those considered; the diagnostics do not prove that either is the true data-generating distribution.
 :::
 ::::
 
-### Part 5: Applying the function to another team
 
-:::: callout-note
-#### Question 8
 
-Use the same function to estimate England's strength.
 
-First, create a dataframe containing the log-likelihood for each candidate strength.
 
-```{r}
-england_likelihood <-
-  candidate_strengths |>
-  mutate(
-    log_likelihood =
-      calculate_loglikelihood(
-        team_name = ___,
-        strength = ___
-      )
-  )
-```
 
-Then find England's maximum likelihood estimate.
-
-```{r}
-england_mle <-
-  england_likelihood |>
-  filter(
-    log_likelihood ==
-      max(___)
-  )
-
-england_mle
-```
-
-::: {.callout-important collapse="true"}
-#### Click for solution
-
-```{r}
-england_likelihood <-
-  candidate_strengths |>
-  mutate(
-    log_likelihood =
-      calculate_loglikelihood(
-        team_name = "England",
-        strength = strength
-      )
-  )
-
-england_mle <-
-  england_likelihood |>
-  filter(
-    log_likelihood ==
-      max(log_likelihood)
-  )
-
-england_mle
-```
-
-The same function can be reused because the team name is supplied as an argument rather than written directly into the function.
-:::
-::::
-
-:::: callout-note
-#### Question 9
-
-In one or two sentences, explain what a maximum likelihood estimate represents in this example.
-
-::: {.callout-important collapse="true"}
-#### Click for solution
-
-The maximum likelihood estimate is the proposed team strength that makes the observed sequence of wins and losses most likely under the assumed probability model.
-
-It is an estimate based on the observed data and may differ from the strength originally used by the simulator.
-:::
-::::
-
-## Homework
-
-### Question 1
-
-The tutorial used the following probability model:
-
-$$P(\text{Team A wins}) = \frac{\text{Strength}_A} {\text{Strength}\_A+\text{Strength}\_B}$$
-
-Develop a different method for converting two team strengths into a probability.
-
-Your method must:
-
--   return a value between 0 and 1;
--   give a probability of 0.5 when the two teams have equal strengths;
--   give the stronger team a probability greater than 0.5.
-
-Write your method as an R function.
-
-### Question 2
-
-Modify `calculate_loglikelihood()` so that it uses your probability function from Question 1.
-
-Use the modified function to estimate Australia's strength.
-
-### Question 3
-
-Plot Australia's original and modified log-likelihood functions on the same graph.
-
-Compare:
-
--   the location of the maximum;
--   the shape of the curves;
--   how strongly each model distinguishes between different strength values.
-
-### Question 4
-
-Add at least four additional matches for Australia to the `matches` dataframe.
-
-Recalculate and plot the log-likelihood function.
-
-Does the curve become more sharply peaked? Explain why adding observations may affect the amount of information available about the parameter.
-
-### Question 5
-
-The current function assumes that each match outcome is independent.
-
-Explain what this assumption means in the World Cup example. Identify one reason why match outcomes might not be completely independent in practice.
