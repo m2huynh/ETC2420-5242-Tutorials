@@ -50,7 +50,7 @@ Download the data below:
 
 <center>
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
 library(downloadthis)
 
 download_file(
@@ -523,8 +523,7 @@ qq_poisson <-
   stat_qq_line(
     distribution = ___,
     dparams = as.list(___$estimate)
-  ) +
-  labs(title = "Poisson")
+  )
 
 qq_negative_binomial <-
   ggplot(emergency_data, aes(sample = tests_ordered)) +
@@ -535,8 +534,7 @@ qq_negative_binomial <-
   stat_qq_line(
     distribution = ___,
     dparams = as.list(___$estimate)
-  ) +
-  labs(title = "Negative binomial")
+  )
 
 qq_poisson + qq_negative_binomial
 ```
@@ -556,11 +554,6 @@ qq_poisson <-
   stat_qq_line(
     distribution = qpois,
     dparams = as.list(tests_poisson$estimate)
-  ) +
-  labs(
-    title = "Poisson",
-    x = "Theoretical quantiles",
-    y = "Observed quantiles"
   )
 
 qq_negative_binomial <-
@@ -572,11 +565,6 @@ qq_negative_binomial <-
   stat_qq_line(
     distribution = qnbinom,
     dparams = as.list(tests_negative_binomial$estimate)
-  ) +
-  labs(
-    title = "Negative binomial",
-    x = "Theoretical quantiles",
-    y = "Observed quantiles"
   )
 
 qq_poisson + qq_negative_binomial

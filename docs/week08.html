@@ -113,6 +113,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/font-awesome-6.7.2/js/script.js"></script>
+
 
 
 <link rel="stylesheet" href="styles.css">
@@ -439,6 +441,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The hospital wants to identify probability models that adequately describe these variables. Appropriate models could later be used for simulation, planning and estimating the probability of unusually long waits or unusually large numbers of tests.</p>
 <p>Download the data below:</p>
 <center>
+<div class="cell">
+<div class="cell-output-display">
+<button class="btn btn-success" onclick="
+    async function downloadFile(event) {
+      event.preventDefault();
+      try {
+        const response = await fetch('data:text/csv;base64,IiIsInBhdGllbnRfaWQiLCJ3YWl0aW5nX3RpbWUiLCJ0ZXN0c19vcmRlcmVkIg0KIjEiLDEsMTMuMywxDQoiMiIsMiwzNS4yLDUNCiIzIiwzLDE1LDEwDQoiNCIsNCwyNy42LDENCiI1Iiw1LDE3LjgsMw0KIjYiLDYsNzEuNiwxDQoiNyIsNyw3NC44LDcNCiI4Iiw4LDYwLjQsMA0KIjkiLDksNjAuNyw2DQoiMTAiLDEwLDE4LjcsMQ0KIjExIiwxMSw0NS45LDcNCiIxMiIsMTIsMjkuNCw0DQoiMTMiLDEzLDY1LjUsMQ0KIjE0IiwxNCw1OC42LDANCiIxNSIsMTUsMjQuMiw4DQoiMTYiLDE2LDkuNiwzDQoiMTciLDE3LDQ4LjcsMg0KIjE4IiwxOCwxNy43LDINCiIxOSIsMTksNDAuOCw2DQoiMjAiLDIwLDk3LjYsNw0KIjIxIiwyMSwyOC4zLDQNCiIyMiIsMjIsMzUuOCwyDQoiMjMiLDIzLDQ4LjUsMw0KIjI0IiwyNCw0My4xLDUNCiIyNSIsMjUsMzUuOCwxDQoiMjYiLDI2LDE4LjMsMA0KIjI3IiwyNyw3NC40LDINCiIyOCIsMjgsNzAuMSwwDQoiMjkiLDI5LDY2LjUsMQ0KIjMwIiwzMCwxNy42LDMNCiIzMSIsMzEsNDYuMiwzDQoiMzIiLDMyLDE3LjYsMTANCiIzMyIsMzMsOTMuMywzDQoiMzQiLDM0LDE4LjcsMQ0KIjM1IiwzNSwxMTkuMywxDQoiMzYiLDM2LDI3LjIsNg0KIjM3IiwzNyw1OS41LDINCiIzOCIsMzgsNzQuNSwzDQoiMzkiLDM5LDU0LDYNCiI0MCIsNDAsMTcuNiwyDQoiNDEiLDQxLDc1LjksMw0KIjQyIiw0Miw1NSwxDQoiNDMiLDQzLDEyMC4zLDUNCiI0NCIsNDQsNzQuNiw5DQoiNDUiLDQ1LDYwLjIsNA0KIjQ2Iiw0Niw0NS40LDQNCiI0NyIsNDcsNjEuOCw0DQoiNDgiLDQ4LDgwLjgsMQ0KIjQ5Iiw0OSw2OSwyDQoiNTAiLDUwLDMyLjUsNA0KIjUxIiw1MSw1MC41LDQNCiI1MiIsNTIsMjQuMiwzDQoiNTMiLDUzLDU1LjMsMQ0KIjU0Iiw1NCw5MS43LDMNCiI1NSIsNTUsODMuMiwwDQoiNTYiLDU2LDY3LjEsMg0KIjU3Iiw1Nyw3Ni4xLDANCiI1OCIsNTgsNjIuMSwxDQoiNTkiLDU5LDQ4LDUNCiI2MCIsNjAsMTguMyw4DQoiNjEiLDYxLDU0LjksOA0KIjYyIiw2Miw4MC43LDYNCiI2MyIsNjMsMTY3LjIsOA0KIjY0Iiw2NCwxNC4xLDANCiI2NSIsNjUsNzguOCwxDQoiNjYiLDY2LDc4LDYNCiI2NyIsNjcsNzIuOCwyDQoiNjgiLDY4LDE0LjIsMQ0KIjY5Iiw2OSwzMy44LDENCiI3MCIsNzAsMzguOSw4DQoiNzEiLDcxLDE2LjEsNg0KIjcyIiw3Miw1Mi4zLDINCiI3MyIsNzMsMTQuOCw2DQoiNzQiLDc0LDM3LjIsMw0KIjc1Iiw3NSwyNS40LDENCiI3NiIsNzYsNzAuMiwwDQoiNzciLDc3LDExMC43LDINCiI3OCIsNzgsNDcuMSw2DQoiNzkiLDc5LDM2LjEsMA0KIjgwIiw4MCw0Mi4zLDQNCiI4MSIsODEsNjYuNCwxDQoiODIiLDgyLDYzLjUsNA0KIjgzIiw4Myw4MS40LDMNCiI4NCIsODQsNTMuMSw2DQoiODUiLDg1LDQ0LjEsOQ0KIjg2Iiw4NiwzMS42LDEwDQoiODciLDg3LDI1LDUNCiI4OCIsODgsNDcuMyw5DQoiODkiLDg5LDQ4LjksMw0KIjkwIiw5MCwxMDAuNyw1DQoiOTEiLDkxLDI4LjksMA0KIjkyIiw5MiwxMDAuNiwyDQoiOTMiLDkzLDEyNy43LDExDQoiOTQiLDk0LDc2LjUsMw0KIjk1Iiw5NSwxMy41LDINCiI5NiIsOTYsMTYsMQ0KIjk3Iiw5NywxMC44LDUNCiI5OCIsOTgsMTcuNyw3DQoiOTkiLDk5LDE3LjMsMw0KIjEwMCIsMTAwLDI4LjksNA0KIjEwMSIsMTAxLDI5LjcsNg0KIjEwMiIsMTAyLDY1LjIsNA0KIjEwMyIsMTAzLDE3LjYsMA0KIjEwNCIsMTA0LDgxLjIsOQ0KIjEwNSIsMTA1LDg1LDQNCiIxMDYiLDEwNiw2MS42LDMNCiIxMDciLDEwNywzMy4xLDINCiIxMDgiLDEwOCw1MC4zLDQNCiIxMDkiLDEwOSw1MS44LDYNCiIxMTAiLDExMCwzNy44LDINCiIxMTEiLDExMSwyMCw5DQoiMTEyIiwxMTIsMTguMyw4DQoiMTEzIiwxMTMsNDcsMQ0KIjExNCIsMTE0LDM0LjgsMQ0KIjExNSIsMTE1LDUzLjgsNQ0KIjExNiIsMTE2LDE2LjYsMQ0KIjExNyIsMTE3LDQ1LjksMQ0KIjExOCIsMTE4LDYyLjYsNw0KIjExOSIsMTE5LDQ0LjksNA0KIjEyMCIsMTIwLDQ0LjgsMg0KIjEyMSIsMTIxLDQyLjYsOQ0KIjEyMiIsMTIyLDUxLjYsMg0KIjEyMyIsMTIzLDYxLjIsMQ0KIjEyNCIsMTI0LDQwLjEsMw0KIjEyNSIsMTI1LDIwLjUsOA0KIjEyNiIsMTI2LDY1LDINCiIxMjciLDEyNyw3OS4zLDQNCiIxMjgiLDEyOCw1OC4xLDEwDQoiMTI5IiwxMjksMzAuMiwzDQoiMTMwIiwxMzAsNDcuMiwzDQoiMTMxIiwxMzEsNDEuMSw0DQoiMTMyIiwxMzIsMTUuNCwxDQoiMTMzIiwxMzMsNjguOCwwDQoiMTM0IiwxMzQsMjUuMSw0DQoiMTM1IiwxMzUsMjMuNCwzDQoiMTM2IiwxMzYsNDMuMiwyDQoiMTM3IiwxMzcsNjQuOSw1DQoiMTM4IiwxMzgsNTIuNCwxDQoiMTM5IiwxMzksMzMsMA0KIjE0MCIsMTQwLDEzLjgsMTINCiIxNDEiLDE0MSwzMC4yLDUNCiIxNDIiLDE0MiwyMS45LDEzDQoiMTQzIiwxNDMsNjEsMTINCiIxNDQiLDE0NCwxMDguNSwzDQoiMTQ1IiwxNDUsMjkuOCw2DQoiMTQ2IiwxNDYsNjAuMSw5DQoiMTQ3IiwxNDcsMTksMQ0KIjE0OCIsMTQ4LDQ5LDQNCiIxNDkiLDE0OSwzNi4yLDQNCiIxNTAiLDE1MCw1MS45LDENCiIxNTEiLDE1MSwzMSw4DQoiMTUyIiwxNTIsNTMuOSwyDQoiMTUzIiwxNTMsNTQuNSwzDQoiMTU0IiwxNTQsNDIsMw0KIjE1NSIsMTU1LDM0LjIsMQ0KIjE1NiIsMTU2LDM3LjYsMQ0KIjE1NyIsMTU3LDE2LjgsNQ0KIjE1OCIsMTU4LDU3LjgsMTANCiIxNTkiLDE1OSwxNy43LDANCiIxNjAiLDE2MCw2OS4zLDQNCiIxNjEiLDE2MSw0OCwwDQoiMTYyIiwxNjIsMjYuNiw0DQoiMTYzIiwxNjMsMzguMywxDQoiMTY0IiwxNjQsMTUuMiwwDQoiMTY1IiwxNjUsMTcuMiwzDQoiMTY2IiwxNjYsNTcuMSw5DQoiMTY3IiwxNjcsMTEuNCwyDQoiMTY4IiwxNjgsNzcsOA0KIjE2OSIsMTY5LDY2LjUsOA0KIjE3MCIsMTcwLDYuOSwzDQoiMTcxIiwxNzEsMzAsMw0KIjE3MiIsMTcyLDMyLjIsMQ0KIjE3MyIsMTczLDY4LDMNCiIxNzQiLDE3NCw1NC42LDgNCiIxNzUiLDE3NSwyMy41LDMNCiIxNzYiLDE3NiwzNS41LDQNCiIxNzciLDE3NywxMy4xLDANCiIxNzgiLDE3OCwxNCw1DQoiMTc5IiwxNzksNDcuNCw5DQoiMTgwIiwxODAsMTYuNyw0DQoiMTgxIiwxODEsMzcuMSwwDQoiMTgyIiwxODIsMzMuNCwzDQoiMTgzIiwxODMsNDkuMyw5DQoiMTg0IiwxODQsMzAuNyw1DQoiMTg1IiwxODUsMTAuMSwyDQoiMTg2IiwxODYsMjkuNywyDQoiMTg3IiwxODcsNzguMywwDQoiMTg4IiwxODgsMTYuNCw4DQoiMTg5IiwxODksNzcuNiwzDQoiMTkwIiwxOTAsNTYsMg0KIjE5MSIsMTkxLDExMS45LDINCiIxOTIiLDE5MiwzNy44LDANCiIxOTMiLDE5Myw5MS40LDcNCiIxOTQiLDE5NCw2NSwxDQoiMTk1IiwxOTUsNjUuOCw0DQoiMTk2IiwxOTYsNDcuMywxDQoiMTk3IiwxOTcsMzQuNCw0DQoiMTk4IiwxOTgsNDMsMQ0KIjE5OSIsMTk5LDk4LjIsMQ0KIjIwMCIsMjAwLDE0LjIsNQ0K');
+        if (!response.ok) throw new Error('Network response failed');
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = 'emergency.csv';
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.dispatchEvent(new MouseEvent('click'));
+        document.body.removeChild(a);
+        setTimeout(() => {
+          window.URL.revokeObjectURL(blobUrl);
+        }, 100);
+        return false;
+      } catch (error) {
+        console.error('Download failed:', error);
+        alert('Download failed. Please try again.');
+      }
+    }
+    downloadFile(event);
+  "><i class="fa fa-save"></i> emergency</button>
+</div>
+</div>
 </center>
 <p><br></p>
 </section>
@@ -1019,22 +1051,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> ___,</span>
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(___<span class="sc">$</span>estimate)</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Poisson"</span>)</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>qq_negative_binomial <span class="ot">&lt;-</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">sample =</span> tests_ordered)) <span class="sc">+</span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(</span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> ___,</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(___<span class="sc">$</span>estimate)</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> ___,</span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(___<span class="sc">$</span>estimate)</span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Negative binomial"</span>)</span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>qq_poisson <span class="sc">+</span> qq_negative_binomial</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>qq_negative_binomial <span class="ot">&lt;-</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">sample =</span> tests_ordered)) <span class="sc">+</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> ___,</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(___<span class="sc">$</span>estimate)</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> ___,</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(___<span class="sc">$</span>estimate)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>qq_poisson <span class="sc">+</span> qq_negative_binomial</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Which model provides the better overall fit?</p>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -1059,30 +1089,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qpois,</span>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(tests_poisson<span class="sc">$</span>estimate)</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Poisson"</span>,</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Theoretical quantiles"</span>,</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Observed quantiles"</span></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>qq_negative_binomial <span class="ot">&lt;-</span></span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">sample =</span> tests_ordered)) <span class="sc">+</span></span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(</span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qnbinom,</span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(tests_negative_binomial<span class="sc">$</span>estimate)</span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
-<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qnbinom,</span>
-<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(tests_negative_binomial<span class="sc">$</span>estimate)</span>
-<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Negative binomial"</span>,</span>
-<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Theoretical quantiles"</span>,</span>
-<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Observed quantiles"</span></span>
-<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>qq_poisson <span class="sc">+</span> qq_negative_binomial</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>qq_negative_binomial <span class="ot">&lt;-</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(emergency_data, <span class="fu">aes</span>(<span class="at">sample =</span> tests_ordered)) <span class="sc">+</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qnbinom,</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(tests_negative_binomial<span class="sc">$</span>estimate)</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> qnbinom,</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">dparams =</span> <span class="fu">as.list</span>(tests_negative_binomial<span class="sc">$</span>estimate)</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>qq_poisson <span class="sc">+</span> qq_negative_binomial</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The negative binomial model should provide the better overall fit. Its log-likelihood is larger and its Q–Q plot should display less systematic departure.</p>
 <p>Because count data contain repeated integer values, their Q–Q plots will naturally appear stepped. Look for the overall pattern rather than expecting every point to lie perfectly on the line.</p>
