@@ -1,3 +1,451 @@
 ---
 title: "Week 10"
+Subtitle: "MCMC"
 ---
+
+```{r}
+#| include: false
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, warning = FALSE, message = FALSE)
+library(tinytex)
+library(tidyverse)
+library(gt)
+library(scales)
+library(MCMCpack)
+```
+
+## Introduction
+
+This week we will begin by playing a short sampling game.
+
+-   The screen shows a hidden landscape, covered in fog.
+-   At each step, you propose a move. You are shown the height of the landscape (the density) at your current position and at the proposed position.
+-   You then decide whether to **move** or **stay**.
+-   Every position you occupy, including repeats when you stay, counts as one of your samples.
+-   Your score depends on how well your 30 samples reproduce the true shape of the hidden landscape, not on how high up it you climb.
+
+There are two rounds, each with a different hidden landscape. You also get 3 probes per round, which reveal the exact height of the landscape wherever you click, at a small cost to your score.
+
+```{=html}
+<iframe
+  src="interactive/MCMC.html"
+  width="100%"
+  height="400"
+  style="border: none;"
+></iframe>
+```
+
+Play both rounds. Record your final score.
+
+Once you have played the game, discuss with your tutorial group:
+
+-   Did always moving toward higher density give you a good score? Why or why not?
+-   In round 2, did you find the smaller hump? What helped you find it?
+-   What happened to your histogram in the first few steps, before it had time to "settle"?
+
+This is exactly what a Metropolis sampler does. It proposes a move, compares the (unnormalised) density at the current and proposed points, and moves with a probability based on that ratio. Run for long enough, the collection of visited points looks like a sample from the target distribution, even though the sampler never needed to know the total area under the curve.
+
+<br>
+
+## Tasks
+
+**Note**: Create a Quarto document in your Project folder and save it in your `week 10` folder.
+
+### Part 1: A hand-built sampler for a proportion
+
+Suppose we want the posterior distribution for the probability of heads, $p$, after observing 12 heads in 20 coin flips, using a Uniform(0, 1) prior.
+
+The posterior is proportional to the likelihood, since the prior is flat:
+
+$$
+\pi(p \mid \text{data}) \propto p^{12}(1-p)^{8}.
+$$
+
+`MCMCpack::MCMCmetrop1R()` will draw from this posterior for us. It needs a function that returns the **log** of the (unnormalised) posterior density, because working on the log scale avoids numerical underflow when densities get very small.
+
+:::: callout-note
+#### Question 1
+
+Write the log-posterior function for $p$. Remember to return `-Inf` outside the support of $p$, so the sampler never accepts a move to an impossible value.
+
+Fill in the blanks.
+
+```{r, eval=FALSE}
+log_post_coin <- function(p) {
+  if (p <= 0 || p >= 1) return(___)
+  dbinom(___, size = ___, prob = ___, log = ___)
+}
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+log_post_coin <- function(p) {
+  if (p <= 0 || p >= 1) return(-Inf)
+  dbinom(12, size = 20, prob = p, log = TRUE)
+}
+```
+
+Because the prior is Uniform(0, 1), it contributes a constant (1, or 0 on the log scale) over the support of $p$, so the log-likelihood alone is a valid log-posterior up to a constant. We still need the boundary check, since `dbinom` is only meaningful for `p` between 0 and 1.
+:::
+::::
+
+:::: callout-note
+#### Question 2
+
+Use `MCMCmetrop1R()` to draw 10,000 samples from the posterior, after a burn-in of 1,000. Start the chain at $p = 0.5$.
+
+Fill in the blanks.
+
+```{r, eval=FALSE}
+coin_chain <- MCMCmetrop1R(
+  ___,
+  theta.init = ___,
+  mcmc = ___,
+  burnin = ___,
+  seed = 1
+)
+
+summary(coin_chain)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+coin_chain <- MCMCmetrop1R(
+  log_post_coin,
+  theta.init = 0.5,
+  mcmc = 10000,
+  burnin = 1000,
+  seed = 1
+)
+
+summary(coin_chain)
+```
+
+Two things are printed to the console when this runs. First, a report of the Metropolis acceptance rate. Second, the usual `summary()` output for an `mcmc` object: the posterior mean, standard deviation, and a set of quantiles.
+
+The posterior mean should be close to $12/20 = 0.60$, pulled slightly toward $0.5$ by the small amount of information in the prior relative to a sample of size 20. In fact, since the prior is conjugate here, the exact posterior is $\text{Beta}(13, 9)$, with mean $13/22 \approx 0.591$ and standard deviation $\approx 0.103$. Your simulated summary should be close to these exact values.
+:::
+::::
+
+:::: callout-note
+#### Question 3
+
+`MCMCmetrop1R()` reported an acceptance rate. Extract the chain as a plain vector and calculate this rate directly, as the proportion of iterations where the value changed from the previous one.
+
+Fill in the blanks.
+
+```{r, eval=FALSE}
+coin_vec <- as.numeric(___)
+acceptance_rate <- mean(diff(___) != 0)
+acceptance_rate
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+coin_vec <- as.numeric(coin_chain)
+acceptance_rate <- mean(diff(coin_vec) != 0)
+acceptance_rate
+```
+
+This should match the rate reported by `MCMCmetrop1R()` at around 0.71, or 71%. A rate in the rough range of 20% to 50% is often considered efficient for random-walk Metropolis, though for a single simple parameter like this one, a higher rate is not a problem.
+:::
+::::
+
+:::: callout-note
+#### Question 4
+
+Use the `summary()` function to explore your MCMC output
+
+```{r, eval=FALSE}
+summary(___)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+summary(coin_chain)
+```
+
+:::
+::::
+
+:::: callout-note
+#### Question 5
+
+We'll create a dataset of the output so that we can create some plots. Have two columns `iteration` and `theta`. These should be based on the output above.
+
+```{r, eval=FALSE}
+chain_coin_df <- tibble(
+  iteration = 1:length(___),
+  theta = as.numeric(___)
+)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r, eval=FALSE}
+chain_coin_df <- tibble(
+  iteration = 1:length(coin_chain),
+  theta = as.numeric(coin_chain)
+)
+```
+
+:::
+::::
+
+:::: callout-note
+#### Question 6
+
+Using the `chain_coin_df` from the previous question, create a trace plot.
+
+```{r, eval=FALSE}
+p_trace <- ggplot(___, aes(x = ___, y = ___)) +
+  geom_point(size = 0.1) +
+  geom_line()
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r, eval=FALSE}
+p_trace <- ggplot(chain_coin_df, aes(x = iteration, y = theta)) +
+  geom_point(size = 0.1) +
+  geom_line()
+```
+
+:::
+::::
+
+:::: callout-note
+#### Question 7
+
+Create a density plot of the data
+
+```{r, eval=FALSE}
+p_density <- ggplot(___, aes(x = ___)) +
+  geom___
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r, eval=FALSE}
+p_density <- ggplot(chain_coin_df, aes(x = theta)) +
+  geom_density()
+```
+
+:::
+::::
+
+:::: callout-note
+#### Question 8
+
+Use `patchwork` to place the two plots together
+
+```{r, eval=FALSE}
+library(patchwork)
+
+___ + ___
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r, eval=FALSE}
+p_trace + p_density
+```
+
+:::
+::::
+
+### Part 2: A two-humped posterior, and checking your chain
+
+Round 2 of the warm-up game had a hidden landscape with two humps: a large one and a smaller, easy-to-miss one. This is exactly the shape you get when a parameter has two plausible explanations behind it. Suppose $\theta$, between 0 and 10, represents a quantity that could plausibly come from either of two subgroups: a large subgroup centred around 3, and a smaller subgroup centred around 7.5. As an unnormalised posterior, this is a two-component mixture:
+
+$$
+\pi(\theta \mid \text{data}) \propto 0.72 \times \text{Normal}(\theta; 3, 0.6) + 0.28 \times \text{Normal}(\theta; 7.5, 0.5).
+$$
+
+:::: callout-note
+#### Question 9
+
+Write the log-posterior function for $\theta$, and draw 10,000 samples using `MCMCmetrop1R()`, with a burn-in of 1,000 and `theta.init = 1`, matching the starting position in round 2 of the game.
+
+Fill in the blanks.
+
+```{r, eval=FALSE}
+log_post_two_groups <- function(theta) {
+  if (theta <= 0 || theta >= 10) return(___)
+  log(___ * dnorm(theta, mean = ___, sd = ___) + ___ * dnorm(theta, mean = ___, sd = ___))
+}
+
+two_groups_chain <- MCMCmetrop1R(
+  ___,
+  theta.init = ___,
+  mcmc = 10000,
+  burnin = 1000,
+  seed = 1
+)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+log_post_two_groups <- function(theta) {
+  if (theta <= 0 || theta >= 10) return(-Inf)
+  log(0.72 * dnorm(theta, mean = 3, sd = 0.6) + 0.28 * dnorm(theta, mean = 7.5, sd = 0.5))
+}
+
+two_groups_chain <- MCMCmetrop1R(
+  log_post_two_groups,
+  theta.init = 1,
+  mcmc = 10000,
+  burnin = 1000,
+  seed = 1
+)
+```
+
+:::
+::::
+
+:::: callout-note
+#### Question 10
+
+Use the `summary()` function to explore your MCMC output.
+
+```{r, eval=FALSE}
+summary(___)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+summary(two_groups_chain)
+```
+
+:::
+::::
+
+:::: callout-note
+#### Question 11
+
+We'll create a dataset of the output so that we can create some plots. Have two columns `iteration` and `theta`. These should be based on the output above.
+
+```{r, eval=FALSE}
+chain_two_groups_df <- tibble(
+  iteration = 1:length(___),
+  theta = as.numeric(___)
+)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+chain_two_groups_df <- tibble(
+  iteration = 1:length(two_groups_chain),
+  theta = as.numeric(two_groups_chain)
+)
+```
+:::
+::::
+
+:::: callout-note
+#### Question 12
+
+Using the `chain_two_groups_df` from the previous question, create a trace plot.
+
+```{r, eval=FALSE}
+p_trace <- ggplot(___, aes(x = ___, y = ___)) +
+  geom_point(size = 0.1) +
+  geom_line()
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+p_trace <- ggplot(chain_two_groups_df, aes(x = iteration, y = theta)) +
+  geom_point(size = 0.1) +
+  geom_line()
+
+p_trace
+```
+
+Look for the chain jumping back and forth between a region near 3 and a region near 7.5. That jumping is the sampler moving between the two humps. If your chain only ever visited one hump, that is the multimodal equivalent of a student in the game who never found the second hill: the sampler is not wrong, it just has not been given the chance (or the step size) to discover the other mode.
+:::
+::::
+
+:::: callout-note
+#### Question 13
+
+Create a density plot of the data.
+
+```{r, eval=FALSE}
+p_density <- ggplot(___, aes(x = ___)) +
+  geom___
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+p_density <- ggplot(chain_two_groups_df, aes(x = theta)) +
+  geom_density()
+
+p_density
+```
+
+The density plot should show two bumps, a tall one near 3 and a shorter one near 7.5, mirroring the shape of the fog-covered landscape from round 2 of the warm-up game, now filled in by your samples instead of by probes.
+:::
+::::
+
+:::: callout-note
+#### Question 14
+
+Use `patchwork` to place the two plots together.
+
+```{r, eval=FALSE}
+library(patchwork)
+
+___ + ___
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+library(patchwork)
+
+p_trace + p_density
+```
+
+:::
+::::
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

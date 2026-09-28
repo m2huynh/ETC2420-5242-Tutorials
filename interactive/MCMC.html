@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Be the Metropolis sampler</title>
+<style>
+:root{--bg:#e9eef3;--card:#fff;--ink:#17212b;--mut:#5b6b7a;--acc:#1f7a8c;--warn:#d1495b;--fog:rgba(140,158,176,.6);--line:#cfd8e0;--good:#1a8f5a;--bad:#c93c3c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f151b;--card:#18212a;--ink:#e6edf3;--mut:#98a8b8;--acc:#4fc0d4;--warn:#ff7a8a;--fog:rgba(110,128,146,.55);--line:#2a3743;--good:#4cc38a;--bad:#ef7a7a}}
+:root[data-theme="dark"]{--bg:#0f151b;--card:#18212a;--ink:#e6edf3;--mut:#98a8b8;--acc:#4fc0d4;--warn:#ff7a8a;--fog:rgba(110,128,146,.55);--line:#2a3743;--good:#4cc38a;--bad:#ef7a7a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;max-width:920px;margin:0 auto}
+h1{font-size:1.25rem;margin:0}
+h2{font-size:1.05rem;margin:0 0 4px}
+.wrap{max-width:920px;margin:0 auto;padding:0 16px 24px;display:grid;gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.mut{color:var(--mut);font-size:.9rem;margin:4px 0 0}
+canvas{width:100%;display:block}
+#c{height:280px}#t{height:90px;margin-top:6px}
+.stats{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.9rem}
+.stats span{white-space:nowrap}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+button{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button.p{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.on{outline:2px solid var(--warn)}
+button:disabled{opacity:.45;cursor:default}
+button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
+label{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.95rem}
+input[type=range]{width:min(320px,100%)}
+#info{margin-top:10px;font-size:.95rem;min-height:4.4em}
+.ok{color:var(--good)}.no{color:var(--bad)}
+.note{margin-top:6px;padding:6px 10px;border-left:4px solid var(--warn);background:var(--bg)}
+#toast{font-size:.85rem;color:var(--warn);padding:0 16px;max-width:920px;margin:0 auto;min-height:1.2em}
+#final{display:none}
+ul{margin:6px 0 0;padding-left:20px}
+</style></head><body>
+<header><h1>Be the Metropolis sampler</h1>
+<button id="fs" aria-label="Toggle full screen">Full screen</button></header>
+<div id="toast" role="status"></div>
+<div class="wrap">
+<section class="card"><h2 id="rt"></h2><div id="story"></div>
+<p class="mut">Each step: propose a move, compare the density at your spot and the proposed spot, then decide whether to move or stay. Every position you occupy (repeats included) is a sample. Your score is how well your samples match the hidden distribution's mean and spread, minus the cost of any probes.</p><div class="row" id="startrow"><button class="p" id="start">Start round</button></div></section>
+<section class="card" id="pc"><div class="stats" id="stats"></div>
+<canvas id="c"></canvas><canvas id="t"></canvas></section>
+<section class="card" id="cc">
+<label>Step size <input type="range" id="sl" min="1" max="50" value="10"> <b id="slv"></b></label>
+<div class="row"><button class="p" id="go">Propose a move</button><button class="p" id="mv">Move</button><button class="p" id="st">Stay</button><button id="auto">Auto x5 (coin rule)</button><button id="auto10">Auto x10 (coin rule)</button><button id="jump">Long jump</button><button id="probe">Probe</button><button class="p" id="next">Next round</button></div>
+<div id="info"></div></section>
+<section class="card" id="final"></section>
+</div>
+<script>
+const N=30,NB=25,PAD=14,COST=[3,5,8],$=id=>document.getElementById(id),sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const R=[
+{name:'Round 1: the coin',story:'You flip a coin 20 times and see 12 heads. Where does the probability of heads, p, plausibly lie? Explore p between 0 and 1.',lo:0,hi:1,start:.9,seed:11,jumps:0,f:x=>x<=0||x>=1?0:1e7*Math.pow(x,12)*Math.pow(1-x,8)},
+{name:'Round 2: two subgroups',story:'A survey mixes two subgroups, so the plausible values of θ (between 0 and 10) form two humps. One hump is smaller and easy to miss. You get one long jump: a proposal anywhere in the range.',lo:0,hi:10,start:1,seed:23,jumps:1,f:x=>30*Math.exp(-Math.pow(x-3,2)/.72)+14*Math.exp(-Math.pow(x-7.5,2)/.5)}];
+R.forEach(r=>{const g=rng(r.seed);r.z=[];r.u=[];r.j=[];for(let i=0;i<N;i++){r.z.push(Math.sqrt(-2*Math.log(1-g()))*Math.cos(6.2832*g()));r.u.push(g());r.j.push(g())}
+const M=4000,dx=(r.hi-r.lo)/M;let Z=0,m=0,q=0;for(let k=0;k<M;k++){const x=r.lo+(k+.5)*dx,v=r.f(x)*dx;Z+=v;m+=v*x;q+=v*x*x}
+r.Z=Z;r.mu=m/Z;r.sd=Math.sqrt(q/Z-r.mu*r.mu)});
+const F=(r,x)=>x<r.lo||x>r.hi?0:r.f(x),fmt=v=>v===0?'0':v.toPrecision(3);
+const c=$('c'),t=$('t'),fog=document.createElement('canvas');
+let G,S=[];
+function newRound(ri){const r=R[ri];G={ri,started:false,step:0,x:r.start,chain:[],acc:0,phase:'idle',prop:null,pl:3,jl:r.jumps,probes:[],cost:0,pm:false,done:false,busy:false,last:''};$('sl').value=10;$('final').style.display='none';ui()}
+const sdv=()=>$('sl').value/100*(R[G.ri].hi-R[G.ri].lo);
+function propose(kind){if(G.phase!=='idle'||G.done)return;const r=R[G.ri],i=G.step;
+const xp=kind==='jump'?r.lo+r.j[i]*(r.hi-r.lo):G.x+sdv()*r.z[i];if(kind==='jump')G.jl--;
+G.prop={x:xp,f:F(r,xp)};G.phase='prop';ui()}
+function flip(dec){if(G.phase!=='prop')return;const r=R[G.ri],i=G.step,p=G.prop,a=Math.min(1,p.f/F(r,G.x)),u=r.u[i],ok=dec===undefined?u<a:dec;
+G.last=dec===undefined?`Coin flip: u = ${u.toFixed(2)}, accept probability ${(a*100).toFixed(0)}%. `+(ok?'<b class="ok">Accepted</b>, you move.':'<b class="no">Rejected</b>, you stay put and this spot counts again.'):(ok?'You chose to <b class="ok">move</b>.':'You chose to <b class="no">stay</b>, so this spot counts again.')+` The coin rule would have moved with probability ${(a*100).toFixed(0)}%.`;
+if(ok){G.x=p.x;G.acc++}G.chain.push(G.x);G.step++;G.phase='idle';G.prop=null;if(G.step>=N)finish();ui()}
+function finish(){G.done=true;const r=R[G.ri],ch=G.chain,m=ch.reduce((a,b)=>a+b)/N,s=Math.sqrt(ch.reduce((a,b)=>a+(b-m)**2,0)/(N-1)),err=(Math.abs(m-r.mu)+Math.abs(s-r.sd))/r.sd,acc=Math.round(100*Math.max(0,1-err/1.5));
+S[G.ri]={acc,cost:G.cost,net:Math.max(0,acc-G.cost),m,s}}
+async function auto(n){G.busy=true;ui();for(let k=0;k<n&&!G.done;k++){propose();await sleep(350);flip();await sleep(350)}G.busy=false;ui()}
+function ui(){const r=R[G.ri],p=G.prop,fc=F(r,G.x),dg=r.hi-r.lo<=1?3:2,tot=S.reduce((a,b)=>a+(b?b.net:0),0);
+$('pc').style.display=$('cc').style.display=G.started?'':'none';$('startrow').style.display=G.started?'none':'';$('start').textContent='Start round '+(G.ri+1);$('rt').textContent=r.name;$('story').textContent=r.story;
+$('stats').innerHTML=`<span>Step <b>${G.step}/${N}</b></span><span>Accepted <b>${G.acc}</b></span><span>Probe cost <b>-${G.cost}</b></span><span>Banked points <b>${tot}</b></span>`;
+$('slv').textContent=sdv().toFixed(dg);$('sl').disabled=G.phase==='prop'||G.busy||G.done;
+const go=$('go');go.textContent='Propose a move';go.disabled=G.busy;go.style.display=G.done||G.phase==='prop'?'none':'';$('mv').style.display=$('st').style.display=G.phase==='prop'&&!G.done?'':'none';
+$('auto').disabled=$('auto10').disabled=G.phase==='prop'||G.busy||G.done;
+$('jump').style.display=r.jumps?'':'none';$('jump').textContent=`Long jump (${G.jl} left)`;$('jump').disabled=G.phase==='prop'||G.busy||G.done||G.jl<1;
+const pb=$('probe');pb.disabled=G.pl<1||G.done;pb.classList.toggle('on',G.pm);pb.textContent=G.pm?'Click the landscape to probe':(G.pl?`Probe (-${COST[3-G.pl]} pts, ${G.pl} left)`:'No probes left');
+$('next').style.display=G.done?'':'none';$('next').textContent=G.ri===0?'Next round':'See final score';
+let h='';
+if(G.done){const s=S[G.ri];h=`<b>The fog lifts.</b> Your ${N} samples have mean ${s.m.toFixed(dg)} and sd ${s.s.toFixed(dg)}; the truth is mean ${r.mu.toFixed(dg)} and sd ${r.sd.toFixed(dg)}.<br>Accuracy <b>${s.acc}</b>, minus probes <b>${s.cost}</b>, gives <b>${s.net}</b> points for this round.`}
+else{h=`You are at <b>${G.x.toFixed(dg)}</b>, where the density is <b>${fmt(fc)}</b>.`;
+if(p)h+=`<br>Proposed move to <b>${p.x.toFixed(dg)}</b>, where the density is <b>${fmt(p.f)}</b>.<br>Ratio ${fmt(p.f/fc)}, so the coin rule would move with probability <b>${(Math.min(1,p.f/fc)*100).toFixed(0)}%</b>. Your call: move or stay?`;
+else if(G.last)h+=`<br>${G.last}`;
+if(!p&&(G.step===10||G.step===20))h+=`<div class="note">Checkpoint: you accepted ${G.acc} of ${G.step} moves (${Math.round(100*G.acc/G.step)}%). Mostly rejections? Try smaller steps. Nearly everything accepted? Try bigger ones.</div>`}
+$('info').innerHTML=h;draw()}
+function draw(){const r=R[G.ri],cs=getComputedStyle(document.documentElement),col=n=>cs.getPropertyValue(n).trim(),dpr=window.devicePixelRatio||1,W=c.clientWidth,H=280;
+if(!W)return;if(c.width!==Math.round(W*dpr)){c.width=fog.width=Math.round(W*dpr);c.height=fog.height=H*dpr;t.width=c.width;t.height=90*dpr}
+const x2=c.getContext('2d');x2.setTransform(dpr,0,0,dpr,0,0);x2.clearRect(0,0,W,H);
+const X=v=>PAD+(v-r.lo)/(r.hi-r.lo)*(W-2*PAD),base=H-28,plotH=base-30;
+if(!G.done){const f=fog.getContext('2d');f.setTransform(dpr,0,0,dpr,0,0);f.globalCompositeOperation='source-over';f.clearRect(0,0,W,H);f.fillStyle=col('--fog');f.fillRect(0,0,W,H);f.globalCompositeOperation='destination-out';
+[G.x,...G.chain,...G.probes.map(p=>p.x),...(G.prop?[G.prop.x]:[])].forEach(v=>{const g=f.createRadialGradient(X(v),H/2,0,X(v),H/2,42);g.addColorStop(0,'rgba(0,0,0,1)');g.addColorStop(1,'rgba(0,0,0,0)');f.fillStyle=g;f.fillRect(X(v)-42,0,84,H)});x2.drawImage(fog,0,0,W,H)}
+x2.strokeStyle=col('--mut');x2.fillStyle=col('--mut');x2.font='12px system-ui,sans-serif';x2.beginPath();x2.moveTo(PAD,base);x2.lineTo(W-PAD,base);x2.stroke();
+[r.lo,(r.lo+r.hi)/2,r.hi].forEach((v,i)=>{x2.textAlign=i===0?'left':i===2?'right':'center';x2.fillText(v,X(v)+(i===0?-PAD+2:i===2?PAD-2:0),base+16)});
+const cnt=Array(NB).fill(0);G.chain.forEach(v=>cnt[Math.min(NB-1,Math.floor((v-r.lo)/(r.hi-r.lo)*NB))]++);
+const bw=(W-2*PAD)/NB,ex=v=>N*((r.hi-r.lo)/NB)*r.f(v)/r.Z;let mx=Math.max(8,...cnt);
+if(G.done)for(let k=0;k<=100;k++)mx=Math.max(mx,ex(r.lo+(r.hi-r.lo)*k/100));
+const u=Math.min(16,plotH/mx);x2.fillStyle=col('--acc');cnt.forEach((n,b)=>{for(let k=0;k<n;k++)x2.fillRect(PAD+b*bw+1,base-(k+1)*u,bw-2,u-1)});
+if(G.done){x2.strokeStyle=col('--warn');x2.lineWidth=3;x2.beginPath();for(let k=0;k<=200;k++){const v=r.lo+(r.hi-r.lo)*k/200,y=base-ex(v)*u;k?x2.lineTo(X(v),y):x2.moveTo(X(v),y)}x2.stroke();x2.lineWidth=1;x2.fillStyle=col('--warn');x2.textAlign='left';x2.fillText('true distribution',PAD+4,14)}
+const tri=(v,fill,ci)=>{x2.beginPath();x2.moveTo(X(v)-7,4);x2.lineTo(X(v)+7,4);x2.lineTo(X(v),18);x2.closePath();if(fill)x2.fill();else x2.stroke()};
+if(!G.done){x2.fillStyle=col('--ink');x2.strokeStyle=col('--ink');tri(G.x,true);x2.setLineDash([3,3]);x2.beginPath();x2.moveTo(X(G.x),18);x2.lineTo(X(G.x),base);x2.stroke();x2.setLineDash([]);
+if(G.prop){x2.strokeStyle=col('--warn');x2.lineWidth=2;tri(G.prop.x,false);x2.lineWidth=1}
+G.probes.forEach(p=>{x2.fillStyle=col('--warn');const y=H/2;x2.beginPath();x2.moveTo(X(p.x),y-7);x2.lineTo(X(p.x)+6,y);x2.lineTo(X(p.x),y+7);x2.lineTo(X(p.x)-6,y);x2.closePath();x2.fill();x2.fillStyle=col('--ink');x2.textAlign='center';x2.fillText(fmt(p.f),X(p.x),y-12)})}
+const y2=t.getContext('2d'),TH=90;y2.setTransform(dpr,0,0,dpr,0,0);y2.clearRect(0,0,W,TH);y2.strokeStyle=col('--line');y2.strokeRect(PAD,4,W-2*PAD,TH-8);
+const TX=i=>PAD+i/N*(W-2*PAD),TY=v=>TH-6-(v-r.lo)/(r.hi-r.lo)*(TH-12),pts=[r.start,...G.chain];
+y2.strokeStyle=col('--acc');y2.fillStyle=col('--acc');y2.lineWidth=1.5;y2.beginPath();pts.forEach((v,i)=>i?y2.lineTo(TX(i),TY(v)):y2.moveTo(TX(i),TY(v)));y2.stroke();pts.forEach((v,i)=>{y2.beginPath();y2.arc(TX(i),TY(v),2.5,0,7);y2.fill()});y2.lineWidth=1;
+y2.fillStyle=col('--mut');y2.textAlign='left';y2.fillText('trace: position by step',PAD+4,16)}
+$('go').onclick=()=>propose();$('mv').onclick=()=>flip(true);$('st').onclick=()=>flip(false);
+$('auto').onclick=()=>auto(5);$('auto10').onclick=()=>auto(10);$('start').onclick=()=>{G.started=true;ui()};$('jump').onclick=()=>propose('jump');
+$('probe').onclick=()=>{G.pm=!G.pm;ui()};$('sl').oninput=ui;
+$('next').onclick=()=>{if(G.ri===0){newRound(1);window.scrollTo(0,0)}else showFinal()};
+c.addEventListener('pointerdown',e=>{if(!G.pm||G.done||G.pl<1)return;const r=R[G.ri],b=c.getBoundingClientRect(),x=r.lo+((e.clientX-b.left)-PAD)/(b.width-2*PAD)*(r.hi-r.lo);if(x<r.lo||x>r.hi)return;
+G.probes.push({x,f:F(r,x)});G.cost+=COST[3-G.pl];G.pl--;G.pm=false;ui()});
+function showFinal(){const tot=S.reduce((a,b)=>a+b.net,0),f=$('final');f.style.display='block';
+f.innerHTML=`<h2>Final score: ${tot}</h2><div>Round 1: ${S[0].net} (accuracy ${S[0].acc}, probes -${S[0].cost}). Round 2: ${S[1].net} (accuracy ${S[1].acc}, probes -${S[1].cost}).</div><p class="mut">Talk it over:</p><ul><li>Did anyone find the second hill in round 2? How?</li><li>Did your probes pay for themselves?</li><li>What did your rejections do to your histogram?</li><li>What did your trace look like in the first few steps?</li></ul><div class="row"><button class="p" id="again">Play again</button></div>`;
+$('again').onclick=()=>{S=[];newRound(0)};f.scrollIntoView({behavior:'smooth'})}
+function fsFail(){$('toast').textContent='Full screen is blocked in this view. Open the page in its own tab to use it.';setTimeout(()=>$('toast').textContent='',5000)}
+$('fs').onclick=()=>{const d=document,e=d.documentElement;try{if(d.fullscreenElement||d.webkitFullscreenElement){(d.exitFullscreen||d.webkitExitFullscreen).call(d)}else{const p=(e.requestFullscreen||e.webkitRequestFullscreen).call(e);if(p&&p.catch)p.catch(fsFail)}}catch(x){fsFail()}};
+document.addEventListener('fullscreenchange',()=>{$('fs').textContent=document.fullscreenElement?'Exit full screen':'Full screen';draw()});
+window.addEventListener('resize',draw);
+newRound(0);
+</script></body></html>

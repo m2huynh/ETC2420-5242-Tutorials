@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Week 9 – ETC2420/5242 Tutorials</title>
+<title>Week 10 – ETC2420/5242 Tutorials</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -70,8 +70,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./week10.html" rel="next">
-<link href="./week08.html" rel="prev">
+<link href="./week09.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -319,7 +318,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week09.html"><span class="chapter-title">Week 9</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week10.html"><span class="chapter-title">Week 10</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -400,12 +399,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./week09.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Week 9</span></a>
+  <a href="./week09.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Week 9</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./week10.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Week 10</span></a>
+  <a href="./week10.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Week 10</span></a>
   </div>
 </li>
     </ul>
@@ -421,7 +420,8 @@ window.Quarto = {
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#tasks" id="toc-tasks" class="nav-link" data-scroll-target="#tasks">Tasks</a>
   <ul class="collapse">
-  <li><a href="#part-1-customer-feedback-and-bayesian-updating" id="toc-part-1-customer-feedback-and-bayesian-updating" class="nav-link" data-scroll-target="#part-1-customer-feedback-and-bayesian-updating">Part 1: Customer feedback and Bayesian updating</a></li>
+  <li><a href="#part-1-a-hand-built-sampler-for-a-proportion" id="toc-part-1-a-hand-built-sampler-for-a-proportion" class="nav-link" data-scroll-target="#part-1-a-hand-built-sampler-for-a-proportion">Part 1: A hand-built sampler for a proportion</a></li>
+  <li><a href="#part-2-a-two-humped-posterior-and-checking-your-chain" id="toc-part-2-a-two-humped-posterior-and-checking-your-chain" class="nav-link" data-scroll-target="#part-2-a-two-humped-posterior-and-checking-your-chain">Part 2: A two-humped posterior, and checking your chain</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -432,7 +432,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Week 9</span></h1>
+<h1 class="title"><span class="chapter-title">Week 10</span></h1>
 </div>
 
 
@@ -451,138 +451,37 @@ window.Quarto = {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Suppose a coffee company is testing a new drink. Before adding it to the menu, the company wants to know whether customers genuinely support the launch. Rather than asking for a single opinion, the company collects short customer comments from taste-testing sessions. Some comments clearly support launching the drink. Others are negative, uncertain, or only mildly positive.</p>
-<p>Your task is to act as the product team. Each day, you will read a small set of customer comments and decide which ones count as <strong>genuine support</strong> for launching the drink.</p>
-<p>For each day:</p>
+<p>This week we will begin by playing a short sampling game.</p>
 <ul>
-<li>Tick the comments that you think count as genuine support.</li>
-<li>The app will count how many comments you selected.</li>
-<li>That count becomes the data for the Bayesian update.</li>
+<li>The screen shows a hidden landscape, covered in fog.</li>
+<li>At each step, you propose a move. You are shown the height of the landscape (the density) at your current position and at the proposed position.</li>
+<li>You then decide whether to <strong>move</strong> or <strong>stay</strong>.</li>
+<li>Every position you occupy, including repeats when you stay, counts as one of your samples.</li>
+<li>Your score depends on how well your 30 samples reproduce the true shape of the hidden landscape, not on how high up it you climb.</li>
 </ul>
-<div class="app-frame-container" id="cafe-app-container">
-
-  <div class="app-frame-toolbar">
-    <button type="button" onclick="minimiseCafeApp()" title="Minimise">−</button>
-    <button type="button" onclick="maximiseCafeApp()" title="Maximise">□</button>
-    <button type="button" onclick="fullscreenCafeApp()" title="Fullscreen">⛶</button>
-  </div>
-
-  <iframe id="cafe-app-frame" src="interactive/Cafe.html" width="100%" height="620" style="border: none;" allowfullscreen="">
-  </iframe>
-
-</div>
-
-<style>
-.app-frame-container {
-  width: 100%;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  overflow: hidden;
-  background: white;
-}
-
-.app-frame-toolbar {
-  display: flex;
-  justify-content: flex-end;
-  gap: 6px;
-  padding: 6px;
-  background: #f3f4f6;
-  border-bottom: 1px solid #d1d5db;
-}
-
-.app-frame-toolbar button {
-  border: 1px solid #9ca3af;
-  border-radius: 6px;
-  padding: 5px 10px;
-  background: white;
-  cursor: pointer;
-}
-
-.app-frame-container.maximised iframe {
-  height: 90vh;
-}
-
-.app-frame-container.minimised iframe {
-  display: none;
-}
-
-.app-frame-container:fullscreen {
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  height: 100vh;
-  border: none;
-  border-radius: 0;
-}
-
-.app-frame-container:fullscreen iframe {
-  flex: 1;
-  width: 100%;
-  height: 100%;
-}
-</style>
-
-<script>
-function minimiseCafeApp() {
-  const container = document.getElementById("cafe-app-container");
-
-  container.classList.toggle("minimised");
-  container.classList.remove("maximised");
-}
-
-function maximiseCafeApp() {
-  const container = document.getElementById("cafe-app-container");
-
-  container.classList.toggle("maximised");
-  container.classList.remove("minimised");
-}
-
-function fullscreenCafeApp() {
-  const container = document.getElementById("cafe-app-container");
-
-  container.classList.remove("minimised");
-
-  if (!document.fullscreenElement) {
-    container.requestFullscreen();
-  } else {
-    document.exitFullscreen();
-  }
-}
-</script>
+<p>There are two rounds, each with a different hidden landscape. You also get 3 probes per round, which reveal the exact height of the landscape wherever you click, at a small cost to your score.</p>
+<iframe src="interactive/MCMC.html" width="100%" height="400" style="border: none;"></iframe>
+<p>Play both rounds. Record your final score.</p>
+<p>Once you have played the game, discuss with your tutorial group:</p>
+<ul>
+<li>Did always moving toward higher density give you a good score? Why or why not?</li>
+<li>In round 2, did you find the smaller hump? What helped you find it?</li>
+<li>What happened to your histogram in the first few steps, before it had time to “settle”?</li>
+</ul>
+<p>This is exactly what a Metropolis sampler does. It proposes a move, compares the (unnormalised) density at the current and proposed points, and moves with a probability based on that ratio. Run for long enough, the collection of visited points looks like a sample from the target distribution, even though the sampler never needed to know the total area under the curve.</p>
+<p><br></p>
 </section>
 <section id="tasks" class="level2">
 <h2 class="anchored" data-anchor-id="tasks">Tasks</h2>
-<section id="part-1-customer-feedback-and-bayesian-updating" class="level3">
-<h3 class="anchored" data-anchor-id="part-1-customer-feedback-and-bayesian-updating">Part 1: Customer feedback and Bayesian updating</h3>
-<p>In the app, you acted as the product team for a coffee company deciding whether to launch a new drink.</p>
-<p>Each day, you read six customer comments and selected the comments that counted as <strong>genuine support</strong> for launching the drink. The app recorded the number of selected comments as:</p>
+<p><strong>Note</strong>: Create a Quarto document in your Project folder and save it in your <code>week 10</code> folder.</p>
+<section id="part-1-a-hand-built-sampler-for-a-proportion" class="level3">
+<h3 class="anchored" data-anchor-id="part-1-a-hand-built-sampler-for-a-proportion">Part 1: A hand-built sampler for a proportion</h3>
+<p>Suppose we want the posterior distribution for the probability of heads, <span class="math inline">\(p\)</span>, after observing 12 heads in 20 coin flips, using a Uniform(0, 1) prior.</p>
+<p>The posterior is proportional to the likelihood, since the prior is flat:</p>
 <p><span class="math display">\[
-x = \text{number of comments judged as genuine support}
+\pi(p \mid \text{data}) \propto p^{12}(1-p)^{8}.
 \]</span></p>
-<p>Each day had:</p>
-<p><span class="math display">\[
-n = 6
-\]</span></p>
-<p>We will use your copied data from the app to reproduce the Bayesian updating process in R.</p>
-<p>The unknown parameter is:</p>
-<p><span class="math display">\[
-\theta = \text{the proportion of customers who genuinely support launching the drink}
-\]</span></p>
-<p>We begin with a neutral prior:</p>
-<p><span class="math display">\[
-\theta \sim \text{Beta}(1,1)
-\]</span></p>
-<p>After observing (x) supportive comments out of (n), the posterior is:</p>
-<p><span class="math display">\[
-\theta \mid x
-\sim
-\text{Beta}(\alpha + x,\ \beta + n - x)
-\]</span></p>
-<p>The posterior from one day becomes the prior for the next day.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<p><code>MCMCpack::MCMCmetrop1R()</code> will draw from this posterior for us. It needs a function that returns the <strong>log</strong> of the (unnormalised) posterior density, because working on the log scale avoids numerical underflow when densities get very small.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -593,16 +492,13 @@ n = 6
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Paste the data copied from the app into your Quarto document.</p>
-<p>Your copied data should look something like this:</p>
+<p>Write the log-posterior function for <span class="math inline">\(p\)</span>. Remember to return <code>-Inf</code> outside the support of <span class="math inline">\(p\)</span>, so the sampler never accepts a move to an impossible value.</p>
+<p>Fill in the blanks.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Each value is the number of customer comments you selected as genuine support on that day.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">c</span>(___, ___, ___, ___, ___, ___)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>my_data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>log_post_coin <span class="ot">&lt;-</span> <span class="cf">function</span>(p) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (p <span class="sc">&lt;=</span> <span class="dv">0</span> <span class="sc">||</span> p <span class="sc">&gt;=</span> <span class="dv">1</span>) <span class="fu">return</span>(___)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dbinom</span>(___, <span class="at">size =</span> ___, <span class="at">prob =</span> ___, <span class="at">log =</span> ___)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
@@ -616,13 +512,13 @@ n = 6
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Your values will be different from the example below, depending on how you classified the customer comments.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>my_data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>log_post_coin <span class="ot">&lt;-</span> <span class="cf">function</span>(p) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (p <span class="sc">&lt;=</span> <span class="dv">0</span> <span class="sc">||</span> p <span class="sc">&gt;=</span> <span class="dv">1</span>) <span class="fu">return</span>(<span class="sc">-</span><span class="cn">Inf</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dbinom</span>(<span class="dv">12</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p, <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>There should be six numbers because the app runs for six days.</p>
+<p>Because the prior is Uniform(0, 1), it contributes a constant (1, or 0 on the log scale) over the support of <span class="math inline">\(p\)</span>, so the log-likelihood alone is a valid log-posterior up to a constant. We still need the boundary check, since <code>dbinom</code> is only meaningful for <code>p</code> between 0 and 1.</p>
 </div>
 </div>
 </div>
@@ -638,16 +534,18 @@ n = 6
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Create a tibble called <code>launch_data</code> with one row per day.</p>
-<p>The variable <code>x</code> should contain the values from <code>my_data</code>. The variable <code>n</code> should be 6 for every day.</p>
+<p>Use <code>MCMCmetrop1R()</code> to draw 10,000 samples from the posterior, after a burn-in of 1,000. Start the chain at <span class="math inline">\(p = 0.5\)</span>.</p>
+<p>Fill in the blanks.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>launch_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">day =</span> ___,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> ___,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> ___</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>launch_data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>coin_chain <span class="ot">&lt;-</span> <span class="fu">MCMCmetrop1R</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  ___,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta.init =</span> ___,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mcmc =</span> ___,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">burnin =</span> ___,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">1</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(coin_chain)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
@@ -662,15 +560,18 @@ n = 6
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>launch_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">day =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> my_data,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="dv">6</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>launch_data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>coin_chain <span class="ot">&lt;-</span> <span class="fu">MCMCmetrop1R</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  log_post_coin,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta.init =</span> <span class="fl">0.5</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mcmc =</span> <span class="dv">10000</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">burnin =</span> <span class="dv">1000</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">1</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(coin_chain)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The variable <code>x</code> records the number of comments judged as genuine support. The variable <code>n</code> records the number of comments shown each day.</p>
+<p>Two things are printed to the console when this runs. First, a report of the Metropolis acceptance rate. Second, the usual <code>summary()</code> output for an <code>mcmc</code> object: the posterior mean, standard deviation, and a set of quantiles.</p>
+<p>The posterior mean should be close to <span class="math inline">\(12/20 = 0.60\)</span>, pulled slightly toward <span class="math inline">\(0.5\)</span> by the small amount of information in the prior relative to a sample of size 20. In fact, since the prior is conjugate here, the exact posterior is <span class="math inline">\(\text{Beta}(13, 9)\)</span>, with mean <span class="math inline">\(13/22 \approx 0.591\)</span> and standard deviation <span class="math inline">\(\approx 0.103\)</span>. Your simulated summary should be close to these exact values.</p>
 </div>
 </div>
 </div>
@@ -686,17 +587,12 @@ n = 6
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Calculate the total number of supportive comments and the total number of comments reviewed.</p>
-<p>Then calculate the overall sample proportion.</p>
+<p><code>MCMCmetrop1R()</code> reported an acceptance rate. Extract the chain as a plain vector and calculate this rate directly, as the proportion of iterations where the value changed from the previous one.</p>
+<p>Fill in the blanks.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>launch_summary <span class="ot">&lt;-</span> launch_data <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_support =</span> <span class="fu">sum</span>(___),</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_comments =</span> <span class="fu">sum</span>(___),</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sample_proportion =</span> ___ <span class="sc">/</span> ___</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>launch_summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>coin_vec <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(___)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>acceptance_rate <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">diff</span>(___) <span class="sc">!=</span> <span class="dv">0</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>acceptance_rate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
@@ -711,16 +607,11 @@ n = 6
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>launch_summary <span class="ot">&lt;-</span> launch_data <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_support =</span> <span class="fu">sum</span>(x),</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_comments =</span> <span class="fu">sum</span>(n),</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sample_proportion =</span> total_support <span class="sc">/</span> total_comments</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>launch_summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>coin_vec <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(coin_chain)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>acceptance_rate <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">diff</span>(coin_vec) <span class="sc">!=</span> <span class="dv">0</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>acceptance_rate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>This is the raw proportion of comments you classified as genuine support across all six days.</p>
+<p>This should match the rate reported by <code>MCMCmetrop1R()</code> at around 0.71, or 71%. A rate in the rough range of 20% to 50% is often considered efficient for random-walk Metropolis, though for a single simple parameter like this one, a higher rate is not a problem.</p>
 </div>
 </div>
 </div>
@@ -736,49 +627,9 @@ n = 6
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Use a loop to update the beta distribution one day at a time.</p>
-<p>Start with:</p>
-<p><span class="math display">\[
-\alpha = 1
-\]</span></p>
-<p>and:</p>
-<p><span class="math display">\[
-\beta = 1
-\]</span></p>
-<p>For each day, update using:</p>
-<p><span class="math display">\[
-\alpha_{new} = \alpha_{old} + x
-\]</span></p>
-<p>and:</p>
-<p><span class="math display">\[
-\beta_{new} = \beta_{old} + n - x
-\]</span></p>
+<p>Use the <code>summary()</code> function to explore your MCMC output</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>alpha_current <span class="ot">&lt;-</span> ___</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>beta_current <span class="ot">&lt;-</span> ___</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>updates <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(launch_data)) {</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  x_today <span class="ot">&lt;-</span> launch_data<span class="sc">$</span>___[i]</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  n_today <span class="ot">&lt;-</span> launch_data<span class="sc">$</span>___[i]</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  alpha_current <span class="ot">&lt;-</span> alpha_current <span class="sc">+</span> ___</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  beta_current <span class="ot">&lt;-</span> beta_current <span class="sc">+</span> ___ <span class="sc">-</span> ___</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  updates[[i]] <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">day =</span> launch_data<span class="sc">$</span>day[i],</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> x_today,</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> n_today,</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> alpha_current,</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> beta_current,</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">posterior_mean =</span> alpha_current <span class="sc">/</span> (alpha_current <span class="sc">+</span> beta_current)</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>posterior_updates <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(updates)</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>posterior_updates</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(___)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
@@ -793,33 +644,8 @@ n = 6
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>alpha_current <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>beta_current <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>updates <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(launch_data)) {</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  x_today <span class="ot">&lt;-</span> launch_data<span class="sc">$</span>x[i]</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  n_today <span class="ot">&lt;-</span> launch_data<span class="sc">$</span>n[i]</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  alpha_current <span class="ot">&lt;-</span> alpha_current <span class="sc">+</span> x_today</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  beta_current <span class="ot">&lt;-</span> beta_current <span class="sc">+</span> n_today <span class="sc">-</span> x_today</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  updates[[i]] <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">day =</span> launch_data<span class="sc">$</span>day[i],</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> x_today,</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> n_today,</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> alpha_current,</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> beta_current,</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">posterior_mean =</span> alpha_current <span class="sc">/</span> (alpha_current <span class="sc">+</span> beta_current)</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>posterior_updates <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(updates)</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>posterior_updates</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(coin_chain)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Each row gives the posterior distribution after that day of customer feedback.</p>
 </div>
 </div>
 </div>
@@ -835,41 +661,12 @@ n = 6
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Add the initial prior to the update table and create a clean summary table.</p>
-<p>The initial prior is:</p>
-<p><span class="math display">\[
-\text{Beta}(1,1)
-\]</span></p>
-<p>with mean:</p>
-<p><span class="math display">\[
-\frac{1}{1+1} = 0.50
-\]</span></p>
+<p>We’ll create a dataset of the output so that we can create some plots. Have two columns <code>iteration</code> and <code>theta</code>. These should be based on the output above.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>initial_prior <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">day =</span> ___,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> ___,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> ___,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> ___,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta =</span> ___,</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">posterior_mean =</span> ___</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>posterior_path <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  ___,</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  ___</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> <span class="fu">paste0</span>(<span class="st">"Beta("</span>, ___, <span class="st">", "</span>, ___, <span class="st">")"</span>)</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>posterior_path <span class="sc">|&gt;</span></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">Day =</span> day,</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">Support =</span> x,</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">Comments =</span> n,</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">Distribution =</span> distribution,</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Posterior mean</span><span class="st">`</span> <span class="ot">=</span> posterior_mean</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>chain_coin_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">iteration =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(___),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta =</span> <span class="fu">as.numeric</span>(___)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
@@ -884,35 +681,11 @@ n = 6
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>initial_prior <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">day =</span> <span class="dv">0</span>,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="dv">0</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="dv">0</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">1</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta =</span> <span class="dv">1</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">posterior_mean =</span> <span class="fl">0.5</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>posterior_path <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  initial_prior,</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  posterior_updates</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">distribution =</span> <span class="fu">paste0</span>(<span class="st">"Beta("</span>, alpha, <span class="st">", "</span>, beta, <span class="st">")"</span>)</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>posterior_path <span class="sc">|&gt;</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">Day =</span> day,</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">Support =</span> x,</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">Comments =</span> n,</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">Distribution =</span> distribution,</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Posterior mean</span><span class="st">`</span> <span class="ot">=</span> posterior_mean</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="st">`</span><span class="at">Posterior mean</span><span class="st">`</span>, <span class="at">decimals =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>chain_coin_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">iteration =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(coin_chain),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta =</span> <span class="fu">as.numeric</span>(coin_chain)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>This table shows how the beta distribution changes as more customer feedback is included.</p>
 </div>
 </div>
 </div>
@@ -928,29 +701,11 @@ n = 6
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Plot the prior and posterior distributions across the six days.</p>
-<p>First, create a grid of possible values for (). Then calculate the beta density for each distribution in <code>posterior_path</code>.</p>
+<p>Using the <code>chain_coin_df</code> from the previous question, create a trace plot.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> posterior_path <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">if_else</span>(day <span class="sc">==</span> ___, <span class="st">"Initial prior"</span>, <span class="fu">paste0</span>(<span class="st">"Day "</span>, day))</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">crossing</span>(<span class="at">theta =</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">length.out =</span> <span class="dv">500</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">density =</span> <span class="fu">dbeta</span>(theta, <span class="at">shape1 =</span> ___, <span class="at">shape2 =</span> ___),</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">factor</span>(label, <span class="at">levels =</span> <span class="fu">unique</span>(label))</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___)) <span class="sc">+</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> label, <span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">expression</span>(theta),</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Density"</span>,</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Prior and posterior distributions"</span>,</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Each panel shows belief after another day of feedback"</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>p_trace <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(___, <span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___)) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
@@ -965,28 +720,10 @@ n = 6
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> posterior_path <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">if_else</span>(day <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"Initial prior"</span>, <span class="fu">paste0</span>(<span class="st">"Day "</span>, day))</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">crossing</span>(<span class="at">theta =</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">length.out =</span> <span class="dv">500</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">density =</span> <span class="fu">dbeta</span>(theta, <span class="at">shape1 =</span> alpha, <span class="at">shape2 =</span> beta),</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">factor</span>(label, <span class="at">levels =</span> <span class="fu">unique</span>(label))</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> density)) <span class="sc">+</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> label, <span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">expression</span>(theta),</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Density"</span>,</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Prior and posterior distributions"</span>,</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Each panel shows belief after another day of feedback"</span></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>p_trace <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(chain_coin_df, <span class="fu">aes</span>(<span class="at">x =</span> iteration, <span class="at">y =</span> theta)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The posterior should usually become more concentrated as more comments are classified. This happens because the model has more information after each day.</p>
 </div>
 </div>
 </div>
@@ -1002,26 +739,10 @@ n = 6
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Summarise the final posterior distribution.</p>
-<p>Calculate:</p>
-<ol type="1">
-<li>the final posterior mean;</li>
-<li>a 95% credible interval;</li>
-<li>the posterior probability that more than half of customers genuinely support launching the drink.</li>
-</ol>
+<p>Create a density plot of the data</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>final_posterior <span class="ot">&lt;-</span> posterior_path <span class="sc">|&gt;</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_tail</span>(<span class="at">n =</span> ___)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>final_summary <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">final_distribution =</span> <span class="fu">paste0</span>(<span class="st">"Beta("</span>, final_posterior<span class="sc">$</span>___, <span class="st">", "</span>, final_posterior<span class="sc">$</span>___, <span class="st">")"</span>),</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">posterior_mean =</span> final_posterior<span class="sc">$</span>___,</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower_95 =</span> <span class="fu">qbeta</span>(___, <span class="at">shape1 =</span> final_posterior<span class="sc">$</span>___, <span class="at">shape2 =</span> final_posterior<span class="sc">$</span>___),</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper_95 =</span> <span class="fu">qbeta</span>(___, <span class="at">shape1 =</span> final_posterior<span class="sc">$</span>___, <span class="at">shape2 =</span> final_posterior<span class="sc">$</span>___),</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">prob_above_half =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbeta</span>(___, <span class="at">shape1 =</span> final_posterior<span class="sc">$</span>___, <span class="at">shape2 =</span> final_posterior<span class="sc">$</span>___)</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>final_summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>p_density <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(___, <span class="fu">aes</span>(<span class="at">x =</span> ___)) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  geom___</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
@@ -1036,26 +757,301 @@ n = 6
 <div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>final_posterior <span class="ot">&lt;-</span> posterior_path <span class="sc">|&gt;</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_tail</span>(<span class="at">n =</span> <span class="dv">1</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>final_summary <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">final_distribution =</span> <span class="fu">paste0</span>(<span class="st">"Beta("</span>, final_posterior<span class="sc">$</span>alpha, <span class="st">", "</span>, final_posterior<span class="sc">$</span>beta, <span class="st">")"</span>),</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">posterior_mean =</span> final_posterior<span class="sc">$</span>posterior_mean,</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower_95 =</span> <span class="fu">qbeta</span>(<span class="fl">0.025</span>, <span class="at">shape1 =</span> final_posterior<span class="sc">$</span>alpha, <span class="at">shape2 =</span> final_posterior<span class="sc">$</span>beta),</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper_95 =</span> <span class="fu">qbeta</span>(<span class="fl">0.975</span>, <span class="at">shape1 =</span> final_posterior<span class="sc">$</span>alpha, <span class="at">shape2 =</span> final_posterior<span class="sc">$</span>beta),</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">prob_above_half =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbeta</span>(<span class="fl">0.50</span>, <span class="at">shape1 =</span> final_posterior<span class="sc">$</span>alpha, <span class="at">shape2 =</span> final_posterior<span class="sc">$</span>beta)</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>final_summary <span class="sc">|&gt;</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(posterior_mean, lower_95, upper_95, prob_above_half), <span class="at">decimals =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>p_density <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(chain_coin_df, <span class="fu">aes</span>(<span class="at">x =</span> theta)) <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The value <code>prob_above_half</code> answers the question:</p>
-<blockquote class="blockquote">
-<p>After six days of customer feedback, how likely is it that more than half of customers genuinely support launching the drink?</p>
-</blockquote>
-<p>A value close to 1 provides strong evidence in favour of launch support being above 50%. A value close to 0 suggests weak evidence that support is above 50%. A value near 0.5 means there is still substantial uncertainty.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Question 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use <code>patchwork</code> to place the two plots together</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>___ <span class="sc">+</span> ___</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Click for solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>p_trace <span class="sc">+</span> p_density</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="part-2-a-two-humped-posterior-and-checking-your-chain" class="level3">
+<h3 class="anchored" data-anchor-id="part-2-a-two-humped-posterior-and-checking-your-chain">Part 2: A two-humped posterior, and checking your chain</h3>
+<p>Round 2 of the warm-up game had a hidden landscape with two humps: a large one and a smaller, easy-to-miss one. This is exactly the shape you get when a parameter has two plausible explanations behind it. Suppose <span class="math inline">\(\theta\)</span>, between 0 and 10, represents a quantity that could plausibly come from either of two subgroups: a large subgroup centred around 3, and a smaller subgroup centred around 7.5. As an unnormalised posterior, this is a two-component mixture:</p>
+<p><span class="math display">\[
+\pi(\theta \mid \text{data}) \propto 0.72 \times \text{Normal}(\theta; 3, 0.6) + 0.28 \times \text{Normal}(\theta; 7.5, 0.5).
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Question 9
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Write the log-posterior function for <span class="math inline">\(\theta\)</span>, and draw 10,000 samples using <code>MCMCmetrop1R()</code>, with a burn-in of 1,000 and <code>theta.init = 1</code>, matching the starting position in round 2 of the game.</p>
+<p>Fill in the blanks.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>log_post_two_groups <span class="ot">&lt;-</span> <span class="cf">function</span>(theta) {</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (theta <span class="sc">&lt;=</span> <span class="dv">0</span> <span class="sc">||</span> theta <span class="sc">&gt;=</span> <span class="dv">10</span>) <span class="fu">return</span>(___)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">log</span>(___ <span class="sc">*</span> <span class="fu">dnorm</span>(theta, <span class="at">mean =</span> ___, <span class="at">sd =</span> ___) <span class="sc">+</span> ___ <span class="sc">*</span> <span class="fu">dnorm</span>(theta, <span class="at">mean =</span> ___, <span class="at">sd =</span> ___))</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>two_groups_chain <span class="ot">&lt;-</span> <span class="fu">MCMCmetrop1R</span>(</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  ___,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta.init =</span> ___,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">mcmc =</span> <span class="dv">10000</span>,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">burnin =</span> <span class="dv">1000</span>,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">1</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Click for solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>log_post_two_groups <span class="ot">&lt;-</span> <span class="cf">function</span>(theta) {</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (theta <span class="sc">&lt;=</span> <span class="dv">0</span> <span class="sc">||</span> theta <span class="sc">&gt;=</span> <span class="dv">10</span>) <span class="fu">return</span>(<span class="sc">-</span><span class="cn">Inf</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">log</span>(<span class="fl">0.72</span> <span class="sc">*</span> <span class="fu">dnorm</span>(theta, <span class="at">mean =</span> <span class="dv">3</span>, <span class="at">sd =</span> <span class="fl">0.6</span>) <span class="sc">+</span> <span class="fl">0.28</span> <span class="sc">*</span> <span class="fu">dnorm</span>(theta, <span class="at">mean =</span> <span class="fl">7.5</span>, <span class="at">sd =</span> <span class="fl">0.5</span>))</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>two_groups_chain <span class="ot">&lt;-</span> <span class="fu">MCMCmetrop1R</span>(</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  log_post_two_groups,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta.init =</span> <span class="dv">1</span>,</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">mcmc =</span> <span class="dv">10000</span>,</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">burnin =</span> <span class="dv">1000</span>,</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">1</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Question 10
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the <code>summary()</code> function to explore your MCMC output.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(___)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Click for solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(two_groups_chain)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Question 11
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We’ll create a dataset of the output so that we can create some plots. Have two columns <code>iteration</code> and <code>theta</code>. These should be based on the output above.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>chain_two_groups_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">iteration =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(___),</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta =</span> <span class="fu">as.numeric</span>(___)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Click for solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>chain_two_groups_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">iteration =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(two_groups_chain),</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta =</span> <span class="fu">as.numeric</span>(two_groups_chain)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Question 12
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using the <code>chain_two_groups_df</code> from the previous question, create a trace plot.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>p_trace <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(___, <span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___)) <span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Click for solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>p_trace <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(chain_two_groups_df, <span class="fu">aes</span>(<span class="at">x =</span> iteration, <span class="at">y =</span> theta)) <span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>p_trace</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Look for the chain jumping back and forth between a region near 3 and a region near 7.5. That jumping is the sampler moving between the two humps. If your chain only ever visited one hump, that is the multimodal equivalent of a student in the game who never found the second hill: the sampler is not wrong, it just has not been given the chance (or the step size) to discover the other mode.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Question 13
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Create a density plot of the data.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>p_density <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(___, <span class="fu">aes</span>(<span class="at">x =</span> ___)) <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  geom___</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Click for solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>p_density <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(chain_two_groups_df, <span class="fu">aes</span>(<span class="at">x =</span> theta)) <span class="sc">+</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>p_density</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The density plot should show two bumps, a tall one near 3 and a shorter one near 7.5, mirroring the shape of the fog-covered landscape from round 2 of the warm-up game, now filled in by your samples instead of by probes.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Question 14
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use <code>patchwork</code> to place the two plots together.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>___ <span class="sc">+</span> ___</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Click for solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-27" class="callout-27-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>p_trace <span class="sc">+</span> p_density</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div>
 </div>
 </div>
@@ -1688,14 +1684,11 @@ window.onload = function() {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./week08.html" class="pagination-link" aria-label="Week 8">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Week 8</span></span>
+      <a href="./week09.html" class="pagination-link" aria-label="Week 9">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Week 9</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./week10.html" class="pagination-link" aria-label="Week 10">
-        <span class="nav-page-text"><span class="chapter-title">Week 10</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
