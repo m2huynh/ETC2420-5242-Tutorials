@@ -1,3 +1,980 @@
 ---
 title: "Week 11"
+subtitle: "Frequentist Models"
+execute: 
+  warning: false
+  message: false
 ---
+
+## Overview
+
+In this tutorial you will use real 2026 AFL match data to ask:
+
+> **Which team statistics are good predictors of the final margin of a game?**
+
+You will build **three different models**, each with **exactly three predictors**, and then decide which one you would trust most.
+
+By the end you should be able to:
+
+1. Fit a regression model using `glm()`.
+2. Write down the **fitted regression equation** from R output.
+3. **Interpret the coefficients and their confidence intervals** in context.
+4. **Check the assumptions** of each model using the `performance` package.
+5. **Compare models** and justify a final choice.
+6. **Make predictions** for new games and judge how well your models predict data they have never seen.
+
+::: {.callout-note}
+## Why `glm()` and not `lm()`?
+For a numeric response like margin, `glm()` with a Gaussian family gives the same fit as `lm()`. We use `glm()` now because next we will move to **Poisson** and **logistic** regression, and they all share the same structure. Learning the structure now means only one thing changes later: the family and link.
+:::
+
+## Setting up the project
+
+### 1. Load packages
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(performance)
+library(see)
+library(patchwork)
+```
+
+### 2. Download the data
+
+We have two data sets from the 2026 AFL season:
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(downloadthis)
+
+btn <- function(path, label, type) {
+  gsub("\n", "", as.character(
+    download_file(
+      path = path,
+      output_name = tools::file_path_sans_ext(basename(path)),
+      output_extension = ".csv",
+      button_label = label,
+      button_type = type,
+      has_icon = TRUE,
+      icon = "fa fa-save",
+      self_contained = TRUE
+    )
+  ))
+}
+
+tab <- data.frame(
+  Games = c("Regular season (home and away rounds)", "The finals series"),
+  Role = c("<strong>Training data</strong>: used to build and compare your models",
+           "<strong>Test data</strong>: kept aside to see how well your models predict new games"),
+  CSV = c(btn("data/afl_2026_rr.csv", "Train", "success"),
+          btn("data/afl_2026_finals.csv", "Test", "warning")),
+  check.names = FALSE
+)
+
+knitr::kable(tab, format = "html", escape = FALSE, align = "llc")
+```
+
+Each row is one match. In the regular season file, columns starting with `Home.` and `Away.` hold the team totals for that game.
+
+
+::: {.callout-warning}
+### Don't peek at the test data
+You will not use the finals data until later. Choosing your variables by looking at the finals results would defeat the purpose of a test set.
+:::
+
+### 3. Load the data
+
+Read the data into R and call the files `afl_train` and `afl_test`:
+
+```{r, eval=FALSE}
+afl_train <- ...
+alf_test <- ...
+```
+
+
+## Tasks - Part 1 (Linear Regression)
+
+:::: callout-note
+### Question 1
+
+Explore the data. Pick a few variables and see how they relate to the outcome (`Margin`).
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+You could make summary statistics, figures, etc. Try a few things that you have learnt this semester. As an example:
+
+```{r, include=FALSE}
+afl_train <- read.csv('data/afl_2026_rr.csv')
+```
+
+
+```{r}
+ggplot(afl_train, aes(Kicks.diff, Margin)) +
+  geom_point() +
+  geom_smooth()
+```
+
+
+:::
+::::
+
+:::: callout-note
+### Question 2
+
+Build a model to predict `Margin`. For now, you can only include 3 predictors in your model.
+
+```{r, eval=FALSE}
+# See what the predictors can be
+glimpse(afl_train)
+```
+
+```{r, eval=FALSE}
+# Build your first model
+model1 <- glm(
+  formula = Margin ~ ... + ... + ...,
+  family = ...,
+  data = ...
+)
+```
+
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+Your models will all be different depending on which variables you pick. As an example, suppose you built a model with Kicks, Tackles and Inside50s:
+
+```{r}
+
+model1 <- glm(
+  formula = Margin ~ Kicks.diff + Tackles.diff + Inside.50s.diff ,
+  family = gaussian,
+  data = afl_train
+)
+```
+
+
+:::
+::::
+
+:::: callout-note
+### Question 3
+
+Inspect your model output with the `summary()` function. Are the results what you inspected?
+
+```{r, eval=FALSE}
+summary(...)
+```
+
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+summary(model1)
+```
+
+
+:::
+::::
+
+:::: callout-note
+### Question 4
+
+Use the `confint()` function to obtain confidence intervals for eahc of your model terms.
+
+```{r, eval=FALSE}
+confint(...)
+```
+
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+confint(model1)
+```
+:::
+::::
+
+:::: callout-note
+### Question 5
+
+We should now check whether the assumptions of your model are met. We can do this with the `check_model` function from the `performance` package.
+
+**Note**: You might want to adjust the fig.width and fig.height for this output, otherwise it is difficult to see anything (setting both to 12 should be okay.)
+
+```{r, eval=FALSE}
+library(performance)
+check_model(...)
+```
+
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+Everyone's results will be different, here is an example with the model I listed above.
+
+```{r, fig.width=12, fig.height=12}
+library(performance)
+check_model(model1)
+```
+:::
+::::
+
+:::: callout-note
+### Question 6
+
+Now build two more models. Both should be trying to predict `Margin`. Change these so that the models have at least one different predictor in each.
+
+```{r, eval=FALSE}
+model2 <- glm(
+  formula = ...,
+  data = ...,
+  family = ...
+)
+
+model3 <- glm(
+  formula = ...,
+  data = ...,
+  family = ...
+)
+```
+
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+Everyone's results will be different, but here are two examples:
+
+```{r}
+model2 <- glm(
+  formula = Margin ~ Hit.Outs.diff + Rebounds.diff + Kicks.diff,
+  data = afl_train,
+  family = gaussian
+)
+
+model3 <- glm(
+  formula = Margin ~ Contested.Marks.diff + Tackles.diff + Kicks.diff,
+  data = afl_train,
+  family = gaussian
+)
+```
+
+:::
+::::
+
+:::: callout-note
+### Question 7
+
+Check the assumptions for your two new models.
+
+**Note**: You might want to adjust the fig.width and fig.height for this output, otherwise it is difficult to see anything (setting both to 12 should be okay.)
+
+```{r, eval=FALSE}
+check_model(...)
+check_model(...)
+```
+
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+Everyone's results will be different, here is an example with the models I listed above.
+
+```{r, fig.width=12, fig.height=12}
+check_model(model2)
+```
+
+
+```{r, fig.width=12, fig.height=12}
+check_model(model3)
+```
+
+
+:::
+::::
+
+:::: callout-note
+### Question 8
+
+All three models predict the same response from the same rows of the training data, so we can compare them directly. Note that these are **in-sample** measures: they describe how well each model fits the games it was built from. You can use the `compare_performance()` function from the `performance` package.
+
+```{r, eval=FALSE}
+compare_performance(..., ..., ..., rank = TRUE)
+```
+
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+Everyone's results will be different, but here are two examples:
+
+```{r}
+compare_performance(model1,model2,model3, rank = TRUE)
+
+```
+
+Here is how to read the main columns:
+
+| Measure | What it tells you | Better is |
+|---|---|---|
+| **AIC / BIC** | Fit penalised for complexity. Only differences between models matter. | Lower |
+| **R2** | Share of the variation in margin the model explains. | Higher |
+| **RMSE / Sigma** | Typical size of the prediction error, in points. | Lower |
+
+::: {.callout-note}
+Because every model has exactly three predictors, the models have the same complexity, so the AIC and BIC penalties are the same. The comparison is about which three variables carry more useful information.
+:::
+
+:::
+::::
+
+:::: callout-note
+### Question 9
+
+**Predicting the finals**
+
+A model that fits the data it was built from can still predict poorly on new data. The finals series is our chance to find out. For each finals game we know the stat differences, and we use the model to predict the margin.
+
+```{r, include=FALSE}
+afl_test <- read.csv('data/afl_2026_finals.csv')
+```
+
+In the code here we will use the `afl_test` dataset (which is the final series macthes only). None of these matches were used to train our models (can you suggest what implications it would have if they were?).
+
+We'll select `Round`, `Home.team`, `Away.team` and we'll rename `Margin` to `Actual`. Then we'll create new columns called `Model1`, `Model2` and `Model3` which will use the `predict()` function. You can then compare the Actual results to what each Model predicted for each match of the final series!
+
+```{r, eval=FALSE}
+afl_test |> 
+  select(Round, Home.team, Away.team, Actual = Margin) |> 
+  mutate(
+    Model1 = predict(..., newdata = ...),
+    Model2 = predict(..., newdata = ...),
+    Model3 = predict(..., newdata = ...)
+  )
+```
+
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+Your answer will be different to mine depending on how you built your models.
+
+```{r}
+afl_test |> 
+  select(Round, Home.team, Away.team, Actual = Margin) |> 
+  mutate(
+    Model1 = predict(model1, newdata = afl_test),
+    Model2 = predict(model2, newdata = afl_test),
+    Model3 = predict(model3, newdata = afl_test)
+  )
+```
+
+:::
+::::
+
+## Tasks - Part 2 (Logistic Regression)
+
+In Part 1 we predicted the **size** of the margin. Often we only care about the **result**:
+
+> **Which team statistics are good predictors of whether the home team wins?**
+
+Now the response is binary (win or loss), so a Gaussian `glm()` is no longer appropriate. We keep the same `glm()` structure and change the **family** and **link**:
+
+| | Part 1 (Linear) | Part 2 (Logistic) |
+|---|---|---|
+| Response | Margin (numeric) | Win (1) or Loss (0) |
+| Family | `gaussian` | `binomial` |
+| Link | identity | logit |
+| Model predicts | the mean margin | the **log-odds** of a home win |
+
+::: {.callout-note}
+## What is "Win" here?
+We define `Win = 1` if the home team's margin is **positive** and `Win = 0` otherwise. A **draw** (margin of exactly 0) is therefore counted as a **loss**. Everything below is about the **home team**: a "win" means the home team won.
+:::
+
+::: {.callout-warning}
+## Avoid leaking the answer
+`Win` is calculated from `Margin`, so neither `Margin` nor the team scores can be used as predictors. They would "predict" the result perfectly because they *are* the result. Stick to the match statistics (the `.diff` variables).
+:::
+
+:::: callout-note
+### Question 1
+
+Create the binary response variable `Win` in **both** the training and test data, using `Margin`. Then check how many games the home team won in the training data.
+
+```{r, eval=FALSE}
+afl_train <- afl_train |> 
+  mutate(Win = ...)
+
+afl_test <- afl_test |> 
+  mutate(Win = ...)
+
+table(afl_train$Win)
+```
+
+What proportion of regular season games were won by the home team? Keep this number in mind, because it gives us a **baseline** to beat later.
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+Begin by making a variable called `Win` which takes the `Margin` variable as a reference. If `Margin > 0` then `Win`, otherwise `Lose`.
+
+```{r}
+afl_train <- afl_train |> 
+  mutate(
+    Win = case_when(Margin > 0 ~ "Win",
+                    TRUE ~ "Loss"),
+    Win = factor(Win, levels = c("Loss", "Win"))
+  )
+
+afl_test <- afl_test |> 
+  mutate(
+    Win = case_when(Margin > 0 ~ "Win",
+                    TRUE ~ "Loss"),
+    Win = factor(Win, levels = c("Loss", "Win"))
+  )
+```
+
+
+:::
+::::
+
+:::: callout-note
+### Question 2
+
+Explore the data. Pick a few variables and see how they differ between games the home team won and games it did not.
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+You could make summary statistics, figures, etc. As an example, compare the distribution of `Kicks.diff` for wins and losses:
+
+```{r}
+ggplot(afl_train, aes(x = factor(Win, labels = c("Loss", "Win")), y = Kicks.diff)) +
+  geom_boxplot() +
+  labs(x = "Home team result", y = "Kicks (home - away)")
+```
+
+If a variable is useful, the two boxes should be shifted relative to each other.
+:::
+::::
+
+:::: callout-note
+### Question 3
+
+Build a logistic regression model to predict `Win`. Again, you can only include 3 predictors. Note the changes from Part 1: the response is `Win`, and the family is now `binomial`.
+
+```{r, eval=FALSE}
+logit1 <- glm(
+  formula = Win ~ ... + ... + ...,
+  family = ...,
+  data = ...
+)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+Your models will all be different depending on which variables you pick. As an example, suppose you built a model with Kicks, Tackles and Inside 50s:
+
+```{r}
+logit1 <- glm(
+  formula = Win ~ Kicks.diff + Tackles.diff + Inside.50s.diff,
+  family = binomial,
+  data = afl_train
+)
+```
+:::
+::::
+
+:::: callout-note
+### Question 4
+
+Inspect your model with `summary()`, then write down the **fitted regression equation**. Remember that a logistic regression models the **log-odds** of a home win, not the probability directly:
+
+$$
+\log\left(\frac{p}{1-p}\right) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3
+$$
+
+where $p$ is the probability that the home team wins.
+
+```{r, eval=FALSE}
+summary(...)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+summary(logit1)
+```
+
+Substitute the estimates from the `Estimate` column into the equation, for example (using your own numbers):
+
+$$
+\log\left(\frac{\hat{p}}{1-\hat{p}}\right) = \hat{\beta}_0 + \hat{\beta}_1 \times \text{Kicks.diff} + \hat{\beta}_2 \times \text{Tackles.diff} + \hat{\beta}_3 \times \text{Inside.50s.diff}
+$$
+
+The intercept is the log-odds of a home win when all the differences are 0 (the two teams are level on every statistic).
+:::
+::::
+
+:::: callout-note
+### Question 5
+
+Use `confint()` to get confidence intervals on the **log-odds** scale. Then use `exp()` to convert both the coefficients and the confidence intervals into **odds ratios**. Interpret each odds ratio in context.
+
+```{r, eval=FALSE}
+confint(...)
+
+exp(coef(...))
+exp(confint(...))
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+confint(logit1)
+
+exp(coef(logit1))
+exp(confint(logit1))
+```
+
+How to read an odds ratio for a predictor:
+
+- An odds ratio **above 1** means that as the variable increases, the odds of a home win **increase**.
+- An odds ratio **below 1** means the odds **decrease**.
+- An odds ratio of **exactly 1** means no association.
+
+Template for your interpretation: *"For each extra [unit] the home team has over the away team in [variable], the odds of a home win are multiplied by [odds ratio] (95% CI: [lower] to [upper]), holding the other variables constant."*
+
+If the confidence interval for an odds ratio contains **1**, we cannot rule out that the variable has no effect once the other variables are accounted for.
+
+For variables measured in single units (like kicks), a 1 unit change can be tiny. You can scale the effect to something more meaningful, for example the odds ratio for a 10 kick advantage is `exp(10 * coef(logit1)["Kicks.diff"])`.
+:::
+::::
+
+:::: callout-note
+### Question 6
+
+Check the assumptions of your model with `check_model()`. 
+
+**Note**: Set both `fig.width` and `fig.height` to 12 so the plots are readable.
+
+```{r, eval=FALSE}
+check_model(...)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r, fig.width=12, fig.height=12}
+check_model(logit1)
+```
+
+The plots are different from Part 1, because some of the linear regression assumptions (normal residuals, constant variance) do not apply to a binary response. The ones that matter here:
+
+- **Binned residuals**: the residuals are grouped into bins. Most points should sit inside the error bounds. Many points outside suggest the model is missing structure (for example a non-linear effect).
+- **Collinearity (VIF)**: low values mean the predictors are not too strongly related to each other.
+- **Influential observations**: no single game should be driving the fit.
+
+Two assumptions are not shown but still matter: the games are **independent** of each other, and each predictor has a **linear relationship with the log-odds** of a win.
+:::
+::::
+
+:::: callout-note
+### Question 7
+
+Now build two more logistic regression models, and check their assumptions. Change these so that the models have at least one different predictor in each.
+
+```{r, eval=FALSE}
+logit2 <- glm(
+  formula = ...,
+  data = ...,
+  family = ...
+)
+
+logit3 <- glm(
+  formula = ...,
+  data = ...,
+  family = ...
+)
+
+check_model(...)
+check_model(...)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+Everyone's results will be different, but here are two examples:
+
+```{r}
+logit2 <- glm(
+  formula = Win ~ Hit.Outs.diff + Rebounds.diff + Kicks.diff,
+  data = afl_train,
+  family = binomial
+)
+
+logit3 <- glm(
+  formula = Win ~ Contested.Marks.diff + Tackles.diff + Kicks.diff,
+  data = afl_train,
+  family = binomial
+)
+```
+
+```{r, fig.width=12, fig.height=12}
+check_model(logit2)
+```
+
+```{r, fig.width=12, fig.height=12}
+check_model(logit3)
+```
+:::
+::::
+
+:::: callout-note
+### Question 8
+
+Compare your three models with `compare_performance()`. As in Part 1, these are **in-sample** measures.
+
+```{r, eval=FALSE}
+compare_performance(..., ..., ..., rank = TRUE)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+compare_performance(logit1, logit2, logit3, rank = TRUE)
+```
+
+Here is how to read the main columns:
+
+| Measure | What it tells you | Better is |
+|---|---|---|
+| **AIC / BIC** | Fit penalised for complexity. Only differences between models matter. | Lower |
+| **Tjur's R2** | A pseudo R2 for binary data: the average predicted probability for wins minus the average for losses. | Higher |
+| **Log loss** | Penalises confident predictions that turn out to be wrong. | Lower |
+| **PCP** | Percentage of correct predictions, based on the predicted probabilities. | Higher |
+
+::: {.callout-note}
+The ordinary R2 and RMSE from Part 1 are not the right tools for a binary response. Tjur's R2 is usually much smaller than a linear regression R2, so do not judge it against the same scale.
+:::
+:::
+::::
+
+:::: callout-note
+### Question 9
+
+**Predicted probabilities and the confusion matrix**
+
+A logistic regression does not directly predict a win or a loss. It predicts the **probability** of a home win. To turn this into a prediction we need a **classification threshold**: if the predicted probability is above the threshold we predict a win, otherwise a loss. We will start with the usual threshold of **0.5**.
+
+**Part (a)**: Use `predict()` with `type = "response"` to get the predicted probability of a home win for each game in the training data, using `logit1`. Then classify each game as a predicted win or loss.
+
+**Part (b)**: Build a **confusion matrix** by cross-tabulating the predicted result against the actual result.
+
+```{r, eval=FALSE}
+afl_train <- afl_train |> 
+  mutate(
+    Prob1 = predict(..., type = "response"),
+    Pred1 = ifelse(Prob1 > ..., "Win", "Loss"),
+    Actual = ifelse(Win == 1, "Win", "Loss")
+  )
+
+table(Predicted = afl_train$Pred1, Actual = afl_train$Actual)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+results <- afl_test |> 
+  select(Round, Home.team, Away.team, Actual = Win) |> 
+  mutate(
+    Model1 = predict(logit1, newdata = afl_test, type = 'response'),
+    Model2 = predict(logit2, newdata = afl_test, type = 'response'),
+    Model3 = predict(logit3, newdata = afl_test, type = 'response')
+  ) |> 
+  
+  # Change the probabilities to Win/Loss based on a threshold of 0.50.
+  mutate(
+    Model1 = ifelse(Model1<0.5,"Loss","Win"),
+    Model2 = ifelse(Model1<0.5,"Loss","Win"),
+    Model3 = ifelse(Model1<0.5,"Loss","Win")
+  ) 
+
+table(Actual = results$Actual,
+      Model1 = results$Model1)
+
+table(Actual = results$Actual,
+      Model2 = results$Model2)
+
+table(Actual = results$Actual,
+      Model3 = results$Model3)
+```
+
+Without `type = "response"`, `predict()` returns values on the **log-odds** scale, which are not probabilities.
+
+The four cells of the matrix (we treat a **home win** as the "positive" class):
+
+| | **Actual: Win** | **Actual: Loss** |
+|---|---|---|
+| **Predicted: Win** | True positive (TP) | False positive (FP) |
+| **Predicted: Loss** | False negative (FN) | True negative (TN) |
+
+The correct predictions are on the diagonal. The off-diagonal cells are the two kinds of mistakes: predicting a win that did not happen (FP), and missing a win that did happen (FN).
+:::
+::::
+
+:::: callout-note
+### Question 10
+
+**Classification metrics**
+
+Using the four counts from your confusion matrix, calculate these metrics by hand (or in R as simple arithmetic):
+
+| Metric | Formula | In words |
+|---|---|---|
+| **Accuracy** | (TP + TN) / (TP + TN + FP + FN) | Proportion of all games predicted correctly |
+| **Sensitivity** (recall) | TP / (TP + FN) | Of the games the home team **won**, the proportion we correctly predicted |
+| **Specificity** | TN / (TN + FP) | Of the games the home team **did not win**, the proportion we correctly predicted |
+| **Precision** | TP / (TP + FP) | Of the games we **predicted** as wins, the proportion that really were |
+| **F1 score** | 2 × Precision × Sensitivity / (Precision + Sensitivity) | A single number balancing precision and sensitivity |
+
+Then answer:
+
+a. Is the accuracy better than the baseline from Question 1 (always predicting a home win)?
+b. Is the model better at identifying wins or at identifying losses? Which metrics tell you this?
+c. In the context of tipping footy games, is a false positive any worse than a false negative?
+
+```{r, eval=FALSE}
+TP <- ...
+TN <- ...
+FP <- ...
+FN <- ...
+
+accuracy <- ...
+sensitivity <- ...
+specificity <- ...
+precision <- ...
+f1 <- ...
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+To avoid copying numbers by hand, we can pull them straight from the table. Note if your code does not run, it might be because there are two few games in the test set (and it can't divide by zero). If this is the case, skip to the next questions.
+
+```{r, eval=FALSE}
+cm1 <- table(
+  Predicted = factor(afl_train$Pred1, levels = c("Loss", "Win")),
+  Actual = factor(afl_train$Actual, levels = c("Loss", "Win"))
+)
+cm1
+
+TP <- cm1["Win", "Win"]
+TN <- cm1["Loss", "Loss"]
+FP <- cm1["Win", "Loss"]
+FN <- cm1["Loss", "Win"]
+
+accuracy <- (TP + TN) / (TP + TN + FP + FN)
+sensitivity <- TP / (TP + FN)
+specificity <- TN / (TN + FP)
+precision <- TP / (TP + FP)
+f1 <- 2 * precision * sensitivity / (precision + sensitivity)
+
+c(Accuracy = accuracy, Sensitivity = sensitivity, Specificity = specificity,
+  Precision = precision, F1 = f1)
+```
+
+Setting the `levels` in `factor()` guarantees both "Loss" and "Win" appear in the table, even if a model never predicts one of them.
+
+Compare the accuracy to `max(mean(afl_train$Win), 1 - mean(afl_train$Win))`, the accuracy of always predicting the more common result. If the model barely beats it, the three predictors are not adding much.
+
+For (c), think about what each mistake costs you. When tipping, a wrong tip is a wrong tip either way, so the two errors cost the same. In other settings (for example a medical test) they might not.
+:::
+::::
+
+:::: callout-note
+### Question 11
+
+Calculating the metrics by hand for every model gets repetitive. Here are two helper functions that do it for you. Use them to compare the metrics for all three models on the **training data**.
+
+```{r}
+# Builds a confusion matrix from the actual result (1/0) and predicted probabilities
+conf_mat <- function(actual, prob, threshold = 0.5) {
+  table(
+    Predicted = factor(ifelse(prob > threshold, "Win", "Loss"), levels = c("Loss", "Win")),
+    Actual = factor(ifelse(actual == 1, "Win", "Loss"), levels = c("Loss", "Win"))
+  )
+}
+
+# Calculates the classification metrics from a confusion matrix
+class_metrics <- function(cm) {
+  TP <- cm["Win", "Win"]; TN <- cm["Loss", "Loss"]
+  FP <- cm["Win", "Loss"]; FN <- cm["Loss", "Win"]
+  precision <- TP / (TP + FP)
+  sensitivity <- TP / (TP + FN)
+  data.frame(
+    Accuracy = (TP + TN) / sum(cm),
+    Sensitivity = sensitivity,
+    Specificity = TN / (TN + FP),
+    Precision = precision,
+    F1 = 2 * precision * sensitivity / (precision + sensitivity)
+  )
+}
+```
+
+```{r, eval=FALSE}
+afl_train <- afl_train |> 
+  mutate(
+    Prob2 = predict(..., type = "response"),
+    Prob3 = predict(..., type = "response")
+  )
+
+bind_rows(
+  class_metrics(conf_mat(afl_train$Win, afl_train$Prob1)) |> mutate(Model = "Model 1"),
+  ...
+)
+```
+
+Which model would you choose based on these metrics? Does it agree with `compare_performance()` from Question 8?
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r, eval=FALSE}
+afl_train <- afl_train |> 
+  mutate(
+    Prob2 = predict(logit2, type = "response"),
+    Prob3 = predict(logit3, type = "response")
+  )
+
+bind_rows(
+  class_metrics(conf_mat(afl_train$Win, afl_train$Prob1)) |> mutate(Model = "Model 1"),
+  class_metrics(conf_mat(afl_train$Win, afl_train$Prob2)) |> mutate(Model = "Model 2"),
+  class_metrics(conf_mat(afl_train$Win, afl_train$Prob3)) |> mutate(Model = "Model 3")
+) |> 
+  relocate(Model)
+```
+
+Remember these metrics all depend on the 0.5 threshold, and they are still **in-sample**.
+:::
+::::
+
+:::: callout-note
+### Question 12
+
+**Predicting the finals**
+
+Now the real test. Use each model to predict the probability of a home win for each finals game, then classify each game using a threshold of 0.5. As before, the finals games were **not** used to build the models.
+
+We'll select `Round`, `Home.team` and `Away.team`, and rename `Win` to `Actual`. Then we'll create `Prob1`, `Prob2` and `Prob3` using `predict()` with `type = "response"`, and a column for each model's predicted result.
+
+```{r, eval=FALSE}
+finals_pred <- afl_test |> 
+  select(Round, Home.team, Away.team, Actual = Win) |> 
+  mutate(
+    Prob1 = predict(..., newdata = ..., type = "response"),
+    Prob2 = predict(..., newdata = ..., type = "response"),
+    Prob3 = predict(..., newdata = ..., type = "response"),
+    Pred1 = as.integer(Prob1 > 0.5),
+    Pred2 = as.integer(Prob2 > 0.5),
+    Pred3 = as.integer(Prob3 > 0.5)
+  )
+
+finals_pred
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+finals_pred <- afl_test |> 
+  select(Round, Home.team, Away.team, Actual = Win) |> 
+  mutate(
+    Prob1 = predict(logit1, newdata = afl_test, type = "response"),
+    Prob2 = predict(logit2, newdata = afl_test, type = "response"),
+    Prob3 = predict(logit3, newdata = afl_test, type = "response"),
+    Pred1 = as.integer(Prob1 > 0.5),
+    Pred2 = as.integer(Prob2 > 0.5),
+    Pred3 = as.integer(Prob3 > 0.5)
+  )
+
+finals_pred
+```
+
+Look at the games where `Pred` and `Actual` disagree. Were these games where the model was unsure (probability near 0.5) or confidently wrong (probability near 0 or 1)?
+:::
+::::
+
+:::: callout-note
+### Question 13
+
+**Confusion matrices on the test data**
+
+Build a confusion matrix for each of your three models using the finals games, then calculate the classification metrics. 
+
+a. How do the **test** metrics compare to the **training** metrics from Question 11?
+b. The finals series only has a handful of games. How does this affect how much we should trust the test metrics?
+c. In the finals, the "home" team is not always a true home team. Does this matter for how we interpret the model?
+
+```{r, eval=FALSE}
+conf_mat(afl_test$Win, finals_pred$Prob1)
+
+bind_rows(
+  class_metrics(conf_mat(afl_test$Win, finals_pred$Prob1)) |> mutate(Model = "Model 1"),
+  ...
+)
+```
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+```{r}
+conf_mat(afl_test$Win, finals_pred$Prob1)
+conf_mat(afl_test$Win, finals_pred$Prob2)
+conf_mat(afl_test$Win, finals_pred$Prob3)
+```
+
+```{r}
+bind_rows(
+  class_metrics(conf_mat(afl_test$Win, finals_pred$Prob1)) |> mutate(Model = "Model 1"),
+  class_metrics(conf_mat(afl_test$Win, finals_pred$Prob2)) |> mutate(Model = "Model 2"),
+  class_metrics(conf_mat(afl_test$Win, finals_pred$Prob3)) |> mutate(Model = "Model 3")
+) |> 
+  relocate(Model)
+```
+
+Some things to discuss:
+
+- Models usually perform **worse on new data** than on the data they were built from. A large drop suggests the model **overfit** the training data.
+- With only a few games, **one** game changing result moves the accuracy by a large amount, and some metrics may be undefined (for example precision is `NaN` if a model never predicts a win). Treat these numbers as rough evidence, not a definitive ranking.
+- Finals are played at neutral or non-traditional venues, so "home" is often just a label. If there is no real home advantage in these games, the intercept learned from the regular season may not transfer perfectly.
+:::
+::::
+
+:::: callout-note
+### Question 14
+
+**Choosing a final model**
+
+Which of your three logistic regression models would you trust most to predict a game that has not yet been played? Justify your choice using **at least three** pieces of evidence from this tutorial (for example: assumption checks, `compare_performance()`, the confusion matrix metrics, the AUC, and the finals predictions).
+
+::: {.callout-important collapse="true"}
+#### Click for solution
+
+There is no single correct model. A strong answer:
+
+- Uses **both** in-sample evidence (AIC/BIC, Tjur's R2, AUC) and **out-of-sample** evidence (finals accuracy, sensitivity, specificity).
+- Mentions whether the **assumption checks** raised any concerns (such as influential games or collinearity between predictors).
+- Compares the accuracy to the **baseline** of always predicting a home win.
+- Acknowledges the **small size of the test set** and the **choice of threshold**.
+- Notes whether the odds ratios make sense in the context of football (for example more tackles for the home team might be linked to a *lower* chance of winning, because the team without the ball tackles more).
+:::
+::::
